@@ -1,0 +1,97 @@
+/* ---------------------------------------------------
+    SIDEBAR STYLE
+----------------------------------------------------- */
+
+#sidebar {
+  width: var(--sideBar-width);
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  z-index: 999;
+  background: var(--sideBar-list-bg);
+  color: #fff;
+  transition: all 0.3s;
+}
+
+#sidebar:hover,
+#sidebar:focus {
+  overflow: auto;
+}
+
+#sidebar.active {
+  margin-left: calc(var(--sideBar-width) + (-2 * var(--sideBar-width)));
+}
+
+#sidebar .sidebar-header {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  background: var(--sideBar-logo-bg);
+  height: var(--navBar-height);
+}
+
+#sidebar ul.components {
+  border-bottom: 1px solid #47748b;
+}
+
+#sidebar ul p {
+  color: #fff;
+  padding: 10px;
+}
+
+#sidebar ul li a {
+  padding: 10px;
+  font-size: 1.1em;
+  display: block;
+  text-decoration: none;
+  color: var(--sideBar-list-color);
+}
+
+#sidebar ul li a:hover {
+  color: #7386D5;
+  background: #fff;
+}
+
+#sidebar ul li.active>a,
+a[aria-expanded="true"] {
+  text-decoration: none;
+}
+
+a {color: var(--sideBar-list-color);}
+
+a[data-toggle="collapse"] {
+  position: relative;
+}
+
+.dropdown-toggle::after {
+  display: block;
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+}
+
+ul ul a {
+  font-size: 0.9em !important;
+  padding-left: 30px !important;
+  background: var(--sideBar-list-bg);
+}
+
+ul.CTAs {
+  padding: 20px;
+}
+
+ul.CTAs a {
+  text-align: center;
+  font-size: 0.9em !important;
+  display: block;
+  border-radius: 5px;
+  margin-bottom: 5px;
+}
+
+a.article,
+a.article:hover {
+  background: var(--sideBar-list-bg);
+  color: var(--sideBar-list-color) !important;
+}

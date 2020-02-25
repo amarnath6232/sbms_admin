@@ -7,7 +7,7 @@ export class Logout {
 
     logout() {
         this.auth.token = null;
-        localStorage.clear();
+        localStorage.removeItem('token');
         this.router.navigate(['/signIn']);
     }
 }

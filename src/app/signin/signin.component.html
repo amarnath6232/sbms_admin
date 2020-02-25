@@ -60,7 +60,7 @@
             </div>
 
             <div class="row my-4 p-3">
-              <button type="submit" class="btn btn-signin btn-block">
+              <button type="submit" class="btn btn-signin btn-block" [disabled]="loading">
                 <span *ngIf="loading" class="spinner-border spinner-border-sm" (click)="onSubmit()" role="status"
                   aria-hidden="true"></span>
                 Sign In

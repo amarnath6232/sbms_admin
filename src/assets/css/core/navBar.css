@@ -1,0 +1,47 @@
+/* ---------------------------------------------------
+    CONTENT STYLE
+----------------------------------------------------- */
+
+
+a,
+a:hover,
+a:focus {
+  color: inherit;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.navbar {
+  background: var(--navBar-bg);
+  border: none;
+  border-radius: 0;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+  height: var(--navBar-height);
+}
+
+.navbar-btn {
+  box-shadow: none;
+  outline: none !important;
+  border: none;
+}
+
+.navbarTitle{
+  font-size: var(--navBar-title);
+}
+
+.line {
+  width: 100%;
+  height: 1px;
+  border-bottom: 1px dashed #ddd;
+  margin: 40px 0;
+}
+
+.sidebarButton {
+  background-color: transparent;
+  border: none;
+}
+
+.sidebarButton:hover,
+.sidebarButton:focus {
+    outline: none;
+}

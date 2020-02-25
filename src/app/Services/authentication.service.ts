@@ -17,7 +17,7 @@ export class AuthenticationService {
   rolebase: string = null;
   islogin: boolean = false;
   userName = null;
-  private token: string = localStorage.getItem('token') || null;
+  token: string = localStorage.getItem('token') || null;
   refresh_Token = null;
   decoded: any;
 
@@ -61,7 +61,7 @@ export class AuthenticationService {
     return this.http.post(`${this.ip.ip}${this.ip.login_Port}/rest/v1/login/signin`, { loginId, password }).pipe(map(res => {
       if (res) {
         console.log(res);
-        this.token = res['token'];
+        this.token = res['jwtToken'];
         localStorage.setItem('token', this.token);
         this.decodeToken();
         return true;

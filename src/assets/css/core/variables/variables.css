@@ -1,0 +1,12 @@
+:root {
+  /* nav bar variables */
+  --navBar-bg: #F5F5F5;
+  --navBar-height: 70px;
+  --navBar-title: 1.2rem;
+  
+  /* side bar variables */
+  --sideBar-logo-bg: #555A6D;
+  --sideBar-list-bg: #656B79;
+  --sideBar-list-color: #F5F5F5;
+  --sideBar-width: 250px;
+}

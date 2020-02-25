@@ -33,7 +33,7 @@ export class SigninComponent implements OnInit {
 
   SigninValidations() {
     this.signinForm = this.fb.group({
-      loginId: ['', [Validators.required]],
+      loginId: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(32)]],
       password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(16)]],
     })
   }
@@ -49,8 +49,6 @@ export class SigninComponent implements OnInit {
       .subscribe(
         () => {
           this.loading = !this.loading;
-          const name = this.username.charAt(0).toUpperCase() + this.username.slice(1);
-          this.authenticationService.userName = name;
           this.router.navigate(['/dashboard']).then(() => {
             this.toastr.success('Login successful', 'Success');
           });
