@@ -7,9 +7,56 @@
     <li>
       <a [routerLink]="[ '/dashboard' ]" routerLinkActive="active">Dashboard</a>
     </li>
-    <li class="active">
-      <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Home</a>
-      <ul class="collapse list-unstyled" id="homeSubmenu">
+
+    <li>
+      <a href="#userManagement" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">User Management</a>
+      <ul class="collapse list-unstyled" id="userManagement">
+        <!-- permissions -->
+        <li>
+          <a href="#permissions" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+            Permissions</a>
+          <ul class="collapse list-unstyled" id="permissions">
+            <li>
+              <a [routerLink]="[ '/user-management/permissions/permissions-list' ]" routerLinkActive="active">Permissions List</a>
+            </li>
+            <li>
+              <a [routerLink]="[ '/user-management/permissions/create-permissions' ]" routerLinkActive="active">create Permissions</a>
+            </li>
+          </ul>
+        </li>
+        <!-- roles -->
+        <li>
+          <a href="#role" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+            Roles</a>
+          <ul class="collapse list-unstyled" id="role">
+            <li>
+              <a [routerLink]="[ '/user-management/roles/roles-list' ]" routerLinkActive="active">Role List</a>
+            </li>
+            <li>
+              <a [routerLink]="[ '/user-management/roles/create-roles' ]" routerLinkActive="active">Create Roles</a>
+            </li>
+          </ul>
+        </li>
+        <!-- users -->
+        <li>
+          <a href="#users" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+            Users</a>
+          <ul class="collapse list-unstyled" id="users">
+            <li>
+              <a [routerLink]="[ '/user-management/users/users-list' ]" routerLinkActive="active">Users List</a>
+            </li>
+            <li>
+              <a [routerLink]="[ '/user-management/users/create-users' ]" routerLinkActive="active">Create Users</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+
+    <li>
+      <a href="#site" [routerLink]="[ '/site' ]" routerLinkActive="active" data-toggle="collapse" aria-expanded="false"
+        class="dropdown-toggle">Site </a>
+      <ul class="collapse list-unstyled" id="site">
         <li>
           <a href="#">Home 1</a>
         </li>
@@ -23,25 +70,28 @@
     </li>
 
     <li>
-      <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Pages</a>
-      <ul class="collapse list-unstyled" id="pageSubmenu">
+      <a href="#assertManagement" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Asset</a>
+      <ul class="collapse list-unstyled" id="assertManagement">
         <li>
-          <a href="#">Page 1</a>
-        </li>
-        <li>
-          <a href="#">Page 2</a>
-        </li>
-        <li>
-          <a href="#">Page 3</a>
+          <a href="#assetCategory" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+            Asset Category</a>
+          <ul class="collapse list-unstyled" id="assetCategory">
+            <li>
+              <a [routerLink]="[ '/assert-management/catagory-List' ]" routerLinkActive="active">catagory List</a>
+            </li>
+            <li>
+              <a [routerLink]="[ '/assert-management/add-asset-category' ]" routerLinkActive="active">Create Asset</a>
+            </li>
+          </ul>
         </li>
       </ul>
     </li>
-    <li>
+    <!-- <li>
       <a href="#">Portfolio</a>
     </li>
     <li>
       <a href="#">Contact</a>
-    </li>
+    </li> -->
   </ul>
 
 </nav>

@@ -15,7 +15,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    const tokenvalue = localStorage.getItem('token');
+    const tokenvalue = this.auth.getJwtToken();
     console.log('tokenvalue', tokenvalue);
 
     if (tokenvalue) {
@@ -23,7 +23,7 @@ export class AuthInterceptor implements HttpInterceptor {
     }
 
     return next.handle(req).pipe(catchError(error => {
-      if ((error instanceof HttpErrorResponse && error.status === 401)) {
+      if ((error instanceof HttpErrorResponse && error.status == 403)) {
         console.log('token in interceptor', tokenvalue);
         if (tokenvalue) {
           console.log('entered in before handle 401 Error');
@@ -50,31 +50,28 @@ export class AuthInterceptor implements HttpInterceptor {
   private handle401Error(request: HttpRequest<any>, next: HttpHandler) {
     console.log("handle inter token exp");
     console.log("this.isRefreshing", this.isRefreshing);
-    if (!this.isRefreshing) {
-      this.isRefreshing = true;
-      console.log(" if before return intercept refresh token ");
+    this.isRefreshing = true;
+    console.log(" if before return intercept refresh token ");
 
-      return this.auth.refreshToken().pipe(
-        switchMap((token: any) => {
-          this.isRefreshing = false;
-          console.log("intercept refresh token ");
-          console.log(token);
-          this.refreshTokenSubject.next(token['token']);
-          console.log(this.refreshTokenSubject);
-          this.auth.token = token['token'];
-          return next.handle(this.addToken(request, token['token']));
-        }));
+    return this.auth.refreshToken().pipe(
+      switchMap((token: any) => {
+        this.isRefreshing = false;
+        console.log("intercept refresh token ");
+        console.log(token);
+        this.refreshTokenSubject.next(token['jwtToken']);
+        console.log(this.refreshTokenSubject);
+        this.auth.token = token['jwtToken'];
+        return next.handle(this.addToken(request, token['jwtToken']));
+      }));
 
-    } else {
-      console.log(" else before return intercept refresh token ");
-      return this.refreshTokenSubject.pipe(
-        filter(token => token != null),
-        take(1),
-        switchMap(jwt => {
-          console.log("switchMap", jwt);
-          return next.handle(this.addToken(request, jwt));
-        }));
-    }
+    /* console.log(" else before return intercept refresh token ");
+    return this.refreshTokenSubject.pipe(
+      filter(token => token != null),
+      take(1),
+      switchMap(jwt => {
+        console.log("switchMap", jwt);
+        return next.handle(this.addToken(request, jwt));
+      })); */
   }
 
 }

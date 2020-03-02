@@ -13,21 +13,14 @@ import { AuthenticationService } from 'src/app/Services/authentication.service';
 export class NavbarComponent implements OnInit {
     location: Location;
     mobile_menu_visible: any = 0;
+    windowSize = $(window).width();
+
+    userName = null;
 
     @HostListener('window:resize', ['$event'])
     onResize(event) {
-        console.log(event.target.innerWidth);
-        if (event.target.innerWidth < 991) {
-            $(document).ready(function () {
-                $("#sidebar, #content").addClass('active');
-                $(".navbarTitle").hide("fast");
-            });
-        } else {
-            $(document).ready(function () {
-                $("#sidebar, #content").removeClass('active');
-                $(".navbarTitle").show("fast");
-            });
-        }
+        this.windowSize = event.target.innerWidth;
+        this.window(event.target.innerWidth);
     }
 
     constructor(location: Location,
@@ -38,6 +31,31 @@ export class NavbarComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.window(this.windowSize);
+        this.displayUserName();
+    }
+
+    displayUserName(){
+        this.auth.userName.subscribe(val=>{
+            this.userName = val;
+        })
+    }
+
+
+    window(windowSize: Number) {
+        if (windowSize < 991) {
+            $(document).ready(function () {
+                $("#sidebar, #content").addClass('active');
+                $(".navbarTitle").hide("fast");
+                $("#navbarTitleSmall").show();
+            });
+        } else {
+            $(document).ready(function () {
+                $("#sidebar, #content").removeClass('active');
+                $(".navbarTitle").show("fast");
+                $("#navbarTitleSmall").hide();
+            });
+        }
     }
 
 

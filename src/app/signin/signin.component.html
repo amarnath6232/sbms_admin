@@ -48,7 +48,7 @@
             <!-- Password -->
             <div class="my-4 text-center">
               <input type="password" class="form-control text-center input-custom-control" formControlName="password"
-                maxlength="16" autocomplete="off">
+                maxlength="16" autocomplete="off" placeholder="Password">
               <div *ngIf="f.password.invalid && f.password.touched" class="text-danger">
                 <div *ngIf="f.password.errors?.required">
                   <small>password is required</small>

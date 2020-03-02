@@ -48,9 +48,13 @@
   color: var(--sideBar-list-color);
 }
 
+#sidebar ul li a.active {
+  color: #FFF;
+}
+
 #sidebar ul li a:hover {
-  color: #7386D5;
-  background: #fff;
+  color: rgb(255, 255, 255);
+  background: #bdbdbd;
 }
 
 #sidebar ul li.active>a,
@@ -75,6 +79,12 @@ a[data-toggle="collapse"] {
 ul ul a {
   font-size: 0.9em !important;
   padding-left: 30px !important;
+  background: var(--sideBar-list-bg);
+}
+
+ul ul ul a {
+  font-size: 0.9em !important;
+  padding-left: 40px !important;
   background: var(--sideBar-list-bg);
 }
 

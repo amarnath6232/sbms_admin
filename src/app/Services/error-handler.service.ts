@@ -22,7 +22,7 @@ export class ErrorHandlerService {
     //     `body was: ${error.error}`);
     // }
     // return an observable with a user-facing error message
-    // console.error(error);
+    console.error(error);
     return throwError(error);
   }
 }

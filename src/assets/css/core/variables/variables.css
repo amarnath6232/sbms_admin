@@ -3,10 +3,11 @@
   --navBar-bg: #F5F5F5;
   --navBar-height: 70px;
   --navBar-title: 1.2rem;
-  
+  --narBar-bottom-margin: 8px;
+
   /* side bar variables */
   --sideBar-logo-bg: #555A6D;
   --sideBar-list-bg: #656B79;
-  --sideBar-list-color: #F5F5F5;
+  --sideBar-list-color: #bdbdbd;
   --sideBar-width: 250px;
 }
