@@ -16,14 +16,20 @@
     width: 100%;
 }
 
-.height{
+.height {
     height: calc(100vh - var(--navBar-height));
 }
 
-.mandetory{
+.mandetory {
     color: red;
 }
 
-.form-control.ng-invalid{
-    border: 1px solid red;
+.form-control.ng-untouched {
+    border: 1px solid #ced4da !important;
+    border-radius: 5px;
+}
+
+.form-control.ng-invalid {
+    border: 1px solid #ff000052;
+    border-radius: 5px;
 }

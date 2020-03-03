@@ -1,14 +1,21 @@
 <div class="wrapper">
+
+  <!-- Side Nav Bar -->
   <div class="sidebar">
     <app-sidebar></app-sidebar>
   </div>
+
   <div id="content">
+    <!-- Nav Bar -->
     <app-navbar></app-navbar>
     <div class="height">
+      <!-- components -->
       <div class="container-fluid">
         <router-outlet></router-outlet>
       </div>
     </div>
+    <!-- Footer -->
     <app-footer></app-footer>
   </div>
+
 </div>

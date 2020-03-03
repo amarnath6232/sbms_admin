@@ -1,4 +1,7 @@
+<!-- Component title -->
 <h3 class="text-capitalize text-center">Permissions List</h3>
+
+<!-- Permissions List -->
 <table class="table">
   <thead class="thead-dark">
     <tr>
@@ -10,7 +13,7 @@
   </thead>
   <tbody>
     <tr *ngIf="permissionsList.length === 0" aria-colspan="4" class="text-center">
-      <td colspan="4">No Permission</td>
+      <td colspan="4">No Permissions</td>
     </tr>
     <tr *ngFor="let item of permissionsList; let i=index">
       <th>{{i + 1}}</th>
@@ -32,8 +35,7 @@
   </tbody>
 </table>
 
-
-<!-- edit Permission modal -->
+<!-- Edit Permission modal -->
 <div class="modal fade bd-example-modal-lg" id="editPermissionModal" tabindex="-1" role="dialog"
   aria-labelledby="editPermissionLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">

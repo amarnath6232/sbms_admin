@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { RoleService } from 'src/app/Services/roles/role.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+
+import { RoleService } from 'src/app/Services/roles/role.service';
 import { ValidationsService } from 'src/app/Services/validations/validations.service';
 
 @Component({
@@ -10,12 +11,12 @@ import { ValidationsService } from 'src/app/Services/validations/validations.ser
   templateUrl: './create-permissions.component.html',
   styleUrls: ['./create-permissions.component.css']
 })
+
 export class CreatePermissionsComponent implements OnInit {
 
   loading: boolean;
   validations;
   permission: FormGroup;
-
 
   constructor(private fb: FormBuilder,
     private roleService: RoleService,
@@ -45,17 +46,28 @@ export class CreatePermissionsComponent implements OnInit {
     this.loading = false;
   }
 
+  get f() {
+    return this.permission.controls;
+  }
+
   createPermissions() {
     this.loading = true;
-    if (this.permission.invalid){
-      this.toastr.warning("please fill all fields");
+
+    if (this.permission.invalid) {
+      this.toastr.warning("Please fill all fields", "Warning");
       return
-    } 
+    }
+
     this.roleService.createPermission(this.permission.value).subscribe(res => {
       console.log(res);
+      this.toastr.success('Permission created successfully ', 'Success')
       this.router.navigate(['/user-management/permissions/permissions-list']);
     }, err => {
-      this.toastr.error(err.error.errorMessage);
+      if (err.status === 400) {
+        this.toastr.warning(err.error.errorMessage, "Warning");
+      }
+      else
+        this.toastr.error(err.error.errorMessage, "Error");
     });
     this.loadingfalse();
   }

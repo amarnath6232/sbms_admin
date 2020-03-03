@@ -1,13 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
-import { RoleService } from 'src/app/Services/roles/role.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+
+import { RoleService } from 'src/app/Services/roles/role.service';
 
 @Component({
   selector: 'app-create-roles',
   templateUrl: './create-roles.component.html',
   styleUrls: ['./create-roles.component.css']
 })
+
 export class CreateRolesComponent implements OnInit {
 
   createRole: FormGroup;
@@ -16,7 +19,8 @@ export class CreateRolesComponent implements OnInit {
   loading: boolean;
   constructor(private fb: FormBuilder,
     private roleService: RoleService,
-    private router:Router) {
+    private router: Router,
+    private toastr: ToastrService) {
     this.initCreateRole();
   }
 
@@ -27,7 +31,7 @@ export class CreateRolesComponent implements OnInit {
 
   getpermissionsFromService() {
     this.roleService.permissionList.subscribe(val => {
-      console.log("val",val);
+      console.log("val", val);
       if (val.length != 0) {
         this.permissions = val;
       }
@@ -60,8 +64,12 @@ export class CreateRolesComponent implements OnInit {
     }
   }
 
-  loadingFalse(){
+  loadingFalse() {
     this.loading = false;
+  }
+
+  get f() {
+    return this.createRole.controls;
   }
 
   sendCreateRole() {
@@ -73,10 +81,16 @@ export class CreateRolesComponent implements OnInit {
     }
     this.roleService.createRole(this.createRole.value).subscribe(res => {
       console.log(res);
+      this.toastr.success("Role created successfully", "Success");
       this.router.navigate(['/user-management/roles/roles-list']);
-    }, complete => {
-      this.loadingFalse();
-    })
+    }, err => {
+      if (err.status === 400) {
+        this.toastr.warning(err.error.errorMessage, "Warning");
+      }
+      else
+        this.toastr.error(err.error.errorMessage, "Error");
+    });
+    this.loadingFalse();
   }
 
 }

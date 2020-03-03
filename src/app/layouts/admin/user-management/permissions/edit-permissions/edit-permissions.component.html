@@ -1,20 +1,45 @@
+<!-- Form Starts -->
 <form [formGroup]="permissionEdit" (ngSubmit)="editPermissions()">
+
+  <!-- 1st Row -->
   <div class="form-group row">
-    <label for="permissionName" class="col-sm-3 col-form-label">Permission Name</label>
-    <div class="col-sm-9">
-      <input type="text" class="form-control" id="permissionName" formControlName="name" placeholder="Permission Name" autocomplete="off">
+
+    <!-- Label -->
+    <div class="col-3">
+      <label for="permissionName" class="col-form-label">Permission Name</label>
     </div>
+
+    <!-- Input Control -->
+    <div class="col-9">
+      <input type="text" class="form-control" id="permissionName" formControlName="name" placeholder="Permission Name"
+        autocomplete="off">
+    </div>
+
   </div>
+
+  <!-- 2nd Row -->
   <div class="form-group row">
-    <label for="description" class="col-sm-3 col-form-label">Description</label>
-    <div class="col-sm-9">
+
+    <!-- Label -->
+    <div class="col-3">
+      <label for="description" class="col-form-label">Description</label>
+    </div>
+
+    <!-- Input Control -->
+    <div class="col-9">
       <textarea name="description" id="description" class="form-control" cols="30" rows="5"
         formControlName="description" placeholder="Description" autocomplete="off"></textarea>
     </div>
   </div>
+
+  <!-- Submit Button -->
   <div class="d-flex justify-content-end">
     <button type="submit" class="btn btn-primary btn-sm text-capitalize" [disabled]="loading">
       <span class="spinner-border spinner-border-sm" *ngIf="loading" role="status" aria-hidden="true"></span>
-      update</button>
+      update
+    </button>
   </div>
+
 </form>
+
+<!-- Form Ends -->

@@ -1,17 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { RoleService } from 'src/app/Services/roles/role.service';
-import { permissionsList } from 'src/app/share/modal/modal';
 import { ToastrService } from 'ngx-toastr';
 
+import { RoleService } from 'src/app/Services/roles/role.service';
+import { permissionsList } from 'src/app/share/modal/modal';
 declare var $;
+
 @Component({
   selector: 'app-permissions-list',
   templateUrl: './permissions-list.component.html',
   styleUrls: ['./permissions-list.component.css']
 })
+
 export class PermissionsListComponent implements OnInit {
 
-  permissionsList: permissionsList[]=[];
+  permissionsList: permissionsList[] = [];
   copyPermission: permissionsList;
 
   constructor(private roleService: RoleService,
@@ -33,7 +35,7 @@ export class PermissionsListComponent implements OnInit {
       console.log("res per", res);
       if (res != null) {
         this.permissionsList = res;
-      }else{
+      } else {
         this.permissionsList = []
       }
     });
@@ -48,7 +50,7 @@ export class PermissionsListComponent implements OnInit {
   deletePermission() {
     this.roleService.deletePermissions(this.copyPermission.permissionId).subscribe(res => {
       $('#deletePermissionModal').modal('hide');
-      this.toastr.success(`${this.copyPermission.name} deleted successfull`, "Success");
+      this.toastr.success(`${this.copyPermission.name} deleted successfully`, "Success");
     });
   }
 

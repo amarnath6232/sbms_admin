@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+
 import { PermissionsComponent } from './permissions.component';
 import { PermissionsListComponent } from './permissions-list/permissions-list.component';
 import { CreatePermissionsComponent } from './create-permissions/create-permissions.component';
-
 
 const routes: Routes = [
   {
@@ -19,4 +19,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
+
 export class PermissionsRoutingModule { }

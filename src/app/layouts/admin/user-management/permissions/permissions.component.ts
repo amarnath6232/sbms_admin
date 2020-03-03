@@ -5,9 +5,11 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './permissions.component.html',
   styleUrls: ['./permissions.component.css']
 })
+
 export class PermissionsComponent implements OnInit {
 
-  ngOnInit(): void {
-  }
+  constructor() { }
+
+  ngOnInit(): void { }
 
 }

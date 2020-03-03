@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject, Subject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+
 import { IpService } from '../ip.service';
 import { ErrorHandlerService } from '../error-handler.service';
 import { User, RoleList } from 'src/app/share/modal/modal';
@@ -15,7 +16,11 @@ export class UserService {
 
   roleListById = new BehaviorSubject<RoleList>(null);
   copyEditUser = new Subject<User>();
+
+  /* used in edit user edit */
   userList = new BehaviorSubject<User>(null);
+
+  users_List = new BehaviorSubject<User[]>([]);
 
   constructor(private http: HttpClient,
     private ip: IpService,
@@ -54,8 +59,12 @@ export class UserService {
   }
 
   //Get USers
-  getUsers(): Observable<User[]> {
+  getUsers() {
     return this.http.get<User[]>(`${this.ip.ip}${this.ip.usermanagement_port}/rest/v1/users`).pipe(
+      map(res => {
+        this.users_List.next(res);
+        return res;
+      }),
       (catchError(this.errHandler.handleError))
     );
   }
@@ -70,6 +79,7 @@ export class UserService {
   //Delete user
   deleteUsers(id: number) {
     return this.http.delete(`${this.ip.ip}${this.ip.usermanagement_port}/rest/v1/users/${id}`).pipe(
+      map((res) => { this.getUsers().subscribe(); return res }),
       (catchError(this.errHandler.handleError))
     );
   }

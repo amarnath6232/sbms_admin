@@ -46,7 +46,7 @@ export class CategoryListComponent implements OnInit {
 
   deleteAssetCategory() {
     this.assetService.deleteAssetCategory(this.copyDeleteItem.assetCategoryId).subscribe(res => {
-      this.toastr.success(`${this.copyDeleteItem.categoryName} deleted successfull`, "Success");
+      this.toastr.success(`${this.copyDeleteItem.categoryName} deleted successfully`, "Success");
       this.getCategoryList();
     })
   }

@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+
 import { UsersComponent } from './users.component';
 import { UserlistComponent } from './userlist/userlist.component';
 import { CreateUsersComponent } from './create-users/create-users.component';
-
 
 const routes: Routes = [
   {
@@ -19,4 +19,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
+
 export class UsersRoutingModule { }

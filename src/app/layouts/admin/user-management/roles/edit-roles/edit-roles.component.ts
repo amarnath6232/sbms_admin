@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+
 import { RoleService } from 'src/app/Services/roles/role.service';
 import { permissionsList } from 'src/app/share/modal/modal';
 declare var $;
@@ -9,6 +11,7 @@ declare var $;
   templateUrl: './edit-roles.component.html',
   styleUrls: ['./edit-roles.component.css']
 })
+
 export class EditRolesComponent implements OnInit {
 
   edit_Role: FormGroup;
@@ -17,7 +20,8 @@ export class EditRolesComponent implements OnInit {
   edit_role_permissions = [];
 
   constructor(private fb: FormBuilder,
-    private roleService: RoleService) { }
+    private roleService: RoleService,
+    private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.getPermissionsList();
@@ -80,18 +84,18 @@ export class EditRolesComponent implements OnInit {
     const permissions = this.edit_Role.get('permissions') as FormArray;
     console.log("edit_role_permissions", this.edit_role_permissions);
     console.log("permissions", permissions.value);
-    this.permissionsList.forEach((val, i) => {
-      if (this.permissionsList.length != 0) {
-        if (val.name == this.edit_role_permissions[i]) {
-          permissions.value[i]['checked'] = true;
-        } else {
-          permissions.value[i]['checked'] = false;
+    console.log("permissions list", this.permissionsList);
+    if (this.permissionsList.length != 0) {
+      for (let i = 0; i < this.permissionsList.length; i++) {
+        for (let j = 0; j < this.edit_role_permissions.length; j++) {
+          if (this.permissionsList[i].name == this.edit_role_permissions[j]) {
+            permissions.value[i]['checked'] = true;
+            break;
+          }
         }
       }
-    });
+    }
   }
-
-
 
   getPermissionsList() {
     this.roleService.getPermissions().subscribe(res => {
@@ -111,8 +115,6 @@ export class EditRolesComponent implements OnInit {
       }
     });
   }
-
-
 
   onCheckboxChange(e, index) {
     const permissions = this.edit_Role.get('permissions') as FormArray;
@@ -148,7 +150,14 @@ export class EditRolesComponent implements OnInit {
     console.log(editRole);
     this.roleService.updateRole(editRole).subscribe(res => {
       console.log(res);
+      this.toastr.success("Role updated successfully", "Success");
       $('#editRoleModal').modal('hide');
+    }, err => {
+      if (err.status === 400) {
+        this.toastr.warning(err.error.errorMessage, "Warning");
+      }
+      else
+        this.toastr.error(err.error.errorMessage, "Error");
     });
   }
 

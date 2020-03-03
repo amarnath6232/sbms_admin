@@ -15,4 +15,5 @@ import { ComponentsModule } from 'src/app/components/components.module';
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
+
 export class AdminModule { }

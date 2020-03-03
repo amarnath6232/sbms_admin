@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { User, Country, State, City, RoleName } from 'src/app/share/modal/modal';
 import { ToastrService } from 'ngx-toastr';
+
+import { User, Country, State, City, RoleName } from 'src/app/share/modal/modal';
 import { UserService } from 'src/app/Services/roles/user.service';
 
 @Component({
@@ -25,8 +26,8 @@ export class UserlistComponent implements OnInit {
     private toastr: ToastrService) { }
 
   ngOnInit(): void {
-
     this.getUsers();
+    this.subscribe_user_List();
   }
 
   getUsers() {
@@ -39,6 +40,16 @@ export class UserlistComponent implements OnInit {
         console.log(err);
       }
     )
+  }
+
+  subscribe_user_List() {
+    this.user.users_List.subscribe(val => {
+      if (val) {
+        this.userData = val;
+      } else {
+        this.userData = [];
+      }
+    })
   }
   /* 
      updateUser(userData: User) {
@@ -82,7 +93,6 @@ export class UserlistComponent implements OnInit {
 
     } else {
       this.toastr.warning('Please select country', 'Warning');
-
     }
 
   }
@@ -98,7 +108,6 @@ export class UserlistComponent implements OnInit {
         console.log(err);
       }
     )
-
   }
 
   selectedState(name) {
@@ -108,9 +117,8 @@ export class UserlistComponent implements OnInit {
     if (number.length != 0) {
       this.getCities(+number[0].id);
     } else {
-      this.toastr.warning('Please select state', 'warning');
+      this.toastr.warning('Please select state', 'Warning');
     }
-
   }
 
   getCities(id: number) {
@@ -165,6 +173,7 @@ export class UserlistComponent implements OnInit {
         this.ngOnInit();
       },
       (err) => {
+        this.toastr.error(err.error.errorMessage, "Error");
         console.log(err);
       }
     )
@@ -177,6 +186,7 @@ export class UserlistComponent implements OnInit {
         this.toastr.success('User updated successfully', 'Success');
       },
       (err) => {
+        this.toastr.error(err.error.errorMessage, "Error");
         console.log(err);
       }
     )

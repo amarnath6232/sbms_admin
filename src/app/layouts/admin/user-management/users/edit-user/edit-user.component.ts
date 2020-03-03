@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
+import { FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+
 import { UserService } from 'src/app/Services/roles/user.service';
 import { State, City, RoleName, Country, User, permissionsList } from 'src/app/share/modal/modal';
-import { ToastrService } from 'ngx-toastr';
 import { RoleService } from 'src/app/Services/roles/role.service';
 
 @Component({
@@ -48,18 +49,14 @@ export class EditUserComponent implements OnInit {
     private userService: UserService,
     private toastr: ToastrService,
     private roleService: RoleService) {
-
   }
 
   ngOnInit(): void {
-
     this.getCountries();
     this.getRoles();
     this.getPermissionsList();
     this.subRolelistById();
     this.sub_copy_edit_User();
-    this.Filter(this.selectedUser.country);
-    this.selectedState(this.selectedUser.state);
   }
 
   sub_copy_edit_User() {
@@ -75,18 +72,23 @@ export class EditUserComponent implements OnInit {
       this.selectedUser = res;
       console.log(this.selectedUser);
       /* call countires states cities on change */
-      this.Filter(this.userForm.controls['country'].value);
-      this.selectedState(this.userForm.controls['state'].value);
-
+      this.init_country_state_city();
       this.selectedRolename(this.userForm.controls['role'].value);
-
       /*   this.userForm.controls['permissions'].patchValue(res.permissions); */
     })
+  }
+
+  init_country_state_city() {
+    console.log("init_country_state_city -------- country", this.selectedUser.country);
+    this.Filter(this.selectedUser.country);
+    console.log("init_country_state_city -------- state", this.selectedUser.state);
+    setTimeout(() => { this.selectedState(this.selectedUser.state); }, 300);
   }
 
   get f() {
     return this.userForm.controls;
   }
+
   //Get Countries
   getCountries() {
     this.userService.getCountries().subscribe(
@@ -105,13 +107,12 @@ export class EditUserComponent implements OnInit {
   Filter(name) {
     console.log("Country:", name);
     let number = this.countries.filter(v => v.name == name);
-    console.log(number);
+    console.log("country ", number);
     if (number.length !== 0) {
       this.extensionNo = number[0].phone_code;
       this.extensionNumber = this.extensionNo;
       console.log(this.extensionNumber);
       this.getStates(number[0].id);
-
     }
   }
 
@@ -126,11 +127,10 @@ export class EditUserComponent implements OnInit {
       },
       (err) => {
         console.log(err);
-      }
-    )
+      })
   }
 
-  //Staes Filter
+  //States Filter
   selectedState(name) {
     console.log("state:", name);
     let number = this.states.filter(v => v.name == name);
@@ -147,7 +147,7 @@ export class EditUserComponent implements OnInit {
     console.log(id);
     this.userService.getCities(id).subscribe(
       (res) => {
-        console.log("cities",res);
+        console.log("cities", res);
         this.cities = res;
       },
       (err) => {
@@ -233,15 +233,7 @@ export class EditUserComponent implements OnInit {
       /*  permissions.push(new FormControl(e.target.value)); */
       permissions.value[index]['checked'] = true;
     } else {
-      let i: number = 0;
-      permissions.controls.forEach((item: FormControl) => {
-        console.log("item", item);
-        if (item.value == e.target.value) {
-          permissions.removeAt(i);
-          return;
-        }
-        i++;
-      });
+      permissions.value[index]['checked'] = false;
     }
   }
 
@@ -258,8 +250,8 @@ export class EditUserComponent implements OnInit {
 
   addPermissionsListToForm() {
     const permissions = this.userForm.get('permissions') as FormArray;
+    permissions.controls = [];
     for (let i = 0; i < this.permissionsList.length; i++) {
-      permissions.removeAt(i);
       permissions.push(new FormControl({
         "createdBy": this.permissionsList[i].createdBy,
         "createdDate": this.permissionsList[i].createdDate,
@@ -277,7 +269,7 @@ export class EditUserComponent implements OnInit {
   editUser() {
     console.log(this.userForm.value);
     if (this.userForm.invalid) {
-      this.toastr.error("Please fill all mandatory fields.", "Error");
+      this.toastr.error("Please fill all fields.", "Error");
       return
     }
     console.log(this.userForm.value.permissions);
@@ -304,7 +296,7 @@ export class EditUserComponent implements OnInit {
         });
       }, (err) => {
         console.log(err);
-        this.toastr.error("Some thing went worng.", "Error");
+        this.toastr.error(err.error.errorMessage, "Error");
       }
     )
   }

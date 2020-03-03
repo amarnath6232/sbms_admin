@@ -1,4 +1,7 @@
+<!-- Component Title -->
 <h3 class="text-capitalize text-center">Roles list</h3>
+
+<!-- Roles List Data -->
 <table class="table">
   <thead class="thead-dark">
     <tr>
@@ -17,7 +20,7 @@
       <th scope="row">{{i + 1}}</th>
       <td>{{item.name}}</td>
       <td>{{item.description}}</td>
-      <td >
+      <td>
         <div *ngFor="let per of item.permissions">{{per}}</div>
       </td>
       <td>
@@ -36,8 +39,7 @@
   </tbody>
 </table>
 
-
-<!-- edit roles modal -->
+<!-- Edit roles modal -->
 <div class="modal fade bd-example-modal-lg" id="editRoleModal" tabindex="-1" role="dialog"
   aria-labelledby="editRoleLabel" aria-hidden="true" data-backdrop="static">
   <div class="modal-dialog modal-lg" role="document">
@@ -55,8 +57,7 @@
   </div>
 </div>
 
-
-<!--delete Modal -->
+<!--Delete Modal -->
 <div class="modal fade" id="deleteRoleModal" tabindex="-1" role="dialog" aria-labelledby="deleteRoleLabel"
   aria-hidden="true">
   <div class="modal-dialog" role="document">

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { Country, State, City, RoleName, permissionsList } from 'src/app/share/modal/modal';
 import { Router } from '@angular/router';
+
+import { Country, State, City, RoleName, permissionsList } from 'src/app/share/modal/modal';
 import { UserService } from 'src/app/Services/roles/user.service';
 import { RoleService } from 'src/app/Services/roles/role.service';
 
@@ -44,7 +45,7 @@ export class CreateUsersComponent implements OnInit {
   ngOnDestroy(): void {
     //Called once, before the instance is destroyed.
     //Add 'implements OnDestroy' to the class.
-    this.userForm.setControl('permissions',this.fb.array([]));
+    this.userForm.setControl('permissions', this.fb.array([]));
   }
 
   userFormValidations() {
@@ -77,7 +78,7 @@ export class CreateUsersComponent implements OnInit {
   addPermissionsListToForm() {
     const permissions = this.userForm.get('permissions') as FormArray;
     console.log("per add per", permissions);
-    this.userForm.controls['permissions'].setValue([], [Validators.required]);
+    permissions.controls = [];
     for (let i = 0; i < this.permissionsList.length; i++) {
       permissions.push(new FormControl({
         "createdBy": this.permissionsList[i].createdBy,
@@ -121,15 +122,7 @@ export class CreateUsersComponent implements OnInit {
     if (e.target.checked) {
       permissions.value[index]['checked'] = true;
     } else {
-      let i: number = 0;
-      permissions.controls.forEach((item: FormControl) => {
-        console.log("item", item);
-        if (item.value == e.target.value) {
-          permissions.removeAt(i);
-          return;
-        }
-        i++;
-      });
+      permissions.value[index]['checked'] = false;
     }
   }
 
@@ -173,7 +166,6 @@ export class CreateUsersComponent implements OnInit {
         console.log(err);
       }
     )
-
   }
 
   selectedState(name) {
@@ -185,7 +177,6 @@ export class CreateUsersComponent implements OnInit {
     } else {
       this.toastr.warning('Please select state', 'warning');
     }
-
   }
 
   getCities(id: number) {
@@ -216,7 +207,6 @@ export class CreateUsersComponent implements OnInit {
   getRolesById(roleId: string) {
     this.user.getRoleById(roleId).subscribe()
   }
-
 
   selectRolename(name) {
     console.log(name);

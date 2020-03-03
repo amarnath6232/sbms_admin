@@ -5,11 +5,11 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './roles.component.html',
   styleUrls: ['./roles.component.css']
 })
+
 export class RolesComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
 }

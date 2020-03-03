@@ -1,7 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { RoleService } from 'src/app/Services/roles/role.service';
 import { ToastrService } from 'ngx-toastr';
+
+import { RoleService } from 'src/app/Services/roles/role.service';
 import { ValidationsService } from 'src/app/Services/validations/validations.service';
 declare var $;
 
@@ -10,6 +11,7 @@ declare var $;
   templateUrl: './edit-permissions.component.html',
   styleUrls: ['./edit-permissions.component.css']
 })
+
 export class EditPermissionsComponent implements OnInit {
   validations;
   permissionEdit: FormGroup;
@@ -56,15 +58,23 @@ export class EditPermissionsComponent implements OnInit {
     this.loading = true;
     console.log(this.permissionEdit.value);
     if (this.permissionEdit.invalid) {
-      this.toastr.warning("please fill all mandatory fields");
+      this.toastr.warning("Please fill all fields", "Warning");
       this.loading = false;
       return
     }
     this.roleService.editPermissions(this.permissionEdit.value).subscribe(res => {
       this.loading = false;
-      this.toastr.success("Successfully edited", "Success");
+      this.toastr.success("Permission updated successfully", "Success");
       $('#editPermissionModal').modal('hide');
-    }, err => { this.loading = false; });
+    }, err => {
+      if (err.status === 400) {
+        this.toastr.warning(err.error.errorMessage, "Warning");
+      }
+      else {
+        this.toastr.error(err.error.errorMessage, "Error")
+      }
+      this.loading = false;
+    });
   }
 
 }

@@ -39,12 +39,12 @@ export class AddAssetCategoryComponent implements OnInit {
   createAssetCategory() {
     console.log(this.addAssetCategory.value);
     if (this.addAssetCategory.invalid) {
-      this.toastr.error("Please fill all mandatory fields.", "Error");
+      this.toastr.warning("Please fill all fields.", "Warning");
       return
     }
     this.assetService.createAssetCategory(this.addAssetCategory.value).subscribe(res => {
       console.log(res);
-      this.toastr.success("Create asset successfull.", "Success");
+      this.toastr.success("Create asset successfully.", "Success");
       this.addAssetCategory.reset();
       this.router.navigate(['/assert-management/catagory-List']);
     }, err => {

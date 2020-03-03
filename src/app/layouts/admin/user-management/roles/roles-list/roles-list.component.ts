@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { RoleService } from 'src/app/Services/roles/role.service';
-import { RoleList } from 'src/app/share/modal/modal';
 import { ToastrService } from 'ngx-toastr';
 
+import { RoleService } from 'src/app/Services/roles/role.service';
+import { RoleList } from 'src/app/share/modal/modal';
 declare var $;
 
 @Component({
@@ -10,6 +10,7 @@ declare var $;
   templateUrl: './roles-list.component.html',
   styleUrls: ['./roles-list.component.css']
 })
+
 export class RolesListComponent implements OnInit {
 
   roleList: RoleList[];
@@ -57,7 +58,7 @@ export class RolesListComponent implements OnInit {
   deleteRole() {
     this.roleService.deleteRole(this.copy_role.roleId).subscribe(res => {
       $('#deleteRoleModal').modal('hide');
-      this.toastr.success(`${this.copy_role.name} deleted succesfull`, "Success");
+      this.toastr.success(`${this.copy_role.name} deleted successfully`, "Success");
     }, err => {
       this.toastr.error(`${err.error.errorMessage}`, "Error");
     });

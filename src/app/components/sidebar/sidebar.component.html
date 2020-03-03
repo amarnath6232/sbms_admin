@@ -1,6 +1,6 @@
 <nav id="sidebar">
-  <div class="sidebar-header">
-    <img src="assets/Images/logo.png" alt="Logo" class="image-fluid" width="100">
+  <div class="sidebar-header mx-auto">
+    <img src="assets/Images/logo.png" alt="Logo" width="80">
   </div>
 
   <ul class="list-unstyled components">
@@ -17,10 +17,12 @@
             Permissions</a>
           <ul class="collapse list-unstyled" id="permissions">
             <li>
-              <a [routerLink]="[ '/user-management/permissions/permissions-list' ]" routerLinkActive="active">Permissions List</a>
+              <a [routerLink]="[ '/user-management/permissions/permissions-list' ]"
+                routerLinkActive="active">Permissions List</a>
             </li>
             <li>
-              <a [routerLink]="[ '/user-management/permissions/create-permissions' ]" routerLinkActive="active">Create Permissions</a>
+              <a [routerLink]="[ '/user-management/permissions/create-permissions' ]" routerLinkActive="active">Create
+                Permissions</a>
             </li>
           </ul>
         </li>
@@ -53,7 +55,7 @@
       </ul>
     </li>
 
-    <li>
+    <!-- <li>
       <a href="#site" [routerLink]="[ '/site' ]" routerLinkActive="active" data-toggle="collapse" aria-expanded="false"
         class="dropdown-toggle">Site </a>
       <ul class="collapse list-unstyled" id="site">
@@ -67,7 +69,7 @@
           <a href="#">Home 3</a>
         </li>
       </ul>
-    </li>
+    </li> -->
 
     <li>
       <a href="#assertManagement" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Asset</a>

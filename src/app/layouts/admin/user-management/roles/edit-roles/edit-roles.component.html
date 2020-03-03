@@ -1,28 +1,48 @@
+<!-- Form Starts -->
 <form [formGroup]="edit_Role" (ngSubmit)="sendEditRole()">
+
+  <!-- 1st Row -->
   <div class="form-group row">
-    <label for="roleName" class="col-sm-2 col-form-label">Role Name</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control" id="roleName" formControlName="name" placeholder="Role Name" autocomplete="off">
+
+    <!-- Label -->
+    <div class="col-2">
+      <label for="roleName" class="col-form-label">Role Name</label>
     </div>
+
+    <!-- Input Control -->
+    <div class="col-10">
+      <input type="text" class="form-control" id="roleName" formControlName="name" placeholder="Role Name"
+        autocomplete="off">
+    </div>
+
   </div>
 
-  <!-- <div class="form-group row">
-    <label for="aliasName" class="col-sm-2 col-form-label">Role alias Name</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control" id="aliasName" formControlName="aliasName">
-    </div>
-  </div> -->
-
+  <!-- 2nd Row -->
   <div class="form-group row">
-    <label for="description" class="col-sm-2 col-form-label">Description</label>
-    <div class="col-sm-10">
+
+    <!-- Label -->
+    <div class="col-2">
+      <label for="description" class="col-form-label">Description</label>
+    </div>
+
+    <!-- Textarea Control -->
+    <div class="col-10">
       <textarea name="description" cols="30" rows="5" class="form-control" id="description"
         formControlName="description" placeholder="Description" autocomplete="off"></textarea>
     </div>
+
   </div>
+
+  <!-- 3rd Row -->
   <div class="form-group row">
-    <label for="permission" class="col-sm-2 col-form-label">Permissions</label>
-    <div class="col-sm-10" formArrayName="permissions">
+
+    <!-- Label -->
+    <div class="col-2">
+      <label for="permission" class="col-form-label">Permissions</label>
+    </div>
+
+    <!-- Input Controls as Checkboxes -->
+    <div class="col-10" formArrayName="permissions">
       <div class="form-check form-check-inline"
         *ngFor="let permission of edit_Role.controls.permissions?.value;let i = index;">
         <div [formGroupName]="i">
@@ -32,11 +52,16 @@
         </div>
       </div>
     </div>
+
   </div>
 
+  <!-- 4th Row Update Button -->
   <div class="d-flex justify-content-end">
     <button type="submit" class="btn btn-primary btn-sm text-capitalize" [disabled]="loading">
       <span class="spinner-border spinner-border-sm" *ngIf="loading" role="status" aria-hidden="true"></span>
-      update</button>
+      update
+    </button>
   </div>
+
 </form>
+<!-- Form Ends -->

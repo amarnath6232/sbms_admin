@@ -45,12 +45,12 @@ export class EditAsetCategoryComponent implements OnInit {
   editAssetCategory() {
     console.log(this.addAssetCategory.value);
     if (this.addAssetCategory.invalid) {
-      this.toastr.error("Please fill all mandatory fields.", "Error");
+      this.toastr.warning("Please fill all fields.", "Warning");
       return
     }
     this.assetService.editAssetCategory(this.addAssetCategory.value).subscribe(res => {
       console.log(res);
-      this.toastr.success("Edit asset category successfull.", "Success");
+      this.toastr.success("Edit asset category successfully.", "Success");
       this.addAssetCategory.reset();
       this.assetService.getAssetCategoryList().subscribe();
       $(document).ready(function () {

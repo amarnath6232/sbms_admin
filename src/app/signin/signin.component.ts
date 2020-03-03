@@ -60,7 +60,7 @@ export class SigninComponent implements OnInit {
           if (error.status === 404) {
             this.toastr.error('Incorrect username or password', 'Error');
           } else if (error.status > 500) {
-            this.toastr.error("Internal server error please try agian after sometime", 'Error');
+            this.toastr.error("Internal server error please try again after sometime", 'Error');
           } else if (error.status === 0) {
             this.toastr.error("Server is not responding", 'Error');
           } else if (error.status === 500) {
@@ -68,5 +68,5 @@ export class SigninComponent implements OnInit {
           }
         });
   }
-  
+
 }

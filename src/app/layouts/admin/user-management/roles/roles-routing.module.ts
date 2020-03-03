@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+
 import { RolesComponent } from './roles.component';
 import { RolesListComponent } from './roles-list/roles-list.component';
 import { CreateRolesComponent } from './create-roles/create-roles.component';
-
 
 const routes: Routes = [
   {
