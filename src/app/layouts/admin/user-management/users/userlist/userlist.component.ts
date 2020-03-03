@@ -25,6 +25,7 @@ export class UserlistComponent implements OnInit {
     private toastr: ToastrService) { }
 
   ngOnInit(): void {
+
     this.getUsers();
   }
 
@@ -39,10 +40,20 @@ export class UserlistComponent implements OnInit {
       }
     )
   }
-
-  updateUser(userData: User) {
-    this.editUSer = userData;
-    console.log(userData);
+  /* 
+     updateUser(userData: User) {
+       this.editUSer = userData;
+       console.log(userData);
+       this.getCountries();
+       this.Filter(this.editUSer.country);
+       this.selectedState(this.editUSer.state);
+       this.selectedCity(this.editUSer.city);
+       this.getRoles();
+       this.selectRolename(this.editUSer.roleName);
+   
+     } */
+  updateUser(user: User) {
+    this.user.copyEditUser.next(user);
 
   }
 
@@ -66,14 +77,12 @@ export class UserlistComponent implements OnInit {
       this.extensionNo = number[0].phone_code;
       this.extensionNumber = this.extensionNo;
       console.log(this.extensionNumber);
-      /*   this.id = number[0].id;
-        console.log(this.id); */
+
       this.getStates(number[0].id);
-      /*  console.log(this.getStates(this.id)); */
+
     } else {
       this.toastr.warning('Please select country', 'Warning');
-      // this.states = [];
-      // this.cities = [];
+
     }
 
   }
@@ -116,6 +125,12 @@ export class UserlistComponent implements OnInit {
       }
     )
   }
+  //Cities Filter
+  selectedCity(name) {
+    console.log(name);
+    let number = this.cities.filter(v => v.name == name);
+    console.log(number);
+  }
 
   getRoles() {
     this.user.getRole().subscribe(
@@ -128,6 +143,13 @@ export class UserlistComponent implements OnInit {
       }
     )
   }
+  //Roles Filter
+  selectRolename(name) {
+    console.log(name);
+    let number = this.roles.filter(v => v.roleId == name);
+    console.log(number);
+  }
+
 
   deleteUser(userData: User) {
     this.delUser = userData;
@@ -148,8 +170,8 @@ export class UserlistComponent implements OnInit {
     )
   }
 
-  update(id: number) {
-    this.user.updateUsers(this.editUSer, id).subscribe(
+  update(editUSer) {
+    this.user.updateUsers(editUSer, editUSer.id).subscribe(
       (res) => {
         console.log(res);
         this.toastr.success('User updated successfully', 'Success');

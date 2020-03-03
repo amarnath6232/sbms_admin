@@ -1,4 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
-* {
-  font-family: 'Roboto', 'Open Sans', 'Helvetica Neue', sans-serif, 'Oxygen', 'Ubuntu', 'Cantarell'
+body {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  src: local('Roboto'), local('Roboto-Regular'), url(https://fonts.gstatic.com/s/roboto/v20/KFOmCnqEu92Fr1Mu72xKOzY.woff2) format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+
+.toast-container {
+  font-size: 10px !important;
+}
+
+th,td{
+  font-size: 14px !important;
 }

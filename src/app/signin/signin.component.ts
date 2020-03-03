@@ -57,7 +57,7 @@ export class SigninComponent implements OnInit {
           this.loading = !this.loading;
           this.pwd = null;
           console.log(error);
-          if (error.status > 200 && error.status < 227) {
+          if (error.status === 404) {
             this.toastr.error('Incorrect username or password', 'Error');
           } else if (error.status > 500) {
             this.toastr.error("Internal server error please try agian after sometime", 'Error');

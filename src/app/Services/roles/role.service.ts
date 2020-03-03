@@ -15,8 +15,10 @@ export class RoleService {
   private roles = '/rest/v1/roles';
   private permissions = "/rest/v1/permissions";
 
-  readonly roleList = new BehaviorSubject<RoleList[]>([]);
-  readonly permissionList = new BehaviorSubject<permissionsList[]>([]);
+  roleList = new BehaviorSubject<RoleList[]>([]);
+  permissionList = new BehaviorSubject<permissionsList[]>([]);
+  edit_Permission_Value = new BehaviorSubject<permissionsList>(null);
+  copy_role = new BehaviorSubject<RoleList>(null);
 
 
   constructor(private ip: IpService,
@@ -35,18 +37,22 @@ export class RoleService {
   getPermissions() {
     return this.http.get<permissionsList[]>(`${this.ip.ip}${this.port}${this.permissions}`)
       .pipe(map(res => {
-        console.log("permissions", res);
         if (res != null) {
           this.permissionList.next(res);
+          console.log("permissions", res);
         }
         return res;
       }), catchError(this.errHandler.handleError));
   }
 
   /* edit permissions */
-  editPermissions(permission) {
-    return this.http.put(`${this.ip.ip}${this.port}${this.permissions}/`, permission)
-      .pipe(catchError(this.errHandler.handleError));
+  editPermissions(permission: permissionsList) {
+    console.log("edit pers service", permission);
+    return this.http.put(`${this.ip.ip}${this.port}${this.permissions}/${permission.permissionId}`, permission)
+      .pipe(map(res => {
+        this.getPermissions().subscribe();
+        return res;
+      }), catchError(this.errHandler.handleError));
   }
 
   /* delete permissions */
@@ -76,7 +82,10 @@ export class RoleService {
   /* role update */
   updateRole(roles) {
     return this.http.put(`${this.ip.ip}${this.port}${this.roles}/${roles.roleId}`, roles)
-      .pipe(catchError(this.errHandler.handleError));
+      .pipe(map(res => {
+        this.getRoleList().subscribe();
+        return res;
+      }), catchError(this.errHandler.handleError));
   }
 
   /* role update */

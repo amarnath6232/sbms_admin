@@ -23,3 +23,7 @@
 .mandetory{
     color: red;
 }
+
+.form-control.ng-invalid{
+    border: 1px solid red;
+}

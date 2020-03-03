@@ -41,6 +41,12 @@ export class CreateUsersComponent implements OnInit {
     this.subRolelistById();
   }
 
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    this.userForm.setControl('permissions',this.fb.array([]));
+  }
+
   userFormValidations() {
     this.userForm = this.fb.group({
       firstName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(16)]],
@@ -52,7 +58,7 @@ export class CreateUsersComponent implements OnInit {
       country: ['', [Validators.required]],
       state: ['', [Validators.required]],
       city: ['', [Validators.required]],
-      roleName: ['', [Validators.required]],
+      role: ['', [Validators.required]],
       permissions: this.fb.array([], [Validators.required]),
     })
   }
@@ -70,8 +76,9 @@ export class CreateUsersComponent implements OnInit {
 
   addPermissionsListToForm() {
     const permissions = this.userForm.get('permissions') as FormArray;
+    console.log("per add per", permissions);
+    this.userForm.controls['permissions'].setValue([], [Validators.required]);
     for (let i = 0; i < this.permissionsList.length; i++) {
-      permissions.removeAt(i);
       permissions.push(new FormControl({
         "createdBy": this.permissionsList[i].createdBy,
         "createdDate": this.permissionsList[i].createdDate,
@@ -224,18 +231,12 @@ export class CreateUsersComponent implements OnInit {
     }
   }
 
-  ngOnDestroy(): void {
-    //Called once, before the instance is destroyed.
-    //Add 'implements OnDestroy' to the class.
-    this.user.roleListById.next(null);
-  }
-
   onSubmit() {
     this.spin = true;
     console.log(this.userForm.value);
     if (this.userForm.invalid) {
       this.spin = false;
-      this.toastr.warning('asdasdadas');
+      this.toastr.warning('Please fill all mandetory fields.');
       return
     }
     console.log(this.userForm.value.permissions);
@@ -246,6 +247,7 @@ export class CreateUsersComponent implements OnInit {
         per.push(this.userForm.value.permissions[i]['name']);
       }
     }
+
     console.log(per);
     this.userForm.value.permissions = per;
     console.log("this.userForm.value", this.userForm.value);

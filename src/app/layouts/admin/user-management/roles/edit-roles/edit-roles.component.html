@@ -1,6 +1,4 @@
-<h3 class="text-capitalize text-center">create role</h3>
-<form [formGroup]="createRole" (ngSubmit)="sendCreateRole()">
-
+<form [formGroup]="edit_Role" (ngSubmit)="sendEditRole()">
   <div class="form-group row">
     <label for="roleName" class="col-sm-2 col-form-label">Role Name</label>
     <div class="col-sm-10">
@@ -8,7 +6,7 @@
     </div>
   </div>
 
-<!--   <div class="form-group row">
+  <!-- <div class="form-group row">
     <label for="aliasName" class="col-sm-2 col-form-label">Role alias Name</label>
     <div class="col-sm-10">
       <input type="text" class="form-control" id="aliasName" formControlName="aliasName">
@@ -22,22 +20,23 @@
         formControlName="description" placeholder="Description" autocomplete="off"></textarea>
     </div>
   </div>
-
   <div class="form-group row">
     <label for="permission" class="col-sm-2 col-form-label">Permissions</label>
-    <div class="col-sm-10">
-      <div class="form-check form-check-inline" *ngFor="let permission of permissions;let i = index;">
-        <input class="form-check-input" type="checkbox" id="{{i}}" [value]="permission.name"
-          (change)="onCheckboxChange($event)">
-        <label class="form-check-label" for="{{i}}">{{permission.name}}</label>
+    <div class="col-sm-10" formArrayName="permissions">
+      <div class="form-check form-check-inline"
+        *ngFor="let permission of edit_Role.controls.permissions?.value;let i = index;">
+        <div [formGroupName]="i">
+          <input class="form-check-input" type="checkbox" id="per{{i}}" [value]="permission"
+            [checked]="permission.checked" (change)="onCheckboxChange($event,i);">
+          <label class="form-check-label" for="per{{i}}">{{permission.name}}</label>
+        </div>
       </div>
     </div>
   </div>
 
   <div class="d-flex justify-content-end">
-    <button type="submit" class="btn btn-primary btn-sm" [disabled]="loading">
+    <button type="submit" class="btn btn-primary btn-sm text-capitalize" [disabled]="loading">
       <span class="spinner-border spinner-border-sm" *ngIf="loading" role="status" aria-hidden="true"></span>
-      Save</button>
+      update</button>
   </div>
-
 </form>

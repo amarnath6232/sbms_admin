@@ -69,9 +69,11 @@ export interface User {
     city: string;
     state: string;
     country: string;
-    roleName?: string;
+    role?: string;
     permissions?: string[];
 }
+
+
 export interface Country {
     id: number;
     name: string;

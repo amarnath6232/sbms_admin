@@ -37,7 +37,7 @@ export class CreateRolesComponent implements OnInit {
   initCreateRole() {
     this.createRole = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(16)]],
-      aliasName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(16)]],
+      // aliasName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(16)]],
       description: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(200)]],
       permissions: this.fb.array(this.permissions, [Validators.required]),
     })

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, Subject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { IpService } from '../ip.service';
 import { ErrorHandlerService } from '../error-handler.service';
@@ -14,6 +14,8 @@ export class UserService {
   private site_port = this.ip.site_port;
 
   roleListById = new BehaviorSubject<RoleList>(null);
+  copyEditUser = new Subject<User>();
+  userList = new BehaviorSubject<User>(null);
 
   constructor(private http: HttpClient,
     private ip: IpService,

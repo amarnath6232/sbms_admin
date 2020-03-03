@@ -6,10 +6,11 @@ import { RolesComponent } from './roles.component';
 import { RolesListComponent } from './roles-list/roles-list.component';
 import { CreateRolesComponent } from './create-roles/create-roles.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { EditRolesComponent } from './edit-roles/edit-roles.component';
 
 
 @NgModule({
-  declarations: [RolesComponent, RolesListComponent, CreateRolesComponent],
+  declarations: [RolesComponent, RolesListComponent, CreateRolesComponent, EditRolesComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,

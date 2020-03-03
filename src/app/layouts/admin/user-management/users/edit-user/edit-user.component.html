@@ -1,0 +1,88 @@
+<div class="d-flex justify-content-center">
+  <form class="col-12" [formGroup]="userForm" (ngSubmit)="editUser()">
+
+    <!-- id -->
+    <!--    <div class="form-group">
+            <label for="id"> Id<span class="mandetory">*</span></label>
+            <input type="text" class="form-control" id="id" formControlName="id">
+        </div> -->
+    <!-- first name -->
+    <div class="form-group">
+      <label for="firstName"> First Name<span class="mandetory">*</span></label>
+      <input type="text" class="form-control" id="firstName" formControlName="firstName"
+        maxlength="{{maxLen.firstName}}">
+    </div>
+    <!-- Last name -->
+    <div class="form-group">
+      <label for="lastName">Last Name <span class="mandetory">*</span></label>
+      <input type="text" class="form-control" id="lastName" formControlName="lastName" maxlength="{{maxLen.lastName}}">
+    </div>
+
+    <!-- Phone number -->
+    <div class="form-group">
+      <label for="phoneNumber">Phone Number <span class="mandetory">*</span></label>
+      <input type="text" class="form-control" id="phone Number" formControlName="phoneNumber"
+        maxlength="{{maxLen.phoneNumber}}">
+    </div>
+    <!-- Country -->
+    <div class="form-group">
+      <label for="country">Country <span class="mandetory">*</span></label>
+      <select id="country" name="country" class="form-control text-center" placeholder="Select Country"
+        formControlName="country" (change)="Filter($event.target.value)">
+        <option style="font-size: 16px !important;" value="">Select country</option>
+        <option *ngFor="let country of countries" [value]="country.name" class="form-control-sm">
+          {{country.name}}
+        </option>
+      </select>
+    </div>
+
+    <!-- State -->
+    <div class="form-group">
+      <label for="state">State <span class="mandetory">*</span></label>
+      <select id="state" name="state" class="form-control input-custom-control" formControlName="state"
+        (change)="selectedState($event.target.value)">
+        <!--     <option value="null">Select State</option> -->
+        <option *ngFor="let state of states" [value]="state.name" class="form-control input-custom-control-sm">
+          {{state.name}}
+        </option>
+      </select>
+    </div>
+
+    <!-- City -->
+    <div class="form-group">
+      <label for="city">City <span class="mandetory">*</span></label>
+      <select id="city" name="city" class="form-control text-center" formControlName="city">
+        <!--  <option value="null">Select City</option> -->
+        <option *ngFor="let city of cities" [value]="city.name" class="form-control input-custom-control-sm">
+          {{city.name}}
+        </option>
+      </select>
+    </div>
+
+    <!-- Role -->
+    <div class="form-group">
+      <label for="role"> Role<span class="mandetory">*</span></label>
+      <select id="role" name="role" class="form-control text-center" formControlName="role"
+        (change)="selectedRolename($event.target.value)">
+        <option value="">Select Role</option>
+        <option *ngFor="let role of roles" [value]="role.name" class="form-control-sm">
+          {{role.name}}
+        </option>
+      </select>
+    </div>
+
+    <!-- Permission -->
+    <div class="form-group">
+      <label for="permission" class="col-sm-2 col-form-label">Permissions</label>
+      <div class="col-sm-10">
+        <div class="form-check form-check-inline" formArrayName="permissions"
+          *ngFor="let permission of userForm.controls.permissions?.value;let i = index;">
+          <input class="form-check-input" type="checkbox" id="per{{i}}" [value]="permission.name"
+            [checked]="permission.checked" (change)="onCheckboxChange($event,i);">
+          <label class="form-check-label" for="per{{i}}">{{permission.name}}</label>
+        </div>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary float-right">Save</button>
+  </form>
+</div>

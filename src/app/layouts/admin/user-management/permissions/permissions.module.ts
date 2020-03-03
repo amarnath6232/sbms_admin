@@ -6,10 +6,11 @@ import { CreatePermissionsComponent } from './create-permissions/create-permissi
 import { PermissionsListComponent } from './permissions-list/permissions-list.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PermissionsComponent } from './permissions.component';
+import { EditPermissionsComponent } from './edit-permissions/edit-permissions.component';
 
 
 @NgModule({
-  declarations: [CreatePermissionsComponent, PermissionsListComponent,PermissionsComponent],
+  declarations: [CreatePermissionsComponent, PermissionsListComponent,PermissionsComponent, EditPermissionsComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,

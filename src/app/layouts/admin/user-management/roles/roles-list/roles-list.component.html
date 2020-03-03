@@ -1,20 +1,77 @@
+<h3 class="text-capitalize text-center">Roles list</h3>
 <table class="table">
   <thead class="thead-dark">
     <tr>
       <th scope="col" class="text-capitalize">#</th>
-      <th scope="col" class="text-capitalize">Name</th>
+      <th scope="col" class="text-capitalize">Role Name</th>
       <th scope="col" class="text-capitalize">Description</th>
-      <th scope="col" class="text-capitalize">permissions</th>
+      <th scope="col" class="text-capitalize">permissions List</th>
+      <th scope="col" class="text-capitalize">Actions</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let item of roleList; let i=index" >
+    <tr *ngIf="roleList.length === 0" aria-colspan="5" class="text-center">
+      <td colspan="4">No Roles</td>
+    </tr>
+    <tr *ngFor="let item of roleList; let i=index">
       <th scope="row">{{i + 1}}</th>
       <td>{{item.name}}</td>
       <td>{{item.description}}</td>
-      <td class="row">
-        <div *ngFor="let per of item.permissions" class="mx-2">{{per}}</div>
+      <td >
+        <div *ngFor="let per of item.permissions">{{per}}</div>
+      </td>
+      <td>
+        <div class="row">
+          <button type="button" class="btn btn-warning mr-2 btn-sm" data-toggle="modal" data-target="#editRoleModal"
+            (click)="copy_role_from_table(item);">
+            Edit
+          </button>
+          <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteRoleModal"
+            (click)="copy_role_from_table(item);">
+            Delete
+          </button>
+        </div>
       </td>
     </tr>
   </tbody>
 </table>
+
+
+<!-- edit roles modal -->
+<div class="modal fade bd-example-modal-lg" id="editRoleModal" tabindex="-1" role="dialog"
+  aria-labelledby="editRoleLabel" aria-hidden="true" data-backdrop="static">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content" *ngIf="copy_role">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editRoleLabel">Edit Role</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&#10005;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <app-edit-roles></app-edit-roles>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--delete Modal -->
+<div class="modal fade" id="deleteRoleModal" tabindex="-1" role="dialog" aria-labelledby="deleteRoleLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header" *ngIf="copy_role">
+        <h5 class="modal-title" id="deleteRoleLabel">Are you sure to delete <span
+            class="text-danger">{{copy_role.name}}</span></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&#10005;</span>
+        </button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger btn-sm" (click)="deleteRole()">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>

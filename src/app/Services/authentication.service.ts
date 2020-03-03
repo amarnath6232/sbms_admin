@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as jwt_decode from 'jwt-decode';
-import { Observable, Subject, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { catchError, map, take, tap } from 'rxjs/operators';
 import { ErrorHandlerService } from './error-handler.service';
 import { IpService } from './ip.service';
-
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,6 @@ import { IpService } from './ip.service';
 export class AuthenticationService {
 
   authenticatedUser: any;
-  rolebase: string = null;
   islogin: boolean = false;
   userName = new BehaviorSubject<string>(null);
   token: string = localStorage.getItem('token') || null;
@@ -23,7 +22,8 @@ export class AuthenticationService {
 
   constructor(private http: HttpClient,
     private errHandler: ErrorHandlerService,
-    private ip: IpService) {
+    private ip: IpService,
+    private router: Router) {
     this.decodeToken();
   }
 
@@ -46,15 +46,21 @@ export class AuthenticationService {
   }
 
   decodeToken(): boolean {
-    if (this.token != null && this.token != undefined && this.token.length != 0) {
-      this.decoded = jwt_decode(this.token);
-      this.userName.next(this.decoded.sub);
-      // console.log(this.userName);
-      console.log(this.decoded);
-      return true;
+    try {
+      if (this.token != null && this.token != undefined && this.token.length != 0) {
+        this.decoded = jwt_decode(this.token);
+        this.userName.next(this.decoded.sub);
+        // console.log(this.userName);
+        console.log(this.decoded);
+        return true;
+      }
+      else
+        return false;
+    } catch (error) {
+      this.logout();
+      this.router.navigate(['/signIn']);
     }
-    else
-      return false;
+
   }
 
 
@@ -73,11 +79,9 @@ export class AuthenticationService {
   }
 
 
-  logout() {
-    localStorage.clear();
-    sessionStorage.clear();
+  private logout() {
+    localStorage.removeItem('token');
     this.token = null;
-    this.rolebase = null;
     this.islogin = false;
   }
 }
