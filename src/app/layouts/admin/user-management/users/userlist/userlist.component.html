@@ -73,16 +73,15 @@
     <div class="modal-content">
 
       <div class="modal-header ">
-        <h5 class="modal-title">Do you want to delete User - <strong>{{name}}</strong></h5>
+        <h5 class="modal-title">Do you want to delete User - <span class="text-danger">{{name}}</span></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&#10005;</span>
         </button>
       </div>
-      <div class="modal-footer mx-5">
-        <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 mb-2 text-center">
-          <button type="button" class="btn btn-danger" title="Delete" data-dismiss="modal"
-            (click)="delete(delUser.id)">Delete</button>
-        </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger btn-sm" title="Delete" data-dismiss="modal"
+          (click)="delete(delUser.id)">Delete</button>
       </div>
     </div>
   </div>

@@ -39,8 +39,8 @@
                 <div *ngIf="f.loginId.errors?.required">
                   <small>Login Id is required</small>
                 </div>
-                <div *ngIf="f.loginId.errors?.pattern">
-                  <small>Accept only alphabetics with space</small>
+                <div *ngIf="f.loginId.errors?.minlength">
+                  <small>User Name must be atleast 8 characters</small>
                 </div>
               </div>
             </div>
@@ -51,7 +51,10 @@
                 maxlength="16" autocomplete="off" placeholder="Password">
               <div *ngIf="f.password.invalid && f.password.touched" class="text-danger">
                 <div *ngIf="f.password.errors?.required">
-                  <small>password is required</small>
+                  <small>Password is required</small>
+                </div>
+                <div *ngIf="f.password.errors?.minlength">
+                  <small>Password must be atleast 8 characters</small>
                 </div>
                 <div *ngIf="f.password.errors?.pattern">
                   <small>Accept only alphabetics with space</small>
@@ -60,7 +63,7 @@
             </div>
 
             <div class="row my-4 p-3">
-              <button type="submit" class="btn btn-signin btn-block" [disabled]="loading">
+              <button type="submit" class="btn btn-signin btn-block" [disabled]="!signinForm.valid || loading">
                 <span *ngIf="loading" class="spinner-border spinner-border-sm" (click)="onSubmit()" role="status"
                   aria-hidden="true"></span>
                 Sign In
@@ -83,19 +86,22 @@
 
     <!-- footer -->
     <div class="container-fluid footer resdiv">
-      <div class="info col-6 text-left">
-        © 2020 dristia.com.
-      </div>
-      <div class="col-6 text-right mb-3">
-        <a class="disable mr-2">
-          <img src="assets/Images/youtube-footer.svg" width="25" height="25" alt="Youtube">
-        </a>
-        <a class="disable mr-2">
-          <img src="assets/Images/twitter-footer.svg" width="25" height="25" alt="Twitter">
-        </a>
-        <a class="disable mr-2">
-          <img src="assets/Images/facebook-footer.svg" width="25" height="25" style="background: #fff;" alt="Facebook">
-        </a>
+      <div class="row d-flex" style="justify-content: space-between;">
+        <div class="info col-6 text-left" style="justify-content: space-between;">
+          © 2020 dristia.com.
+        </div>
+        <div class="col-6 text-right mb-3">
+          <a class="disable mr-2">
+            <img src="assets/Images/youtube-footer.svg" width="25" height="25" alt="Youtube">
+          </a>
+          <a class="disable mr-2">
+            <img src="assets/Images/twitter-footer.svg" width="25" height="25" alt="Twitter">
+          </a>
+          <a class="disable mr-2">
+            <img src="assets/Images/facebook-footer.svg" width="25" height="25" style="background: #fff;"
+              alt="Facebook">
+          </a>
+        </div>
       </div>
     </div>
 

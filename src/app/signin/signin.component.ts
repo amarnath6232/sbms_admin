@@ -33,7 +33,7 @@ export class SigninComponent implements OnInit {
 
   SigninValidations() {
     this.signinForm = this.fb.group({
-      loginId: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(32)]],
+      loginId: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(16)]],
       password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(16)]],
     })
   }

@@ -1,187 +1,206 @@
+<!-- Component Title -->
 <h3 class="text-capitalize text-center">create User</h3>
-<div class="container-fluid">
 
-  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-    <!-- 1st row -->
-    <div class="form-row">
-      <div class="form-group col-md-6">
-        <label for="firstName">First Name</label>
-        <input type="text" class="form-control" id="firstName" name="firstName" placeholder="First Name"
-          formControlName="firstName" autocomplete="off" minlength="1" maxlength="16">
-        <div *ngIf="f.firstName.invalid && f.firstName.touched" class="text-danger">
-          <div *ngIf="f.firstName.errors?.required">
-            <small>First name is required</small>
-          </div>
-        </div>
-      </div>
-      <div class="form-group col-md-6">
-        <label for="lastName">Last Name</label>
-        <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Last Name"
-          formControlName="lastName" autocomplete="off" minlength="1" maxlength="16">
-        <div *ngIf="f.lastName.invalid && f.lastName.touched" class="text-danger">
-          <div *ngIf="f.lastName.errors?.required">
-            <small>Last name is required</small>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- 2nd Row -->
-    <div class="form-row">
-      <div class="form-group col-md-6">
-        <label for="userName">User Name</label>
-        <input type="text" class="form-control" id="userName" name="userName" placeholder="User Name"
-          formControlName="userName" autocomplete="off" minlength="6">
-        <div *ngIf="f.userName.invalid && f.userName.touched" class="text-danger">
-          <div *ngIf="f.userName.errors?.required">
-            <small>User name is required</small>
-          </div>
-          <div *ngIf="f.userName.errors?.minlength">
-            <small>User name must be atleast 6 characters</small>
-          </div>
-        </div>
-      </div>
-      <div class="form-group col-md-6">
-        <label for="emailId">Email Id</label>
-        <input type="email" class="form-control" id="emailId" name="emailId" placeholder="Email Id"
-          formControlName="emailId" autocomplete="off">
-        <div *ngIf="f.emailId.invalid && f.emailId.touched" class="text-danger">
-          <div *ngIf="f.emailId.errors?.required">
-            <small>Email Id is required</small>
-          </div>
-          <div *ngIf="f.emailId.errors?.pattern">
-            <small>Invalid Email</small>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- 3rd row -->
-    <div class="form-row">
-      <div class="form-group col-md-6">
-        <label for="password">Password</label>
-        <input type="password" class="form-control" id="password" name="password" placeholder="Password"
-          formControlName="password" autocomplete="off" minlength="8" maxlength="16">
-        <div *ngIf="f.password.invalid && f.password.touched" class="text-danger">
-          <div *ngIf="f.password.errors?.required">
-            <small>Password is required</small>
-          </div>
-          <div *ngIf="f.password.errors?.minlength">
-            <small>Password must be atleast 8 characters</small>
-          </div>
-        </div>
-      </div>
+<!-- Form Starts -->
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
 
-      <div class="form-group col-md-6">
-        <label for="phoneNumber">Phone Number</label>
-        <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="Phone Number"
-          formControlName="phoneNumber" autocomplete="off" appNumbersOnly minlength="10" maxlength="10">
-        <div *ngIf="f.phoneNumber.invalid && f.phoneNumber.touched" class="text-danger">
-          <div *ngIf="f.phoneNumber.errors?.required">
-            <small>Phone number is required</small>
-          </div>
-          <div *ngIf="f.phoneNumber.errors?.minlength">
-            <small>Phone number must be 10 digits</small>
-          </div>
+  <!-- 1st row -->
+  <div class="form-row">
+
+    <!-- First Name -->
+    <div class="form-group col-md-6">
+      <label for="firstName">First Name</label>
+      <input type="text" class="form-control" id="firstName" name="firstName" placeholder="First Name"
+        formControlName="firstName" autocomplete="off" minlength="1" maxlength="16">
+      <div *ngIf="f.firstName.invalid && f.firstName.touched" class="text-danger">
+        <div *ngIf="f.firstName.errors?.required">
+          <small>First name is required</small>
         </div>
       </div>
     </div>
 
-    <!-- 4th row -->
-    <div class="form-row">
-
-      <div class="form-group col-md-6">
-        <label for="country">Country</label>
-        <select id="country" name="country" class="form-control text-center" formControlName="country"
-          (change)="Filter($event.target.value)">
-          <option value="">Select Country</option>
-          <option *ngFor="let country of countries" [value]="country.name" class="form-control-sm">
-            {{country.name}}
-          </option>
-          <div *ngIf="f.country.invalid && f.country.touched" class="text-danger">
-            <div *ngIf="f.country.errors?.required">
-              <small>Country is required</small>
-            </div>
-          </div>
-        </select>
-      </div>
-
-      <div class="form-group col-md-6">
-        <label for="state">State</label>
-        <select id="state" name="state" class="form-control text-center" formControlName="state"
-          (change)="selectedState($event.target.value)">
-          <option value="">Select State</option>
-          <option *ngFor="let state of states" [value]="state.name" class="form-control-sm">
-            {{state.name}}
-          </option>
-        </select>
-        <div *ngIf="f.state.invalid && f.state.touched" class="text-danger">
-          <div *ngIf="f.state.errors?.required">
-            <small>State is required</small>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- 5th row -->
-    <div class="form-row">
-      <div class="form-group col-md-6">
-        <label for="city">City</label>
-        <select id="city" name="city" class="form-control text-center" formControlName="city">
-          <option value="">Select City</option>
-          <option *ngFor="let city of cities" [value]="city.name" class="form-control-sm">
-            {{city.name}}
-          </option>
-        </select>
-        <div *ngIf="f.city.invalid && f.city.touched" class="text-danger">
-          <div *ngIf="f.city.errors?.required">
-            <small>City is required</small>
-          </div>
-        </div>
-      </div>
-
-      <div class="form-group col-md-6">
-        <label for="role">Role</label>
-        <select id="role" name="role" class="form-control text-center" formControlName="role"
-          (change)="selectRolename($event.target.value);">
-          <option value="">Select Role</option>
-          <option *ngFor="let role of roles" [value]="role.name" class="form-control-sm">
-            {{role.name}}
-          </option>
-
-        </select>
-        <div *ngIf="f.role.invalid && f.role.touched" class="text-danger">
-          <div *ngIf="f.role.errors?.required">
-            <small>Role is required</small>
-          </div>
-
+    <!-- Last Name -->
+    <div class="form-group col-md-6">
+      <label for="lastName">Last Name</label>
+      <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Last Name"
+        formControlName="lastName" autocomplete="off" minlength="1" maxlength="16">
+      <div *ngIf="f.lastName.invalid && f.lastName.touched" class="text-danger">
+        <div *ngIf="f.lastName.errors?.required">
+          <small>Last name is required</small>
         </div>
       </div>
     </div>
 
-    <!-- 6th row -->
-    <div class="form-group row">
-      <label for="permission" class="col-sm-2 col-form-label">Permissions</label>
-      <div class="col-sm-10">
-        <div class="form-check form-check-inline" formArrayName="permissions"
-          *ngFor="let permission of userForm.controls.permissions?.value;let i = index;">
-          <input class="form-check-input" type="checkbox" id="per{{i}}" [value]="permission.name"
-            [checked]="permission.checked" (change)="onCheckboxChange($event,i);">
-          <label class="form-check-label" for="per{{i}}">{{permission.name}}</label>
+  </div>
+
+  <!-- 2nd Row -->
+  <div class="form-row">
+
+    <!-- User Name -->
+    <div class="form-group col-md-6">
+      <label for="userName">User Name</label>
+      <input type="text" class="form-control" id="userName" name="userName" placeholder="User Name"
+        formControlName="userName" autocomplete="off" minlength="6">
+      <div *ngIf="f.userName.invalid && f.userName.touched" class="text-danger">
+        <div *ngIf="f.userName.errors?.required">
+          <small>User name is required</small>
+        </div>
+        <div *ngIf="f.userName.errors?.minlength">
+          <small>User name must be atleast 6 characters</small>
         </div>
       </div>
     </div>
 
-    <!--  <div class="form-group row">
-            <div class="col-md-12">
-                <div class="form-check form-check-inline" *ngFor="let permission of permissions">
-                    <input class="form-check-input ml-5" type="checkbox" id="permissins" value="permissins">
-                    <label class="form-check-label" for="permissins">P1</label>
-                </div>
-            </div>
+    <!-- Email Id -->
+    <div class="form-group col-md-6">
+      <label for="emailId">Email Id</label>
+      <input type="email" class="form-control" id="emailId" name="emailId" placeholder="Email Id"
+        formControlName="emailId" autocomplete="off">
+      <div *ngIf="f.emailId.invalid && f.emailId.touched" class="text-danger">
+        <div *ngIf="f.emailId.errors?.required">
+          <small>Email Id is required</small>
+        </div>
+        <div *ngIf="f.emailId.errors?.pattern">
+          <small>Invalid Email</small>
+        </div>
+      </div>
+    </div>
 
-        </div> -->
-    <button type="submit" class="btn btn-primary" [disabled]="spin">
+  </div>
+
+  <!-- 3rd row -->
+  <div class="form-row">
+
+    <!-- Password -->
+    <div class="form-group col-md-6">
+      <label for="password">Password</label>
+      <input type="password" class="form-control" id="password" name="password" placeholder="Password"
+        formControlName="password" autocomplete="off" minlength="8" maxlength="16">
+      <div *ngIf="f.password.invalid && f.password.touched" class="text-danger">
+        <div *ngIf="f.password.errors?.required">
+          <small>Password is required</small>
+        </div>
+        <div *ngIf="f.password.errors?.minlength">
+          <small>Password must be atleast 8 characters</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phone Number -->
+    <div class="form-group col-md-6">
+      <label for="phoneNumber">Phone Number</label>
+      <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="Phone Number"
+        formControlName="phoneNumber" autocomplete="off" appNumbersOnly minlength="10" maxlength="10">
+      <div *ngIf="f.phoneNumber.invalid && f.phoneNumber.touched" class="text-danger">
+        <div *ngIf="f.phoneNumber.errors?.required">
+          <small>Phone number is required</small>
+        </div>
+        <div *ngIf="f.phoneNumber.errors?.minlength">
+          <small>Phone number must be 10 digits</small>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 4th row -->
+  <div class="form-row">
+
+    <!-- Country Selection -->
+    <div class="form-group col-md-6">
+      <label for="country">Country</label>
+      <select id="country" name="country" class="form-control text-center" formControlName="country"
+        (change)="Filter($event.target.value)">
+        <option value="">Select Country</option>
+        <option *ngFor="let country of countries" [value]="country.name" class="form-control-sm">
+          {{country.name}}
+        </option>
+        <div *ngIf="f.country.invalid && f.country.touched" class="text-danger">
+          <div *ngIf="f.country.errors?.required">
+            <small>Country is required</small>
+          </div>
+        </div>
+      </select>
+    </div>
+
+    <!-- State Selection -->
+    <div class="form-group col-md-6">
+      <label for="state">State</label>
+      <select id="state" name="state" class="form-control text-center" formControlName="state"
+        (change)="selectedState($event.target.value)">
+        <option value="">Select State</option>
+        <option *ngFor="let state of states" [value]="state.name" class="form-control-sm">
+          {{state.name}}
+        </option>
+      </select>
+      <div *ngIf="f.state.invalid && f.state.touched" class="text-danger">
+        <div *ngIf="f.state.errors?.required">
+          <small>State is required</small>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 5th row -->
+  <div class="form-row">
+
+    <!-- City Selection -->
+    <div class="form-group col-md-6">
+      <label for="city">City</label>
+      <select id="city" name="city" class="form-control text-center" formControlName="city">
+        <option value="">Select City</option>
+        <option *ngFor="let city of cities" [value]="city.name" class="form-control-sm">
+          {{city.name}}
+        </option>
+      </select>
+      <div *ngIf="f.city.invalid && f.city.touched" class="text-danger">
+        <div *ngIf="f.city.errors?.required">
+          <small>City is required</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- Role Selection -->
+    <div class="form-group col-md-6">
+      <label for="role">Role</label>
+      <select id="role" name="role" class="form-control text-center" formControlName="role"
+        (change)="selectRolename($event.target.value);">
+        <option value="">Select Role</option>
+        <option *ngFor="let role of roles" [value]="role.name" class="form-control-sm">
+          {{role.name}}
+        </option>
+      </select>
+      <div *ngIf="f.role.invalid && f.role.touched" class="text-danger">
+        <div *ngIf="f.role.errors?.required">
+          <small>Role is required</small>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 6th row Roles-->
+  <div class="form-group row">
+    <label for="permission" class="col-sm-2 col-form-label">Permissions</label>
+    <div class="col-sm-10">
+      <div class="form-check form-check-inline" formArrayName="permissions"
+        *ngFor="let permission of userForm.controls.permissions?.value;let i = index;">
+        <input class="form-check-input" type="checkbox" id="per{{i}}" [value]="permission.name"
+          [checked]="permission.checked" (change)="onCheckboxChange($event,i);">
+        <label class="form-check-label" for="per{{i}}">{{permission.name}}</label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Submit Button -->
+  <div class="d-flex justify-content-end">
+    <button type="submit" class="btn btn-primary" [disabled]="!userForm.valid || spin">
       <span class="spinner-border spinner-border-sm" *ngIf="spin" role="status" aria-hidden="true"></span>
-      Submit</button>
-  </form>
-</div>
+      Submit
+    </button>
+  </div>
+
+</form>
+
+<!-- Form Ends -->

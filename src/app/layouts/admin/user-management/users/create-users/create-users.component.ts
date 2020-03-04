@@ -218,6 +218,14 @@ export class CreateUsersComponent implements OnInit {
       this.getRolesById(number[0].roleId);
     } else {
       this.toastr.warning('Please select role', 'Warning');
+      const permissions: FormArray = this.userForm.get('permissions') as FormArray;
+      console.log('Permissoin List', permissions);
+      console.log('Permissions List Length', permissions.value.length);
+
+      for (let i = 0; i < permissions.value.length; i++) {
+        if (permissions.value[i].checked == true)
+          permissions.value[i].checked = false;
+      }
     }
   }
 

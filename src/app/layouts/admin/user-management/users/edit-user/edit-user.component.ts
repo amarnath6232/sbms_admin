@@ -156,13 +156,6 @@ export class EditUserComponent implements OnInit {
     )
   }
 
-  //Cities Filter
-  /*   selectedCity(name) {
-      console.log("city:", name);
-      let number = this.cities.filter(v => v.name == name);
-      console.log(number);
-    } */
-
   //Get roles
   getRoles() {
     this.userService.getRole().subscribe(
@@ -199,8 +192,7 @@ export class EditUserComponent implements OnInit {
       },
       (err) => {
         console.log(err);
-      }
-    )
+      })
   }
 
   subRolelistById() {
@@ -230,7 +222,6 @@ export class EditUserComponent implements OnInit {
     console.log(index);
     const permissions: FormArray = this.userForm.get('permissions') as FormArray;
     if (e.target.checked) {
-      /*  permissions.push(new FormControl(e.target.value)); */
       permissions.value[index]['checked'] = true;
     } else {
       permissions.value[index]['checked'] = false;
@@ -288,15 +279,17 @@ export class EditUserComponent implements OnInit {
       (res) => {
         console.log(res);
         this.toastr.success('User updated successfully', 'Success');
-        this.userForm.reset();
-        /* this.userService.getUsers().subscribe(); */
-        this.userService.userList.next(res);
+        /*  const permissions = this.userForm.get('permissions') as FormArray;
+         permissions.controls = [];
+         this.userForm.reset(); */
         $(document).ready(function () {
           $(".close").click();
         });
       }, (err) => {
         console.log(err);
         this.toastr.error(err.error.errorMessage, "Error");
+      }, () => {
+        this.userService.getUsers().subscribe();
       }
     )
   }

@@ -70,9 +70,9 @@ export class UserService {
   }
 
   //Edit user
-  updateUsers(user: User, id: number): Observable<User> {
+  updateUsers(user: User, id: number) {
     return this.http.put<User>(`${this.ip.ip}${this.ip.usermanagement_port}/rest/v1/users/${id}`, user).pipe(
-      (catchError(this.errHandler.handleError))
+      catchError(this.errHandler.handleError)
     );
   }
 

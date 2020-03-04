@@ -13,7 +13,7 @@ import { AssetCategory } from '../share/modal/modal';
 export class AssetService {
 
   private Ip = "http://192.168.10.81:";
-  private baseUrl = '/rest/v1/assetCategory';
+  private baseUrl = '/rest/v1';
 
   copyEditAssertCategory = new Subject<AssetCategory>();
   assetCategoryList = new BehaviorSubject<AssetCategory[]>(null);

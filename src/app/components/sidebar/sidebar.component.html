@@ -8,6 +8,7 @@
       <a [routerLink]="[ '/dashboard' ]" routerLinkActive="active">Dashboard</a>
     </li>
 
+    <!-- userManagement -->
     <li>
       <a href="#userManagement" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">User Management</a>
       <ul class="collapse list-unstyled" id="userManagement">
@@ -71,9 +72,11 @@
       </ul>
     </li> -->
 
+    <!-- assertManagement -->
     <li>
       <a href="#assertManagement" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Asset</a>
       <ul class="collapse list-unstyled" id="assertManagement">
+        <!-- asset catagory -->
         <li>
           <a href="#assetCategory" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
             Asset Category</a>
@@ -83,6 +86,19 @@
             </li>
             <li>
               <a [routerLink]="[ '/assert-management/add-asset-category' ]" routerLinkActive="active">Create Asset</a>
+            </li>
+          </ul>
+        </li>
+        <!-- asset Type -->
+        <li>
+          <a href="#assetType" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+            Asset Type</a>
+          <ul class="collapse list-unstyled" id="assetType">
+            <li>
+              <a [routerLink]="[ '/assert-management/asset-type/asset-type-list' ]" routerLinkActive="active">Asset Type List</a>
+            </li>
+            <li>
+              <a [routerLink]="[ '/assert-management/asset-type/add-asset-type' ]" routerLinkActive="active">Create Asset Type</a>
             </li>
           </ul>
         </li>

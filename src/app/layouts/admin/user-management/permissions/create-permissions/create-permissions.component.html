@@ -53,7 +53,7 @@
 
   <!-- Submit Button -->
   <div class="d-flex justify-content-end">
-    <button type="submit" class="btn btn-primary btn-sm text-capitalize" [disabled]="loading">
+    <button type="submit" class="btn btn-primary btn-sm text-capitalize" [disabled]="loading || permission.invalid">
       <span class="spinner-border spinner-border-sm" *ngIf="loading" role="status" aria-hidden="true"></span>
       Submit
     </button>
