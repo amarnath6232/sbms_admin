@@ -1,16 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+
 import { Country, State, City } from 'src/app/share/modal/modal';
 import { SiteService } from 'src/app/Services/site.service';
-import { ToastrService } from 'ngx-toastr';
-import { Router } from '@angular/router';
-import { AuthenticationService } from 'src/app/Services/authentication.service';
+import { ValidationsService } from 'src/app/Services/validations/validations.service';
 
 @Component({
   selector: 'app-add-site',
   templateUrl: './add-site.component.html',
   styleUrls: ['./add-site.component.css']
 })
+
 export class AddSiteComponent implements OnInit {
 
   siteForm: FormGroup;
@@ -21,15 +23,24 @@ export class AddSiteComponent implements OnInit {
   extensionNo: any;
   id: any;
   loading = false;
+  validations;
+
   constructor(private fb: FormBuilder,
     private site: SiteService,
     private toastr: ToastrService,
     private router: Router,
-  ) { }
+    private validate_ser: ValidationsService) {
+    this.init_validations();
+  }
 
   ngOnInit(): void {
+    this.init_validations();
     this.siteValidations();
     this.getCountries();
+  }
+
+  init_validations() {
+    this.validations = this.validate_ser.creastesite;
   }
 
   siteValidations() {
@@ -37,15 +48,13 @@ export class AddSiteComponent implements OnInit {
       country: ['', [Validators.required]],
       state: ['', [Validators.required]],
       city: ['', [Validators.required]],
-      siteName: ['', [Validators.required]],
-      siteAlias: ['', [Validators.required]],
+      siteName: ['', [Validators.required, Validators.minLength(this.validations.siteName.minLength), Validators.maxLength(this.validations.siteName.maxLength)]],
       createdBy: [''],
       createdDate: [''],
       modifiedBy: [''],
       modifiedDate: ['']
     })
   }
-
 
   get f() {
     return this.siteForm.controls;
@@ -62,19 +71,17 @@ export class AddSiteComponent implements OnInit {
       }
     )
   }
+
   Filter(name) {
     console.log(name);
     let number = this.countries.filter(v => v.name == name);
     console.log(number);
     if (number.length !== 0) {
       this.getStates(number[0].country_id);
-     
+
     } else {
       this.toastr.warning('Please select country', 'Warning');
-      // this.states = [];
-      // this.cities = [];
     }
-
   }
 
   getStates(country_id: number) {
@@ -88,7 +95,6 @@ export class AddSiteComponent implements OnInit {
         console.log(err);
       }
     )
-
   }
 
   selectedState(name) {
@@ -98,9 +104,8 @@ export class AddSiteComponent implements OnInit {
     if (number.length != 0) {
       this.getCities(+number[0].state_id);
     } else {
-      this.toastr.warning('Please select state', 'warning');
+      this.toastr.warning('Please select state', 'Warning');
     }
-
   }
 
   getCities(state_id: number) {
@@ -134,6 +139,5 @@ export class AddSiteComponent implements OnInit {
       }
     )
   }
-
 
 }

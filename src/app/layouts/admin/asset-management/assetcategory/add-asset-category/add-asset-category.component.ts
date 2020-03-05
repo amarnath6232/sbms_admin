@@ -26,8 +26,6 @@ export class AddAssetCategoryComponent implements OnInit {
   ngOnInit(): void {
     this.init_validations();
     this.init_form();
-    console.log('AddAssetCategoryComponent');
-    
   }
 
   get f() {

@@ -1,14 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+
 import { SiteService } from 'src/app/Services/site.service';
 import { Country, State, City, Sites } from 'src/app/share/modal/modal';
-import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-edit-site',
   templateUrl: './edit-site.component.html',
   styleUrls: ['./edit-site.component.css']
 })
+
 export class EditSiteComponent implements OnInit {
   editSite: FormGroup;
   countries: Country[] = [];
@@ -23,7 +25,6 @@ export class EditSiteComponent implements OnInit {
     this.getCountries();
     this.init_Site();
     this.sub_edit_site();
-
   }
 
   init_Site() {
@@ -32,7 +33,6 @@ export class EditSiteComponent implements OnInit {
       state: ['', [Validators.required]],
       city: ['', [Validators.required]],
       siteName: ['', [Validators.required]],
-      siteAlias: [''],
       createdBy: [''],
       createdDate: [''],
       modifiedBy: [''],
@@ -45,12 +45,9 @@ export class EditSiteComponent implements OnInit {
     this.siteService.copy_site.subscribe(val => {
       this.editSite.controls['id'].setValue(val.id);
       this.editSite.controls['country'].setValue(val.country);
-      this.Filter(this.editSite.controls['country'].value);
       this.editSite.controls['state'].setValue(val.state);
-      this.selectedState(this.editSite.controls['state'].value);
       this.editSite.controls['city'].setValue(val.city);
       this.editSite.controls['siteName'].setValue(val.siteName);
-      this.editSite.controls['siteAlias'].setValue(val.siteAlias);
       this.editSite.controls['createdBy'].setValue(val.createdBy);
       this.editSite.controls['createdDate'].setValue(val.createdDate);
       this.editSite.controls['modifiedBy'].setValue(val.modifiedBy);
@@ -63,9 +60,9 @@ export class EditSiteComponent implements OnInit {
 
   init_country_state_city() {
     console.log("init_country_state_city -------- country", this.selectedSite.country);
-    this.Filter(this.selectedSite.country);
+    setTimeout(() => { this.Filter(this.selectedSite.country); }, 200)
     console.log("init_country_state_city -------- state", this.selectedSite.state);
-    this.selectedState(this.selectedSite.state);
+    setTimeout(() => { this.selectedState(this.selectedSite.state); }, 400);
   }
 
 
@@ -83,9 +80,9 @@ export class EditSiteComponent implements OnInit {
       },
       (err) => {
         console.log(err);
-      }
-    )
+      })
   }
+
   Filter(name) {
     console.log(name);
     let number = this.countries.filter(v => v.name == name);
@@ -106,9 +103,7 @@ export class EditSiteComponent implements OnInit {
       },
       (err) => {
         console.log(err);
-      }
-    )
-
+      })
   }
 
   selectedState(name) {
@@ -118,7 +113,6 @@ export class EditSiteComponent implements OnInit {
     if (number.length != 0) {
       this.getCities(+number[0].state_id);
     }
-
   }
 
   getCities(state_id: number) {
@@ -130,8 +124,7 @@ export class EditSiteComponent implements OnInit {
       },
       (err) => {
         console.log(err);
-      }
-    )
+      })
   }
 
   EditSite() {
@@ -145,17 +138,13 @@ export class EditSiteComponent implements OnInit {
       (res) => {
         console.log(res);
         this.toastr.success('Site Updated Successfully', 'Success');
-        /*  this.editSite.reset(); */
-        /*    this.siteService.getSities().subscribe(); */
-        this.ngOnInit();
         $(document).ready(function () {
           $(".close").click();
         });
       }, (err) => {
         console.log(err);
         this.toastr.error(err.error.errorMessage, "Error");
-      }
-    )
+      })
   }
 
 

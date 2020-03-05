@@ -99,7 +99,7 @@ export class ValidationsService {
       label: 'Phone Number',
       minLength: 10,
       maxLength: 10,
-      err_msg_minLength: "Please enter valid phone number",
+      err_msg_minLength: "Phone number should be 10 digit numberic only",
       err_msg_required: 'Phone number is required'
     },
     country: {
@@ -120,4 +120,59 @@ export class ValidationsService {
     }
   }
 
+  readonly creastesite = {
+    country: {
+      label: 'Country',
+      err_msg_required: 'Country is required',
+    },
+    state: {
+      label: 'State',
+      err_msg_required: 'State is required'
+    },
+    city: {
+      label: 'City',
+      err_msg_required: 'City is required'
+    },
+    siteName: {
+      label: 'Site Name',
+      minLength: 5,
+      maxLength: 25,
+      err_msg_required: 'Site name is required',
+      err_msg_minLength: 'Site name must be atleast 5 characters'
+    }
+  }
+
+  readonly siteArchitecture = {
+    noOfModules: {
+      label: 'No Of Modules',
+      minLength: 1,
+      maxLength: 2,
+      err_msg_required: 'No of modules is required',
+      err_msg_minLength: 'No of modules must be atleast 1 digit',
+    },
+    noOfPacks: {
+      label: 'No Of Packs',
+      minLength: 1,
+      maxLength: 2,
+      err_msg_required: 'No of packs is required',
+      err_msg_minLength: 'No of packs must be atleast 1 digit',
+    }
+  }
+
+  readonly Siterequirement = {
+    power: {
+      label: 'Power',
+      minLength: 1,
+      maxLength: 2,
+      err_msg_required: 'Power is required',
+      err_msg_minLength: 'Power must be atleast 1 digit',
+    },
+    voltage: {
+      label: 'Voltage',
+      minLength: 1,
+      maxLength: 2,
+      err_msg_required: 'Voltage is required',
+      err_msg_minLength: 'Voltage must be atleast 1 digit',
+    }
+  }
 }

@@ -18,7 +18,7 @@
 }
 
 .height {
-    height: calc(100vh - var(--navBar-height));
+    min-height: calc(100vh - var(--navBar-height));
 }
 
 .mandetory {

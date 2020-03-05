@@ -7,11 +7,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
-import { NumbersOnlyDirective } from '../share/Directives/numbers-only.directive';
-
 
 @NgModule({
-  declarations: [SignupComponent, NumbersOnlyDirective ],
+  declarations: [SignupComponent],
   imports: [
     CommonModule,
     SignupRoutingModule,

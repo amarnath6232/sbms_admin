@@ -89,7 +89,6 @@ export class EditUserComponent implements OnInit {
     return this.userForm.controls;
   }
 
-  //Get Countries
   getCountries() {
     this.userService.getCountries().subscribe(
       (res) => {
@@ -97,31 +96,27 @@ export class EditUserComponent implements OnInit {
         this.countries = res;
         this.states = [];
         this.cities = [];
-      }, (err) => {
-        console.log(err);
+      },
+      (err) => {
+        console.error(err);
       }
     )
   }
 
-  //Countries Filter
   Filter(name) {
-    console.log("Country:", name);
+    console.log(name);
     let number = this.countries.filter(v => v.name == name);
-    console.log("country ", number);
+    console.log(number);
     if (number.length !== 0) {
-      this.extensionNo = number[0].phone_code;
-      this.extensionNumber = this.extensionNo;
-      console.log(this.extensionNumber);
-      this.getStates(number[0].id);
+      this.getStates(number[0].country_id);
     }
   }
 
-  //Get states
-  getStates(id: number) {
-    console.log(id);
-    this.userService.getStates(id).subscribe(
+  getStates(country_id: number) {
+    console.log(country_id);
+    this.userService.getStates(country_id).subscribe(
       (res) => {
-        console.log("states", res);
+        console.log(res);
         this.states = res;
         this.cities = [];
       },
@@ -130,24 +125,20 @@ export class EditUserComponent implements OnInit {
       })
   }
 
-  //States Filter
   selectedState(name) {
-    console.log("state:", name);
+    console.log(name);
     let number = this.states.filter(v => v.name == name);
-    console.log("number ", number);
+    console.log(number);
     if (number.length != 0) {
-      this.getCities(+number[0].id);
-    } /* else {
-      this.toastr.warning('Please select state', 'warning');
-    } */
+      this.getCities(+number[0].state_id);
+    }
   }
 
-  //Get cities
-  getCities(id: number) {
-    console.log(id);
-    this.userService.getCities(id).subscribe(
+  getCities(state_id: number) {
+    console.log(state_id);
+    this.userService.getCities(state_id).subscribe(
       (res) => {
-        console.log("cities", res);
+        console.log(res);
         this.cities = res;
       },
       (err) => {

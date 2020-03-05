@@ -7,7 +7,7 @@ import { UsersComponent } from './users.component';
 import { UserlistComponent } from './userlist/userlist.component';
 import { CreateUsersComponent } from './create-users/create-users.component';
 import { EditUserComponent } from './edit-user/edit-user.component';
-
+import { NumbersOnlyModule } from 'src/app/share/modules/numbers-only.module';
 
 @NgModule({
   declarations: [UsersComponent,
@@ -17,7 +17,8 @@ import { EditUserComponent } from './edit-user/edit-user.component';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    UsersRoutingModule
+    UsersRoutingModule,
+    NumbersOnlyModule
   ]
 })
 

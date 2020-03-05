@@ -107,7 +107,7 @@ export interface Sites {
     city: string;
     state: string;
     country: string;
-    siteAlias: string;
+    siteAlias?: string;
 }
 
 export interface SiteRequriment {

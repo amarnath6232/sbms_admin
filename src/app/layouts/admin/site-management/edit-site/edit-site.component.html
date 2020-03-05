@@ -12,7 +12,7 @@
         <div class="col-10">
             <select id="country" name="country" class="form-control text-center" formControlName="country"
                 placeholder="Select Country" (change)="Filter($event.target.value)">
-               <!--  <option style="font-size: 16px !important;" value="">Select country</option> -->
+                <option style="font-size: 16px !important;" value="">Select country</option>
                 <option *ngFor="let country of countries" [value]="country.name" class="form-control-sm">
                     {{country.name}}
                 </option>
@@ -66,20 +66,6 @@
         <div class="col-10">
             <input type="text" class="form-control text-center" name="siteName" id="siteName" formControlName="siteName"
                 placeholder="Site Name">
-        </div>
-    </div>
-
-    <!-- 5th row -->
-    <!-- Site alias -->
-    <div class="form-group row">
-        <!-- Label -->
-        <div class="col-2">
-            <label for="siteAlias" class="col-form-label">Site Alias</label>
-        </div>
-        <!-- input control for sitealias -->
-        <div class="col-10">
-            <input type="text" class="form-control text-center" name="siteAlias" id="siteAlias"
-                formControlName="siteAlias" placeholder="Site Alias">
         </div>
     </div>
 

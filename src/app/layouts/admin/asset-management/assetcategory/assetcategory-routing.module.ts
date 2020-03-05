@@ -11,8 +11,8 @@ const routes: Routes = [
     path: '', component: AssetcategoryComponent, children: [
       { path: '', redirectTo: 'asset-category-list' },
       { path: 'asset-category-list', component: AssetCategoryListComponent },
-      { path: 'create-asset-category', component: AddAssetCategoryComponent }
-    ] 
+      { path: 'add-asset-category', component: AddAssetCategoryComponent }
+    ]
   }
 ];
 
