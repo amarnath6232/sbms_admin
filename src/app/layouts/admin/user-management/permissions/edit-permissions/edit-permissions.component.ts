@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 
@@ -20,7 +20,9 @@ export class EditPermissionsComponent implements OnInit {
   constructor(private fb: FormBuilder,
     private roleService: RoleService,
     private toastr: ToastrService,
-    private validation_ser: ValidationsService) { }
+    private validation_ser: ValidationsService) {
+    this.init_validations();
+  }
 
   ngOnInit(): void {
     this.init_validations();
@@ -45,13 +47,17 @@ export class EditPermissionsComponent implements OnInit {
 
   initData() {
     this.permissionEdit = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(this.validations.name_min), Validators.maxLength(this.validations.name_max)]],
-      description: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(this.validations.description)]],
+      name: ['', [Validators.required, Validators.minLength(this.validations.name.minLength), Validators.maxLength(this.validations.name.maxLength)]],
+      description: ['', [Validators.required, Validators.minLength(this.validations.description.minLength), Validators.maxLength(this.validations.description.maxLength)]],
       createdBy: [''],
       createdDate: [''],
       modifiedBy: [''],
       permissionId: [''],
     });
+  }
+
+  get f() {
+    return this.permissionEdit.controls;
   }
 
   editPermissions() {

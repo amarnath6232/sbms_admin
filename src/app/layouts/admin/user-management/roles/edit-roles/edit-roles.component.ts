@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 
 import { RoleService } from 'src/app/Services/roles/role.service';
 import { permissionsList } from 'src/app/share/modal/modal';
+import { ValidationsService } from 'src/app/Services/validations/validations.service';
 declare var $;
 
 @Component({
@@ -18,23 +19,31 @@ export class EditRolesComponent implements OnInit {
   permissionsList: permissionsList[] = [];
   loading: boolean;
   edit_role_permissions = [];
+  validations;
 
   constructor(private fb: FormBuilder,
     private roleService: RoleService,
-    private toastr: ToastrService) { }
+    private toastr: ToastrService,
+    private validate_ser: ValidationsService) {
+    this.init_validations();
+  }
 
   ngOnInit(): void {
     this.getPermissionsList();
     this.getpermissionsFromService();
     this.init_role();
     this.sub_copy_role();
+    this.init_validations();
+  }
+
+  init_validations() {
+    this.validations = this.validate_ser.roles;
   }
 
   init_role() {
     this.edit_Role = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(16)]],
-      // aliasName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(16)]],
-      description: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(200)]],
+      name: ['', [Validators.required, Validators.minLength(this.validations.name.minLength), Validators.maxLength(this.validations.name.maxLength)]],
+      description: ['', [Validators.required, Validators.minLength(this.validations.description.minLength), Validators.maxLength(this.validations.description.maxLength)]],
       permissions: this.fb.array([], [Validators.required]),
       createdBy: [''],
       createdDate: [''],
@@ -48,7 +57,6 @@ export class EditRolesComponent implements OnInit {
     this.roleService.copy_role.subscribe(val => {
       if (val) {
         this.edit_Role.controls['name'].setValue(val.name);
-        // this.edit_Role.controls['aliasName'].patchValue(val.aliasName);
         this.edit_Role.controls['createdBy'].patchValue(val.createdBy);
         this.edit_Role.controls['createdDate'].patchValue(val.createdDate);
         this.edit_Role.controls['description'].patchValue(val.description);
@@ -128,6 +136,10 @@ export class EditRolesComponent implements OnInit {
 
   loadingFalse() {
     this.loading = false;
+  }
+
+  get f() {
+    return this.edit_Role.controls;
   }
 
   sendEditRole() {

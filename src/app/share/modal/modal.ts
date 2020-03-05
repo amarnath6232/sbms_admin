@@ -75,6 +75,7 @@ export interface User {
 
 
 export interface Country {
+    country_id: number
     id: number;
     name: string;
     phone_code: string;
@@ -82,16 +83,41 @@ export interface Country {
 
 export interface State {
     id: string;
+    state_id: number;
     name: string;
-    state_code: string;
 }
 
 export interface City {
     name: string;
 }
+
 export interface RoleName {
     roleId: string;
     aliasName: string;
     name: string;
+}
 
+export interface Sites {
+    createdBy?: string;
+    createdDate?: string;
+    modifiedBy?: string;
+    modifiedDate?: string;
+    id: number;
+    siteName: string;
+    city: string;
+    state: string;
+    country: string;
+    siteAlias: string;
+}
+
+export interface SiteRequriment {
+    id: string;
+    power: string;
+    voltage: string;
+}
+
+export interface SiteArchitecture {
+    id: string;
+    noOfModules: string;
+    noOfPacks: string;
 }

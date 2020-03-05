@@ -1,0 +1,114 @@
+<!-- Component Title -->
+<h3 class="text-capitalize text-center">create Site</h3>
+
+
+<form [formGroup]="siteForm" (ngSubmit)="onSubmit()">
+    <!-- Country -->
+    <div class="form-group row">
+        <!-- Label -->
+        <div class="col-2">
+            <label for="country" class="col-form-label">Country</label>
+        </div>
+        <!-- select control -->
+        <div class="col-10">
+            <select id="country" name="country" class="form-control text-center" formControlName="country"
+                placeholder="Select Country" (change)="Filter($event.target.value)">
+                <option style="font-size: 16px !important;" value="">Select country</option>
+                <option *ngFor="let country of countries" [value]="country.name" class="form-control-sm">
+                    {{country.name}}
+                </option>
+            </select>
+            <div *ngIf="f.country.invalid && f.country.touched" class="text-danger">
+                <div *ngIf="f.country.errors?.required">
+                    <small>Country is required</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- State -->
+    <div class="form-group row">
+        <!-- Label -->
+        <div class="col-2">
+            <label for="state" class="col-form-label">State</label>
+        </div>
+        <!-- select control for state -->
+        <div class="col-10">
+            <select id="state" name="state" class="form-control input-custom-control" formControlName="state"
+                (change)="selectedState($event.target.value)">
+                <option value="">Select state</option>
+                <option *ngFor="let state of states" [value]="state.name" class="form-control input-custom-control-sm">
+                    {{state.name}}
+                </option>
+            </select>
+            <div *ngIf="f.state.invalid && f.state.touched" class="text-danger">
+                <div *ngIf="f.state.errors?.required">
+                    <small>State is required</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- City -->
+    <div class="form-group row">
+        <!-- Label -->
+        <div class="col-2">
+            <label for="city" class="col-form-label">City</label>
+        </div>
+        <!-- Select control for city -->
+        <div class="col-10">
+            <select id="city" name="city" class="form-control text-center" formControlName="city">
+                <option value="">Select city</option>
+                <option *ngFor="let city of cities" [value]="city.name" class="form-control input-custom-control-sm">
+                    {{city.name}}
+                </option>
+            </select>
+            <div *ngIf="f.city.invalid && f.city.touched" class="text-danger">
+                <div *ngIf="f.city.errors?.required">
+                    <small>City is required</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Site name -->
+    <div class="form-group row">
+        <!-- Label -->
+        <div class="col-2">
+            <label for="siteName" class="col-form-label">Site Name</label>
+        </div>
+        <!-- Input control for sitename -->
+        <div class="col-10">
+            <input type="text" class="form-control text-center" name="siteName" id="siteName" formControlName="siteName"
+                placeholder="Site Name">
+            <div *ngIf="f.siteName.invalid && f.siteName.touched" class="text-danger">
+                <div *ngIf="f.siteName.errors?.required">
+                    <small>SiteName is required</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Site alias -->
+    <div class="form-group row">
+        <!-- Label -->
+        <div class="col-2">
+            <label for="siteAlias" class="col-form-label">Site Alias</label>
+        </div>
+        <!-- input control for sitealias -->
+        <div class="col-10">
+            <input type="text" class="form-control text-center" name="siteAlias" id="siteAlias"
+                formControlName="siteAlias" placeholder="Site Alias">
+            <div *ngIf="f.siteAlias.invalid && f.siteAlias.touched" class="text-danger">
+                <div *ngIf="f.siteAlias.errors?.required">
+                    <small>SiteAlias is required</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create button -->
+    <div class="d-flex justify-content-end">
+        <button type="submit" class="btn btn-primary btn-sm text-capitalize" [disabled]="siteForm.invalid">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status"
+                    aria-hidden="true"></span>
+            Submit
+        </button>
+    </div>
+</form>

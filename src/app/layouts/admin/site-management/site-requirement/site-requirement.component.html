@@ -1,0 +1,46 @@
+<!-- Component Title -->
+<h3 class="text-capitalize text-center">Site Requirement</h3>
+<form [formGroup]="siteReqForm" (ngSubmit)="onSubmit()">
+
+    <div class="form-group row">
+        <!-- Label -->
+        <div class="col-2">
+            <label for="power" class="col-form-label">Power</label>
+        </div>
+        <!-- Input control for power -->
+        <div class="col-10">
+            <input type="text" class="form-control text-center" name="power" id="power" formControlName="power"
+                placeholder="Power" autocomplete="off">
+            <div *ngIf="f.power.invalid && f.power.touched" class="text-danger">
+                <div *ngIf="f.power.errors?.required">
+                    <small>Poweris required</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Site alias -->
+    <div class="form-group row">
+        <!-- Label -->
+        <div class="col-2">
+            <label for="voltage" class="col-form-label">Voltage</label>
+        </div>
+        <!-- input control for voltage -->
+        <div class="col-10">
+            <input type="text" class="form-control text-center" name="voltage" id="voltage" formControlName="voltage"
+                placeholder="Voltage" autocomplete="off">
+            <div *ngIf="f.voltage.invalid && f.voltage.touched" class="text-danger">
+                <div *ngIf="f.voltage.errors?.required">
+                    <small>Voltage is required</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create button -->
+    <div class="d-flex justify-content-end">
+        <button type="submit" class="btn btn-primary btn-sm text-capitalize" [disabled]="siteReqForm.invalid">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Submit
+        </button>
+    </div>
+</form>

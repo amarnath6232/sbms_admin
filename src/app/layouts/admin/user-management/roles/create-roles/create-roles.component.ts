@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
 import { RoleService } from 'src/app/Services/roles/role.service';
+import { ValidationsService } from 'src/app/Services/validations/validations.service';
 
 @Component({
   selector: 'app-create-roles',
@@ -15,18 +16,26 @@ export class CreateRolesComponent implements OnInit {
 
   createRole: FormGroup;
   permissions = [];
-
+  validations;
   loading: boolean;
+
   constructor(private fb: FormBuilder,
     private roleService: RoleService,
     private router: Router,
-    private toastr: ToastrService) {
-    this.initCreateRole();
+    private toastr: ToastrService,
+    private validate_ser: ValidationsService) {
+    this.init_validations();
   }
 
   ngOnInit(): void {
     this.roleService.getPermissions().subscribe();
     this.getpermissionsFromService();
+    this.init_validations();
+    this.initCreateRole();
+  }
+
+  init_validations() {
+    this.validations = this.validate_ser.roles;
   }
 
   getpermissionsFromService() {
@@ -40,9 +49,8 @@ export class CreateRolesComponent implements OnInit {
 
   initCreateRole() {
     this.createRole = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(16)]],
-      // aliasName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(16)]],
-      description: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(200)]],
+      name: ['', [Validators.required, Validators.minLength(this.validations.name.minLength), Validators.maxLength(this.validations.name.maxLength)]],
+      description: ['', [Validators.required, Validators.minLength(this.validations.description.minLength), Validators.maxLength(this.validations.description.maxLength)]],
       permissions: this.fb.array(this.permissions, [Validators.required]),
     })
   }

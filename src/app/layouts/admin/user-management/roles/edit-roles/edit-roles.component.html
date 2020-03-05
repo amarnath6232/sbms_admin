@@ -6,13 +6,23 @@
 
     <!-- Label -->
     <div class="col-2">
-      <label for="roleName" class="col-form-label">Role Name</label>
+      <label for="roleName" class="col-form-label">{{this.validations.name.label}}</label>
     </div>
 
     <!-- Input Control -->
     <div class="col-10">
-      <input type="text" class="form-control" id="roleName" formControlName="name" placeholder="Role Name"
-        autocomplete="off">
+      <input type="text" class="form-control" id="roleName" formControlName="name"
+        placeholder="{{this.validations.name.label}}" autocomplete="off" maxlength={{this.validations.name.maxLength}}>
+
+      <!-- Error Messages -->
+      <div *ngIf="f.name.invalid && f.name.touched" class="text-danger">
+        <div *ngIf="f.name.errors?.required">
+          <small>{{this.validations.name.err_msg_required}}</small>
+        </div>
+        <div *ngIf="f.name.errors?.minlength">
+          <small>{{this.validations.name.err_msg_minLength}}</small>
+        </div>
+      </div>
     </div>
 
   </div>
@@ -22,13 +32,26 @@
 
     <!-- Label -->
     <div class="col-2">
-      <label for="description" class="col-form-label">Description</label>
+      <label for="description" class="col-form-label">{{this.validations.description.label}}</label>
     </div>
 
     <!-- Textarea Control -->
     <div class="col-10">
       <textarea name="description" cols="30" rows="5" class="form-control" id="description"
-        formControlName="description" placeholder="Description" autocomplete="off"></textarea>
+        formControlName="description" placeholder="{{this.validations.description.label}}" autocomplete="off"
+        maxlength={{this.validations.description.maxLength}}>
+      </textarea>
+
+      <!-- Error Messages -->
+      <div *ngIf="f.description.invalid && f.description.touched" class="text-danger">
+        <div *ngIf="f.description.errors?.required">
+          <small>{{this.validations.description.err_msg_required}}</small>
+        </div>
+        <div *ngIf="f.description.errors?.minlength">
+          <small>{{this.validations.description.err_msg_minLength}}</small>
+        </div>
+      </div>
+
     </div>
 
   </div>

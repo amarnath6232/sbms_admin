@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import * as $ from "jquery";
-import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-sidebar',
@@ -16,16 +14,5 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit() {
   }
-
-
-
-  isMobileMenu() {
-    if ($(window).width() > 991) {
-      return false;
-    }
-    return true;
-  };
-
-
 
 }

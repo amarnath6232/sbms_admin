@@ -16,7 +16,7 @@ export class AuthInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
     const tokenvalue = this.auth.getJwtToken();
-    console.log('tokenvalue', tokenvalue);
+    // console.log('tokenvalue', tokenvalue);
 
     if (tokenvalue) {
       req = this.addToken(req, tokenvalue);
@@ -24,16 +24,16 @@ export class AuthInterceptor implements HttpInterceptor {
 
     return next.handle(req).pipe(catchError(error => {
       if ((error instanceof HttpErrorResponse && error.status === 401)) {
-        console.log('token in interceptor', tokenvalue);
+        // console.log('token in interceptor', tokenvalue);
         if (tokenvalue) {
-          console.log('entered in before handle 401 Error');
+          // console.log('entered in before handle 401 Error');
           return this.handle401Error(req, next);
         } else {
-          console.log('entered in if else in interceptor');
+          // console.log('entered in if else in interceptor');
           return throwError(error);
         }
       } else {
-        console.log('entered in else in interceptor');
+        // console.log('entered in else in interceptor');
         return throwError(error);
       }
     }))
@@ -50,7 +50,7 @@ export class AuthInterceptor implements HttpInterceptor {
   private handle401Error(request: HttpRequest<any>, next: HttpHandler) {
     if (!this.isRefreshing) {
       this.isRefreshing = true;
-      console.log("in handle401Error ----- if condition");
+      // console.log("in handle401Error ----- if condition");
 
       this.refreshTokenSubject.next(null);
 

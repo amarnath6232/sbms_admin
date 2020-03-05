@@ -9,12 +9,16 @@
 
     <!-- First Name -->
     <div class="form-group col-md-6">
-      <label for="firstName">First Name</label>
-      <input type="text" class="form-control" id="firstName" name="firstName" placeholder="First Name"
-        formControlName="firstName" autocomplete="off" minlength="1" maxlength="16">
+      <label for="firstName">{{validation.firstName.label}}</label>
+      <input type="text" class="form-control" id="firstName" name="firstName"
+        placeholder="{{validation.firstName.label}}" formControlName="firstName" autocomplete="off"
+        minlength="{{validation.firstName.minLength}}" maxlength="{{validation.firstName.maxLength}}">
       <div *ngIf="f.firstName.invalid && f.firstName.touched" class="text-danger">
         <div *ngIf="f.firstName.errors?.required">
-          <small>First name is required</small>
+          <small>{{validation.firstName.err_msg_required}}</small>
+        </div>
+        <div *ngIf="f.firstName.errors?.minlength">
+          <small>{{validation.firstName.err_msg_minLength}}</small>
         </div>
       </div>
     </div>
@@ -23,10 +27,10 @@
     <div class="form-group col-md-6">
       <label for="lastName">Last Name</label>
       <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Last Name"
-        formControlName="lastName" autocomplete="off" minlength="1" maxlength="16">
+        formControlName="lastName" autocomplete="off" maxlength="{{validation.lastName.maxlength}}">
       <div *ngIf="f.lastName.invalid && f.lastName.touched" class="text-danger">
         <div *ngIf="f.lastName.errors?.required">
-          <small>Last name is required</small>
+          <small>{{validation.lastName.err_msg_required}}</small>
         </div>
       </div>
     </div>
@@ -38,30 +42,31 @@
 
     <!-- User Name -->
     <div class="form-group col-md-6">
-      <label for="userName">User Name</label>
-      <input type="text" class="form-control" id="userName" name="userName" placeholder="User Name"
-        formControlName="userName" autocomplete="off" minlength="6">
+      <label for="userName">{{validation.userName.label}}</label>
+      <input type="text" class="form-control" id="userName" name="userName" placeholder="{{validation.userName.label}}"
+        formControlName="userName" autocomplete="off" minlength="{{validation.userName.minlength}}"
+        maxlength="{{validation.userName.maxlength}}">
       <div *ngIf="f.userName.invalid && f.userName.touched" class="text-danger">
         <div *ngIf="f.userName.errors?.required">
-          <small>User name is required</small>
+          <small>{{validation.userName.err_msg_required}}</small>
         </div>
         <div *ngIf="f.userName.errors?.minlength">
-          <small>User name must be atleast 6 characters</small>
+          <small>{{validation.userName.err_msg_minLength}}</small>
         </div>
       </div>
     </div>
 
     <!-- Email Id -->
     <div class="form-group col-md-6">
-      <label for="emailId">Email Id</label>
-      <input type="email" class="form-control" id="emailId" name="emailId" placeholder="Email Id"
+      <label for="emailId">{{validation.emailId.label}}</label>
+      <input type="email" class="form-control" id="emailId" name="emailId" placeholder="{{validation.emailId.label}}"
         formControlName="emailId" autocomplete="off">
       <div *ngIf="f.emailId.invalid && f.emailId.touched" class="text-danger">
         <div *ngIf="f.emailId.errors?.required">
-          <small>Email Id is required</small>
+          <small>{{validation.emailId.err_msg_required}}</small>
         </div>
         <div *ngIf="f.emailId.errors?.pattern">
-          <small>Invalid Email</small>
+          <small>{{validation.emailId.err_msg_pattern}}</small>
         </div>
       </div>
     </div>
@@ -73,30 +78,32 @@
 
     <!-- Password -->
     <div class="form-group col-md-6">
-      <label for="password">Password</label>
-      <input type="password" class="form-control" id="password" name="password" placeholder="Password"
-        formControlName="password" autocomplete="off" minlength="8" maxlength="16">
+      <label for="password">{{validation.password.label}}</label>
+      <input type="password" class="form-control" id="password" name="password"
+        placeholder="{{validation.password.label}}" formControlName="password" autocomplete="off"
+        minlength="{{validation.password.minLength}}" maxlength="{{validation.password.maxLength}}">
       <div *ngIf="f.password.invalid && f.password.touched" class="text-danger">
         <div *ngIf="f.password.errors?.required">
-          <small>Password is required</small>
+          <small>{{validation.password.err_msg_required}}</small>
         </div>
         <div *ngIf="f.password.errors?.minlength">
-          <small>Password must be atleast 8 characters</small>
+          <small>{{validation.password.err_msg_minLength}}</small>
         </div>
       </div>
     </div>
 
     <!-- Phone Number -->
     <div class="form-group col-md-6">
-      <label for="phoneNumber">Phone Number</label>
-      <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="Phone Number"
-        formControlName="phoneNumber" autocomplete="off" appNumbersOnly minlength="10" maxlength="10">
+      <label for="phoneNumber">{{validation.phoneNumber.label}}</label>
+      <input type="tel" class="form-control" id="phoneNumber" name="phoneNumber"
+        placeholder="{{validation.phoneNumber.label}}" formControlName="phoneNumber" autocomplete="off" appNumbersOnly
+        minlength="{{validation.phoneNumber.minLenght}}" maxlength="{{validation.phoneNumber.maxLenght}}">
       <div *ngIf="f.phoneNumber.invalid && f.phoneNumber.touched" class="text-danger">
         <div *ngIf="f.phoneNumber.errors?.required">
-          <small>Phone number is required</small>
+          <small>{{validation.phoneNumber.err_msg_required}}</small>
         </div>
         <div *ngIf="f.phoneNumber.errors?.minlength">
-          <small>Phone number must be 10 digits</small>
+          <small>{{validation.phoneNumber.err_msg_minLength}}</small>
         </div>
       </div>
     </div>
@@ -108,7 +115,7 @@
 
     <!-- Country Selection -->
     <div class="form-group col-md-6">
-      <label for="country">Country</label>
+      <label for="country">{{validation.country.label}}</label>
       <select id="country" name="country" class="form-control text-center" formControlName="country"
         (change)="Filter($event.target.value)">
         <option value="">Select Country</option>
@@ -117,7 +124,7 @@
         </option>
         <div *ngIf="f.country.invalid && f.country.touched" class="text-danger">
           <div *ngIf="f.country.errors?.required">
-            <small>Country is required</small>
+            <small>{{validation.country.err_msg_required}}</small>
           </div>
         </div>
       </select>
@@ -125,7 +132,7 @@
 
     <!-- State Selection -->
     <div class="form-group col-md-6">
-      <label for="state">State</label>
+      <label for="state">{{validation.state.label}}</label>
       <select id="state" name="state" class="form-control text-center" formControlName="state"
         (change)="selectedState($event.target.value)">
         <option value="">Select State</option>
@@ -135,7 +142,7 @@
       </select>
       <div *ngIf="f.state.invalid && f.state.touched" class="text-danger">
         <div *ngIf="f.state.errors?.required">
-          <small>State is required</small>
+          <small>{{validation.state.err_msg_required}}</small>
         </div>
       </div>
     </div>
@@ -147,7 +154,7 @@
 
     <!-- City Selection -->
     <div class="form-group col-md-6">
-      <label for="city">City</label>
+      <label for="city">{{validation.city.label}}</label>
       <select id="city" name="city" class="form-control text-center" formControlName="city">
         <option value="">Select City</option>
         <option *ngFor="let city of cities" [value]="city.name" class="form-control-sm">
@@ -156,14 +163,14 @@
       </select>
       <div *ngIf="f.city.invalid && f.city.touched" class="text-danger">
         <div *ngIf="f.city.errors?.required">
-          <small>City is required</small>
+          <small>{{validation.city.err_msg_required}}</small>
         </div>
       </div>
     </div>
 
     <!-- Role Selection -->
     <div class="form-group col-md-6">
-      <label for="role">Role</label>
+      <label for="role">{{validation.role.label}}</label>
       <select id="role" name="role" class="form-control text-center" formControlName="role"
         (change)="selectRolename($event.target.value);">
         <option value="">Select Role</option>
@@ -173,7 +180,7 @@
       </select>
       <div *ngIf="f.role.invalid && f.role.touched" class="text-danger">
         <div *ngIf="f.role.errors?.required">
-          <small>Role is required</small>
+          <small>{{validation.role.err_msg_required}}</small>
         </div>
       </div>
     </div>

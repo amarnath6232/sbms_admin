@@ -37,8 +37,8 @@ export class CreatePermissionsComponent implements OnInit {
 
   init_form() {
     this.permission = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(this.validations.name_min), Validators.maxLength(this.validations.name_max)]],
-      description: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(this.validations.description)]],
+      name: ['', [Validators.required, Validators.minLength(this.validations.name.minLength), Validators.maxLength(this.validations.name.maxLength)]],
+      description: ['', [Validators.required, Validators.minLength(this.validations.description.minLength), Validators.maxLength(this.validations.description.maxLength)]],
     });
   }
 
@@ -60,7 +60,7 @@ export class CreatePermissionsComponent implements OnInit {
 
     this.roleService.createPermission(this.permission.value).subscribe(res => {
       console.log(res);
-      this.toastr.success('Permission created successfully ', 'Success')
+      this.toastr.success('Permission created successfully', 'Success')
       this.router.navigate(['/user-management/permissions/permissions-list']);
     }, err => {
       if (err.status === 400) {

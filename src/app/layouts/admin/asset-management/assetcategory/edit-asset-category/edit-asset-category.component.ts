@@ -1,35 +1,30 @@
 import { Component, OnInit } from '@angular/core';
-import { Validators, FormBuilder } from '@angular/forms';
+import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+
 import { AssetService } from 'src/app/Services/asset.service';
 import { ToastrService } from 'ngx-toastr';
-import { Router } from '@angular/router';
+import { ValidationsService } from 'src/app/Services/validations/validations.service';
+
 
 @Component({
-  selector: 'app-edit-aset-category',
-  templateUrl: './edit-aset-category.component.html',
-  styleUrls: ['./edit-aset-category.component.css']
+  selector: 'app-edit-asset-category',
+  templateUrl: './edit-asset-category.component.html',
+  styleUrls: ['./edit-asset-category.component.css']
 })
-export class EditAsetCategoryComponent implements OnInit {
+export class EditAssetCategoryComponent implements OnInit {
 
-  maxLen = {
-    categoryName: 16,
-    description: 200
-  }
-
-  addAssetCategory = this.fb.group({
-    assetCategoryId: ['', [Validators.required]],
-    categoryName: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(this.maxLen.categoryName)]],
-    description: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(this.maxLen.description)]],
-  });
-
-  loadind: boolean;
+  validations;
+  addAssetCategory: FormGroup
 
   constructor(private fb: FormBuilder,
     private assetService: AssetService,
     private toastr: ToastrService,
-    private router: Router) { }
+    private validate_ser: ValidationsService) { }
+
 
   ngOnInit(): void {
+    this.init_validations();
+    this.init_form();
     this.assetService.copyEditAssertCategory.subscribe(result => {
       this.addAssetCategory.controls['categoryName'].setValue(result.categoryName);
       this.addAssetCategory.controls['description'].setValue(result.description);
@@ -37,10 +32,22 @@ export class EditAsetCategoryComponent implements OnInit {
     })
   }
 
+
+  init_validations() {
+    this.validations = this.validate_ser.assetCategory;
+  }
+
+  init_form() {
+    this.addAssetCategory = this.fb.group({
+      assetCategoryId: ['', [Validators.required]],
+      categoryName: ['', [Validators.required, Validators.minLength(this.validations.categoryName.minLength), Validators.maxLength(this.validations.categoryName.maxLength)]],
+      description: ['', [Validators.required, Validators.minLength(this.validations.description.minLength), Validators.maxLength(this.validations.description.maxLength)]],
+    });
+  }
+
   get f() {
     return this.addAssetCategory.controls;
   }
-
 
   editAssetCategory() {
     console.log(this.addAssetCategory.value);
@@ -52,14 +59,15 @@ export class EditAsetCategoryComponent implements OnInit {
       console.log(res);
       this.toastr.success("Edit asset category successfully.", "Success");
       this.addAssetCategory.reset();
-      this.assetService.getAssetCategoryList().subscribe();
       $(document).ready(function () {
         $(".close").click();
       });
+      this.assetService.getAssetCategoryList().subscribe();
     }, err => {
       console.log(err);
       this.toastr.error("Some thing went worng.", "Error");
     });
   }
+
 
 }

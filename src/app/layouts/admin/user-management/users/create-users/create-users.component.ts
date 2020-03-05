@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { Country, State, City, RoleName, permissionsList } from 'src/app/share/modal/modal';
 import { UserService } from 'src/app/Services/roles/user.service';
 import { RoleService } from 'src/app/Services/roles/role.service';
+import { ValidationsService } from 'src/app/Services/validations/validations.service';
 
 @Component({
   selector: 'app-create-users',
@@ -14,6 +15,8 @@ import { RoleService } from 'src/app/Services/roles/role.service';
 })
 
 export class CreateUsersComponent implements OnInit {
+
+  validation;
   userForm: FormGroup;
   countries: Country[] = [];
   states: State[] = [];
@@ -31,15 +34,22 @@ export class CreateUsersComponent implements OnInit {
     private user: UserService,
     private roleService: RoleService,
     private toastr: ToastrService,
-    private router: Router) {
-    this.userFormValidations();
+    private router: Router,
+    private validation_ser: ValidationsService) {
+
   }
 
   ngOnInit(): void {
-    this.getPermissionsList();
+    this.getValidations();
+    this.userFormValidations();
     this.getCountries();
+    this.getPermissionsList();
     this.getRoles();
     this.subRolelistById();
+  }
+
+  getValidations() {
+    this.validation = this.validation_ser.userCreation;
   }
 
   ngOnDestroy(): void {
@@ -50,12 +60,12 @@ export class CreateUsersComponent implements OnInit {
 
   userFormValidations() {
     this.userForm = this.fb.group({
-      firstName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(16)]],
-      lastName: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(16)]],
-      userName: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(16)]],
-      emailId: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')]],
-      password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(16)]],
-      phoneNumber: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
+      firstName: ['', [Validators.required, Validators.minLength(this.validation.firstName.minLength), Validators.maxLength(this.validation.firstName.maxLength)]],
+      lastName: ['', [Validators.required, Validators.minLength(this.validation.lastName.minLength), Validators.maxLength(this.validation.lastName.maxLength)]],
+      userName: ['', [Validators.required, Validators.minLength(this.validation.userName.minLength), Validators.maxLength(this.validation.userName.maxLength)]],
+      emailId: ['', [Validators.required, Validators.pattern(this.validation.emailId.pattern)]],
+      password: ['', [Validators.required, Validators.minLength(this.validation.password.minLength), Validators.maxLength(this.validation.password.maxLength)]],
+      phoneNumber: ['', [Validators.required, Validators.minLength(this.validation.phoneNumber.minLength), Validators.maxLength(this.validation.phoneNumber.maxLength)]],
       country: ['', [Validators.required]],
       state: ['', [Validators.required]],
       city: ['', [Validators.required]],
@@ -135,37 +145,37 @@ export class CreateUsersComponent implements OnInit {
       (res) => {
         console.log(res);
         this.countries = res;
-      })
+        this.states = [];
+        this.cities = [];
+      },
+      (err) => {
+        console.error(err);
+      }
+    )
   }
-
   Filter(name) {
     console.log(name);
     let number = this.countries.filter(v => v.name == name);
     console.log(number);
     if (number.length !== 0) {
-      this.extensionNo = number[0].phone_code;
-      this.extensionNumber = this.extensionNo;
-      console.log(this.extensionNumber);
-      /*   this.id = number[0].id;
-        console.log(this.id); */
-      this.getStates(number[0].id);
-      /*  console.log(this.getStates(this.id)); */
-    } else {
-      this.toastr.warning('Please select country', 'Warning');
+      this.getStates(number[0].country_id);
     }
+
   }
 
-  getStates(id: number) {
-    console.log(id);
-    this.user.getStates(id).subscribe(
+  getStates(country_id: number) {
+    console.log(country_id);
+    this.user.getStates(country_id).subscribe(
       (res) => {
         console.log(res);
         this.states = res;
+        this.cities = [];
       },
       (err) => {
         console.log(err);
       }
     )
+
   }
 
   selectedState(name) {
@@ -173,15 +183,14 @@ export class CreateUsersComponent implements OnInit {
     let number = this.states.filter(v => v.name == name);
     console.log(number);
     if (number.length != 0) {
-      this.getCities(+number[0].id);
-    } else {
-      this.toastr.warning('Please select state', 'warning');
+      this.getCities(+number[0].state_id);
     }
+
   }
 
-  getCities(id: number) {
-    console.log(id);
-    this.user.getCities(id).subscribe(
+  getCities(state_id: number) {
+    console.log(state_id);
+    this.user.getCities(state_id).subscribe(
       (res) => {
         console.log(res);
         this.cities = res;

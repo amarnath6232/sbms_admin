@@ -12,7 +12,11 @@ import { User, RoleList } from 'src/app/share/modal/modal';
 })
 export class UserService {
 
-  private site_port = this.ip.site_port;
+  private Ip = this.ip.ip;
+  private user_port = this.ip.usermanagement_port;
+  private baseUrl = "/rest/v1";
+  private countriesUrl = "/locations";
+
 
   roleListById = new BehaviorSubject<RoleList>(null);
   copyEditUser = new Subject<User>();
@@ -27,40 +31,40 @@ export class UserService {
     private errHandler: ErrorHandlerService) { }
 
   createByUser(user: User): Observable<User> {
-    return this.http.post<User>(`${this.ip.ip}${this.ip.usermanagement_port}/rest/v1/users/create`, user).pipe(catchError(this.errHandler.handleError));
+    return this.http.post<User>(`${this.Ip}${this.user_port}${this.baseUrl}/users/create`, user).pipe(catchError(this.errHandler.handleError));
   }
 
   //Get all Countries
   getCountries(): Observable<any> {
-    return this.http.get<any>(`${this.ip.ip}${this.site_port}/rest/v1/location/getCountries`).pipe(
+    return this.http.get<any>(`${this.Ip}${this.user_port}${this.baseUrl}${this.countriesUrl}/countries`).pipe(
       (catchError(this.errHandler.handleError))
     );
   }
 
   //Get states based on country id
   getStates(id: number): Observable<any> {
-    return this.http.get<any>(`${this.ip.ip}${this.site_port}/rest/v1/location/getStates/${id}`).pipe(
+    return this.http.get<any>(`${this.Ip}${this.user_port}${this.baseUrl}${this.countriesUrl}/states/${id}`).pipe(
       (catchError(this.errHandler.handleError))
     );
   }
 
   //Get cities based on state id
   getCities(id: number): Observable<any> {
-    return this.http.get<any>(`${this.ip.ip}${this.site_port}/rest/v1/location/getCities/${id}`).pipe(
+    return this.http.get<any>(`${this.Ip}${this.user_port}${this.baseUrl}${this.countriesUrl}/cities/${id}`).pipe(
       (catchError(this.errHandler.handleError))
     );
   }
 
   //Get Roles
   getRole(): Observable<any> {
-    return this.http.get<any>(`${this.ip.ip}${this.ip.usermanagement_port}/rest/v1/roles`).pipe(
+    return this.http.get<any>(`${this.Ip}${this.user_port}${this.baseUrl}/roles`).pipe(
       (catchError(this.errHandler.handleError))
     );
   }
 
   //Get USers
   getUsers() {
-    return this.http.get<User[]>(`${this.ip.ip}${this.ip.usermanagement_port}/rest/v1/users`).pipe(
+    return this.http.get<User[]>(`${this.Ip}${this.user_port}${this.baseUrl}/users`).pipe(
       map(res => {
         this.users_List.next(res);
         return res;
@@ -71,14 +75,14 @@ export class UserService {
 
   //Edit user
   updateUsers(user: User, id: number) {
-    return this.http.put<User>(`${this.ip.ip}${this.ip.usermanagement_port}/rest/v1/users/${id}`, user).pipe(
+    return this.http.put<User>(`${this.Ip}${this.user_port}${this.baseUrl}/users/${id}`, user).pipe(
       catchError(this.errHandler.handleError)
     );
   }
 
   //Delete user
   deleteUsers(id: number) {
-    return this.http.delete(`${this.ip.ip}${this.ip.usermanagement_port}/rest/v1/users/${id}`).pipe(
+    return this.http.delete(`${this.Ip}${this.user_port}${this.baseUrl}/users/${id}`).pipe(
       map((res) => { this.getUsers().subscribe(); return res }),
       (catchError(this.errHandler.handleError))
     );
@@ -86,7 +90,7 @@ export class UserService {
 
   // Get roles based on id
   getRoleById(roleId: string) {
-    return this.http.get<RoleList>(`${this.ip.ip}${this.ip.usermanagement_port}/rest/v1/roles/${roleId}`)
+    return this.http.get<RoleList>(`${this.Ip}${this.user_port}${this.baseUrl}/roles/${roleId}`)
       .pipe(map(res => {
         this.roleListById.next(res);
         return res

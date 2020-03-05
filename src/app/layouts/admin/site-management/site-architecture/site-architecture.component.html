@@ -1,0 +1,46 @@
+<!-- Component Title -->
+<h3 class="text-capitalize text-center">Site Architecture</h3>
+<form [formGroup]="siteArcForm" (ngSubmit)="onSubmit()">
+
+    <div class="form-group row">
+        <!-- Label -->
+        <div class="col-2">
+            <label for="noOfModules" class="col-form-label">No Of Modules</label>
+        </div>
+        <!-- Input control for nom -->
+        <div class="col-10">
+            <input type="text" class="form-control text-center" name="noOfModules" id="noOfModules"
+                formControlName="noOfModules" placeholder="No Of Modules" autocomplete="off">
+            <div *ngIf="f.noOfModules.invalid && f.noOfModules.touched" class="text-danger">
+                <div *ngIf="f.noOfModules.errors?.required">
+                    <small>No Of Modules is required</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Site alias -->
+    <div class="form-group row">
+        <!-- Label -->
+        <div class="col-2">
+            <label for="noOfPacks" class="col-form-label">No Of Packs</label>
+        </div>
+        <!-- input control for nop -->
+        <div class="col-10">
+            <input type="text" class="form-control text-center" name="noOfPacks" id="noOfPacks"
+                formControlName="noOfPacks" placeholder="No Of Packs" autocomplete="off">
+            <div *ngIf="f.noOfPacks.invalid && f.noOfPacks.touched" class="text-danger">
+                <div *ngIf="f.noOfPacks.errors?.required">
+                    <small>No Of Packs is required</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create button -->
+    <div class="d-flex justify-content-end">
+        <button type="submit" class="btn btn-primary btn-sm text-capitalize" [disabled]="siteArcForm.invalid">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Submit
+        </button>
+    </div>
+</form>

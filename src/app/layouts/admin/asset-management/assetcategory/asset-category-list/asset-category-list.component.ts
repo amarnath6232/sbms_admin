@@ -1,14 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { AssetService } from 'src/app/Services/asset.service';
-import { AssetCategory } from 'src/app/share/modal/modal';
 import { ToastrService } from 'ngx-toastr';
 
+import { AssetService } from 'src/app/Services/asset.service';
+import { AssetCategory } from 'src/app/share/modal/modal';
+declare var $;
+
+
 @Component({
-  selector: 'app-category-list',
-  templateUrl: './category-list.component.html',
-  styleUrls: ['./category-list.component.css']
+  selector: 'app-asset-category-list',
+  templateUrl: './asset-category-list.component.html',
+  styleUrls: ['./asset-category-list.component.css']
 })
-export class CategoryListComponent implements OnInit {
+export class AssetCategoryListComponent implements OnInit {
 
   assetCategoryList: AssetCategory[];
   copyDeleteItem: AssetCategory;
@@ -47,7 +50,9 @@ export class CategoryListComponent implements OnInit {
   deleteAssetCategory() {
     this.assetService.deleteAssetCategory(this.copyDeleteItem.assetCategoryId).subscribe(res => {
       this.toastr.success(`${this.copyDeleteItem.categoryName} deleted successfully`, "Success");
+      $('.modal-Asset-category-del').modal('hide')
       this.getCategoryList();
+
     })
   }
 

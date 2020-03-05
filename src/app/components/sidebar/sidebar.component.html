@@ -56,36 +56,24 @@
       </ul>
     </li>
 
-    <!-- <li>
-      <a href="#site" [routerLink]="[ '/site' ]" routerLinkActive="active" data-toggle="collapse" aria-expanded="false"
-        class="dropdown-toggle">Site </a>
-      <ul class="collapse list-unstyled" id="site">
-        <li>
-          <a href="#">Home 1</a>
-        </li>
-        <li>
-          <a href="#">Home 2</a>
-        </li>
-        <li>
-          <a href="#">Home 3</a>
-        </li>
-      </ul>
-    </li> -->
-
     <!-- assertManagement -->
     <li>
-      <a href="#assertManagement" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Asset</a>
+      <a href="#assertManagement" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Asset
+        Management</a>
       <ul class="collapse list-unstyled" id="assertManagement">
-        <!-- asset catagory -->
+        <!-- asset category -->
         <li>
           <a href="#assetCategory" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
             Asset Category</a>
           <ul class="collapse list-unstyled" id="assetCategory">
             <li>
-              <a [routerLink]="[ '/assert-management/catagory-List' ]" routerLinkActive="active">catagory List</a>
+              <a [routerLink]="[ '/asset-management/assetcategory/asset-category-list' ]"
+                routerLinkActive="active">Category
+                List</a>
             </li>
             <li>
-              <a [routerLink]="[ '/assert-management/add-asset-category' ]" routerLinkActive="active">Create Asset</a>
+              <a [routerLink]="[ '/asset-management/assetcategory/create-asset-category' ]"
+                routerLinkActive="active">Create Asset</a>
             </li>
           </ul>
         </li>
@@ -95,21 +83,39 @@
             Asset Type</a>
           <ul class="collapse list-unstyled" id="assetType">
             <li>
-              <a [routerLink]="[ '/assert-management/asset-type/asset-type-list' ]" routerLinkActive="active">Asset Type List</a>
+              <a [routerLink]="[ '/asset-management/asset-type/asset-type-list' ]" routerLinkActive="active">Asset Type
+                List</a>
             </li>
             <li>
-              <a [routerLink]="[ '/assert-management/asset-type/add-asset-type' ]" routerLinkActive="active">Create Asset Type</a>
+              <a [routerLink]="[ '/asset-management/asset-type/add-asset-type' ]" routerLinkActive="active">Create
+                Asset Type</a>
             </li>
           </ul>
         </li>
       </ul>
     </li>
-    <!-- <li>
-      <a href="#">Portfolio</a>
-    </li>
+
+    <!-- site Management -->
     <li>
-      <a href="#">Contact</a>
-    </li> -->
+      <a href="#site-management" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Site
+        Management</a>
+      <ul class="collapse list-unstyled" id="site-management">
+        <li>
+          <a [routerLink]="['/site-management/site-list']" routerLinkActive="active">Site List
+          </a>
+        </li>
+        <li>
+          <a [routerLink]="['/site-management/add-site']" routerLinkActive="active"> Create Site</a>
+        </li>
+        <li>
+          <a [routerLink]="['/site-management/site-arc' ]" routerLinkActive="active">Site Architecture</a>
+        </li>
+        <li>
+          <a [routerLink]="['/site-management/site-req' ]" routerLinkActive="active">Site Requirement</a>
+        </li>
+      </ul>
+    </li>
+
   </ul>
 
 </nav>

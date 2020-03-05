@@ -12,5 +12,4 @@ export class IpService {
   asset_Port: string = "2018";
   usermanagement_port: string = "2017";
   site_port: string = "2151";
-  asset_port:string = "2018";
 }

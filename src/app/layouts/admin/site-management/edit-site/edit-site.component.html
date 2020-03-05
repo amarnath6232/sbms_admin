@@ -1,0 +1,95 @@
+<!-- Form Starts -->
+<form [formGroup]="editSite" (ngSubmit)="EditSite()">
+
+    <!-- 1st Row -->
+    <!-- Country -->
+    <div class="form-group row">
+        <!-- Label -->
+        <div class="col-2">
+            <label for="country" class="col-form-label">Country</label>
+        </div>
+        <!-- select control -->
+        <div class="col-10">
+            <select id="country" name="country" class="form-control text-center" formControlName="country"
+                placeholder="Select Country" (change)="Filter($event.target.value)">
+               <!--  <option style="font-size: 16px !important;" value="">Select country</option> -->
+                <option *ngFor="let country of countries" [value]="country.name" class="form-control-sm">
+                    {{country.name}}
+                </option>
+            </select>
+        </div>
+    </div>
+
+    <!-- 2nd Row -->
+    <!-- State -->
+    <div class="form-group row">
+        <!-- Label -->
+        <div class="col-2">
+            <label for="state" class="col-form-label">State</label>
+        </div>
+        <!-- select control for state -->
+        <div class="col-10">
+            <select id="state" name="state" class="form-control input-custom-control" formControlName="state"
+                (change)="selectedState($event.target.value)">
+
+                <option *ngFor="let state of states" [value]="state.name" class="form-control input-custom-control-sm">
+                    {{state.name}}
+                </option>
+            </select>
+        </div>
+    </div>
+    <!-- 3rd Row -->
+    <!-- City -->
+    <div class="form-group row">
+        <!-- Label -->
+        <div class="col-2">
+            <label for="city" class="col-form-label">City</label>
+        </div>
+        <!-- Select control for city -->
+        <div class="col-10">
+            <select id="city" name="city" class="form-control text-center" formControlName="city">
+                <option *ngFor="let city of cities" [value]="city.name" class="form-control input-custom-control-sm">
+                    {{city.name}}
+                </option>
+            </select>
+        </div>
+    </div>
+
+    <!-- 4th row -->
+    <!-- Site name -->
+    <div class="form-group row">
+        <!-- Label -->
+        <div class="col-2">
+            <label for="siteName" class="col-form-label">Site Name</label>
+        </div>
+        <!-- Input control for sitename -->
+        <div class="col-10">
+            <input type="text" class="form-control text-center" name="siteName" id="siteName" formControlName="siteName"
+                placeholder="Site Name">
+        </div>
+    </div>
+
+    <!-- 5th row -->
+    <!-- Site alias -->
+    <div class="form-group row">
+        <!-- Label -->
+        <div class="col-2">
+            <label for="siteAlias" class="col-form-label">Site Alias</label>
+        </div>
+        <!-- input control for sitealias -->
+        <div class="col-10">
+            <input type="text" class="form-control text-center" name="siteAlias" id="siteAlias"
+                formControlName="siteAlias" placeholder="Site Alias">
+        </div>
+    </div>
+
+    <!-- 6th Row Update Button -->
+    <div class="d-flex justify-content-end">
+        <button type="submit" class="btn btn-primary btn-sm text-capitalize">
+            <!--  <span class="spinner-border spinner-border-sm" *ngIf="loading" role="status" aria-hidden="true"></span> -->
+            Save
+        </button>
+    </div>
+
+</form>
+<!-- Form Ends -->

@@ -1,6 +1,7 @@
 .wrapper {
     display: flex;
     width: 100%;
+    position: relative;
 }
 
 #content {
@@ -32,4 +33,8 @@
 .form-control.ng-invalid {
     border: 1px solid #ff000052;
     border-radius: 5px;
+}
+
+button:focus {
+    outline: 0px auto -webkit-focus-ring-color !important;
 }
