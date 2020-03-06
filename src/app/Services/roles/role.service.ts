@@ -48,7 +48,7 @@ export class RoleService {
   /* edit permissions */
   editPermissions(permission: permissionsList) {
     console.log("edit pers service", permission);
-    return this.http.put(`${this.ip.ip}${this.port}${this.permissions}/${permission.permissionId}`, permission)
+    return this.http.put(`${this.ip.ip}${this.port}${this.permissions}/${permission.id}`, permission)
       .pipe(map(res => {
         this.getPermissions().subscribe();
         return res;

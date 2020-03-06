@@ -48,7 +48,7 @@ export class PermissionsListComponent implements OnInit {
   }
 
   deletePermission() {
-    this.roleService.deletePermissions(this.copyPermission.permissionId).subscribe(res => {
+    this.roleService.deletePermissions(this.copyPermission.id).subscribe(res => {
       $('#deletePermissionModal').modal('hide');
       this.toastr.success(`${this.copyPermission.name} deleted successfully`, "Success");
     });
