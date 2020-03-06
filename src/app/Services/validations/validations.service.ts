@@ -8,6 +8,23 @@ export class ValidationsService {
 
   constructor() { }
 
+  readonly signin = {
+    loginId: {
+      label: 'User name',
+      minLength: 6,
+      maxLength: 16,
+      err_msg_required: 'User name is required',
+      err_msg_minLength: 'User name must be atleast 8 characters'
+    },
+    password: {
+      label: 'Password',
+      minLength: 6,
+      maxLength: 31,
+      err_msg_required: 'Password is required',
+      err_msg_minLength: 'Password must be atleast 8 characters'
+    }
+  }
+
   readonly permissions = {
     name: {
       label: 'Permission Name',
@@ -16,12 +33,17 @@ export class ValidationsService {
       err_msg_required: 'Permission name is required',
       err_msg_minLength: 'Permission name must be atleast 4 characters'
     },
+    
     description: {
       label: 'Description',
       minLength: 5,
       maxLength: 200,
       err_msg_required: 'Description is required',
       err_msg_minLength: 'Description must be atleast 5 characters'
+    },
+
+    permissionAccess:{
+      label:"Permission Access",
     }
   }
 
@@ -92,8 +114,16 @@ export class ValidationsService {
       label: 'Password',
       minLength: 6,
       maxLength: 31,
-      err_msg_required: 'password is required',
-      err_msg_minLength: "password should be in between 6 to 32 characters",
+      err_msg_required: 'Password is required',
+      err_msg_minLength: "Password should be in between 6 to 32 characters",
+    },
+    confirmPassword: {
+      label: 'Confirm Password',
+      minLength: 6,
+      maxLength: 31,
+      err_msg_required: 'Confirm Password is required',
+      err_msg_minLength: "Confirm Passowrd should be in between 6 to 32 characters",
+      err_msg_mustMatch: "Passowrd and Confirm Password does not match"
     },
     phoneNumber: {
       label: 'Phone Number',

@@ -55,6 +55,36 @@
     </div>
   </div>
 
+  <!-- 3rd row  -->
+  <div class="form-group row">
+
+    <!-- Label -->
+    <div class="col-3">
+      <label for="description" class="col-form-label">{{this.validations.permissionAccess.label}}</label>
+    </div>
+
+    <!-- Radio button Control -->
+    <div class="col-9 d-flex">
+        <div class="form-check mr-2">
+          <!-- read -->
+          <input type="radio" class="form-check-input" name="permissionAccess" id="read" formControlName="permissionAccess" value="READ">
+          <label class="form-check-label" for="read">
+            Read
+          </label>
+        </div>
+  
+        <div class="form-check">
+          <!-- Write -->
+          <input type="radio" class="form-check-input" name="permissionAccess" id="write" formControlName="permissionAccess" value="WRITE">
+          <label class="form-check-label" for="write">
+            Write
+          </label>
+        </div>
+
+    </div>
+
+  </div>
+
   <!-- Submit Button -->
   <div class="d-flex justify-content-end">
     <button type="submit" class="btn btn-primary btn-sm text-capitalize" [disabled]="loading">

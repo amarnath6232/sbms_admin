@@ -1,8 +1,8 @@
 <!-- Component Title -->
-<h3 class="text-capitalize text-center">create User</h3>
+<h3 class="text-capitalize text-center p-2">create User</h3>
 
 <!-- Form Starts -->
-<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+<form class="p-2" [formGroup]="userForm" (ngSubmit)="onSubmit()">
 
   <!-- 1st row -->
   <div class="form-row">
@@ -105,7 +105,7 @@
   <div class="form-row">
 
     <!-- Password -->
-    <div class="form-group col-md-6">
+    <div class="form-group col-md-4">
 
       <!-- label -->
       <label for="password">{{validation.password.label}}</label>
@@ -125,8 +125,34 @@
       </div>
     </div>
 
+    <!-- Confirm Password -->
+
+    <div class="form-group col-md-4">
+
+      <!-- label -->
+      <label for="confirmPassword">{{validation.confirmPassword.label}}</label>
+
+      <!-- Input Control -->
+      <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"
+        formControlName="confirmPassword" placeholder="{{validation.confirmPassword.label}}" autocomplete="off"
+        maxlength="{{validation.confirmPassword.maxLength}}">
+
+      <!-- Error Message -->
+      <div *ngIf="f.confirmPassword.invalid && f.confirmPassword.touched" class="text-danger">
+        <div *ngIf="f.confirmPassword.errors?.required">
+          <small>{{validation.confirmPassword.err_msg_required}}</small>
+        </div>
+        <div *ngIf="f.confirmPassword.errors?.minlength">
+          <small>{{validation.confirmPassword.err_msg_minLength}}</small>
+        </div>
+        <div *ngIf="f.confirmPassword.errors?.mustMatch" class="text-danger">
+          <small>{{validation.confirmPassword.err_msg_mustMatch}}</small>
+        </div>
+      </div>
+    </div>
+
     <!-- Phone Number -->
-    <div class="form-group col-md-6">
+    <div class="form-group col-md-4">
 
       <!-- label -->
       <label for="phoneNumber">{{validation.phoneNumber.label}}</label>

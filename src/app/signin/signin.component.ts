@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthenticationService } from '../Services/authentication.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ValidationsService } from '../Services/validations/validations.service';
 
 
 @Component({
@@ -21,20 +22,27 @@ export class SigninComponent implements OnInit {
   loading = false;
   validations = false;
   reloadonce: string = null;
+  validation;
 
   constructor(private router: Router,
     private authenticationService: AuthenticationService,
     private toastr: ToastrService,
-    private fb: FormBuilder, ) { }
+    private fb: FormBuilder,
+    private validation_ser: ValidationsService) { }
 
   ngOnInit() {
+    this.getValidations();
     this.SigninValidations();
+  }
+
+  getValidations() {
+    this.validation = this.validation_ser.signin;
   }
 
   SigninValidations() {
     this.signinForm = this.fb.group({
-      loginId: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(16)]],
-      password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(16)]],
+      loginId: ['', [Validators.required, Validators.minLength(this.validation.loginId.minLength), Validators.maxLength(this.validation.loginId.maxLength)]],
+      password: ['', [Validators.required, Validators.minLength(this.validation.password.minLength), Validators.maxLength(this.validation.password.maxLength)]],
     })
   }
 

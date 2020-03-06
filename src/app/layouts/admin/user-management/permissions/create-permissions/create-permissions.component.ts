@@ -39,6 +39,7 @@ export class CreatePermissionsComponent implements OnInit {
     this.permission = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(this.validations.name.minLength), Validators.maxLength(this.validations.name.maxLength)]],
       description: ['', [Validators.required, Validators.minLength(this.validations.description.minLength), Validators.maxLength(this.validations.description.maxLength)]],
+      permissionAccess: ['READ', [Validators.required]],
     });
   }
 
@@ -57,7 +58,7 @@ export class CreatePermissionsComponent implements OnInit {
       this.toastr.warning("Please fill all fields", "Warning");
       return
     }
-
+    this.permission.value.permissionAccess.toUpperCase();
     this.roleService.createPermission(this.permission.value).subscribe(res => {
       console.log(res);
       this.toastr.success('Permission created successfully', 'Success')

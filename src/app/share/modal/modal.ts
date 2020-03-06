@@ -48,6 +48,8 @@ export interface permissionsList {
     permissionId?: string;
     name?: string;
     description?: string;
+    permissionAccess?: string;
+    id?: string
 }
 
 export interface CreatePermission {
@@ -65,6 +67,7 @@ export interface User {
     userName: string;
     emailId: string;
     password: string;
+    ConfirmPassword?: string;
     phoneNumber: string;
     city: string;
     state: string;

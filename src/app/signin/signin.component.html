@@ -24,6 +24,7 @@
         <!-- Sign In Form -->
         <div class="col-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 my-auto">
 
+          <!-- Form Starts -->
           <form class="p-5 text-center" [formGroup]="signinForm" (submit)="onSubmit()">
 
             <div class="my-4 text-center">
@@ -33,14 +34,15 @@
 
             <!-- User name -->
             <div class="my-4 text-center">
-              <input type="text" placeholder="User Name" class="form-control text-center input-custom-control"
-                formControlName="loginId" autocomplete="off">
+              <input type="text" placeholder="{{this.validation.loginId.label}}" formControlName="loginId"
+                class="form-control text-center input-custom-control" autocomplete="off"
+                maxlength="{{this.validation.loginId.maxLength}}">
               <div *ngIf="f.loginId.invalid && f.loginId.touched" class="text-danger">
                 <div *ngIf="f.loginId.errors?.required">
-                  <small>Login Id is required</small>
+                  <small>{{this.validation.loginId.err_msg_required}}</small>
                 </div>
                 <div *ngIf="f.loginId.errors?.minlength">
-                  <small>User Name must be atleast 8 characters</small>
+                  <small>{{this.validation.loginId.err_msg_minLength}}</small>
                 </div>
               </div>
             </div>
@@ -48,20 +50,19 @@
             <!-- Password -->
             <div class="my-4 text-center">
               <input type="password" class="form-control text-center input-custom-control" formControlName="password"
-                maxlength="16" autocomplete="off" placeholder="Password">
+                autocomplete="off" placeholder="{{this.validation.password.label}}"
+                maxlength="{{this.validation.password.maxLength}}">
               <div *ngIf="f.password.invalid && f.password.touched" class="text-danger">
                 <div *ngIf="f.password.errors?.required">
-                  <small>Password is required</small>
+                  <small>{{this.validation.password.err_msg_required}}</small>
                 </div>
                 <div *ngIf="f.password.errors?.minlength">
-                  <small>Password must be atleast 8 characters</small>
-                </div>
-                <div *ngIf="f.password.errors?.pattern">
-                  <small>Accept only alphabetics with space</small>
+                  <small>{{this.validation.password.err_msg_minLength}}</small>
                 </div>
               </div>
             </div>
 
+            <!-- Submit Button -->
             <div class="row my-4 p-3">
               <button type="submit" class="btn btn-signin btn-block" [disabled]="!signinForm.valid || loading">
                 <span *ngIf="loading" class="spinner-border spinner-border-sm" (click)="onSubmit()" role="status"
@@ -78,6 +79,8 @@
             </div>
 
           </form>
+
+          <!-- Form Ends -->
         </div>
 
       </div>

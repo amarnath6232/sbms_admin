@@ -1,5 +1,5 @@
 <!-- Component title -->
-<h3 class="text-capitalize text-center">Permissions List</h3>
+<h3 class="text-capitalize text-center p-2">Permissions List</h3>
 
 <!-- Permissions List -->
 <table class="table">
@@ -8,17 +8,19 @@
       <th scope="col">#</th>
       <th scope="col">Permission Name</th>
       <th scope="col">Description</th>
+      <th scope="col">Permission Access</th>
       <th scope="col">Actions</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngIf="permissionsList.length === 0" aria-colspan="4" class="text-center">
-      <td colspan="4">No Permissions</td>
+      <td colspan="5">No Permissions</td>
     </tr>
     <tr *ngFor="let item of permissionsList; let i=index">
       <th>{{i + 1}}</th>
       <td>{{item.name}}</td>
       <td>{{item.description}}</td>
+      <td>{{item.permissionAccess}}</td>
       <td>
         <div class="row">
           <button type="button" class="btn btn-warning mr-2 btn-sm" data-toggle="modal"

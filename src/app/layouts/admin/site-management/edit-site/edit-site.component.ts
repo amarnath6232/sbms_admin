@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 
 import { SiteService } from 'src/app/Services/site.service';
 import { Country, State, City, Sites } from 'src/app/share/modal/modal';
+import { ValidationsService } from 'src/app/Services/validations/validations.service';
 
 @Component({
   selector: 'app-edit-site',
@@ -17,14 +18,24 @@ export class EditSiteComponent implements OnInit {
   states: State[] = [];
   cities: City[] = [];
   selectedSite: Sites;
+  validations;
+
   constructor(private fb: FormBuilder,
     private siteService: SiteService,
-    private toastr: ToastrService) { }
+    private toastr: ToastrService,
+    private validate_ser: ValidationsService) {
+    this.init_validations();
+  }
 
   ngOnInit(): void {
+    this.init_validations();
     this.getCountries();
     this.init_Site();
     this.sub_edit_site();
+  }
+
+  init_validations() {
+    this.validations = this.validate_ser.creastesite;
   }
 
   init_Site() {
@@ -32,7 +43,7 @@ export class EditSiteComponent implements OnInit {
       country: ['', [Validators.required]],
       state: ['', [Validators.required]],
       city: ['', [Validators.required]],
-      siteName: ['', [Validators.required]],
+      siteName: ['', [Validators.required, Validators.minLength(this.validations.siteName.minLength), Validators.maxLength(this.validations.siteName.maxLength)]],
       createdBy: [''],
       createdDate: [''],
       modifiedBy: [''],

@@ -7,6 +7,7 @@ import { Country, State, City, RoleName, permissionsList } from 'src/app/share/m
 import { UserService } from 'src/app/Services/roles/user.service';
 import { RoleService } from 'src/app/Services/roles/role.service';
 import { ValidationsService } from 'src/app/Services/validations/validations.service';
+import { MustMatch } from 'src/app/signup/mustMatch';
 
 @Component({
   selector: 'app-create-users',
@@ -36,7 +37,6 @@ export class CreateUsersComponent implements OnInit {
     private toastr: ToastrService,
     private router: Router,
     private validation_ser: ValidationsService) {
-
   }
 
   ngOnInit(): void {
@@ -65,13 +65,17 @@ export class CreateUsersComponent implements OnInit {
       userName: ['', [Validators.required, Validators.minLength(this.validation.userName.minLength), Validators.maxLength(this.validation.userName.maxLength)]],
       emailId: ['', [Validators.required, Validators.pattern(this.validation.emailId.pattern)]],
       password: ['', [Validators.required, Validators.minLength(this.validation.password.minLength), Validators.maxLength(this.validation.password.maxLength)]],
+      confirmPassword: ['', [Validators.required, Validators.minLength(this.validation.confirmPassword.minLength), Validators.maxLength(this.validation.confirmPassword.maxLength)]],
       phoneNumber: ['', [Validators.required, Validators.minLength(this.validation.phoneNumber.minLength), Validators.maxLength(this.validation.phoneNumber.maxLength)]],
       country: ['', [Validators.required]],
       state: ['', [Validators.required]],
       city: ['', [Validators.required]],
       role: ['', [Validators.required]],
       permissions: this.fb.array([], [Validators.required]),
-    })
+    }, {
+      validator: MustMatch('password', 'confirmPassword')
+    }
+    )
   }
 
   getPermissionsList() {
@@ -270,6 +274,10 @@ export class CreateUsersComponent implements OnInit {
       (err) => {
         console.log(err);
         this.spin = false;
+        if (err.status == 400) {
+          this.toastr.error(err.error.errorMessage, 'Error');
+        }
+
       })
   }
 

@@ -1,0 +1,10 @@
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"] {
+    border-radius: 7px;
+}
+
+textarea {
+    resize: none !important;
+}

@@ -42,6 +42,7 @@ export class EditPermissionsComponent implements OnInit {
       this.permissionEdit.controls['createdDate'].patchValue(val.createdDate);
       this.permissionEdit.controls['modifiedBy'].patchValue(val.modifiedBy);
       this.permissionEdit.controls['permissionId'].patchValue(val.permissionId);
+      this.permissionEdit.controls['permissionAccess'].patchValue(val.permissionAccess);
     })
   }
 
@@ -53,6 +54,7 @@ export class EditPermissionsComponent implements OnInit {
       createdDate: [''],
       modifiedBy: [''],
       permissionId: [''],
+      permissionAccess: ['']
     });
   }
 

@@ -1,9 +1,35 @@
 <nav id="sidebar">
-  <div class="sidebar-header mx-auto">
-    <img src="assets/Images/logo.png" alt="Logo" width="80">
+
+  <!-- Logo with close bar -->
+  <div class="sidebar-brand text-center">
+    <a [routerLink]="['/']" routerLinkActive="active">
+      <img src="assets/Images/logo.png" height="45" alt="SBMS logo">
+    </a>
   </div>
 
-  <ul class="list-unstyled components">
+  <hr>
+
+  <!-- User Info -->
+  <div class="sidebar-header">
+    <div class="user-pic">
+      <img class="img-responsive img-rounded"
+        src="https://raw.githubusercontent.com/azouaoui-med/pro-sidebar-template/gh-pages/src/img/user.jpg"
+        alt="User picture">
+    </div>
+    <div class="user-info">
+      <span class="user-name">
+        <strong class="text-capitalize">{{userName}}</strong>
+      </span>
+      <span class="user-role">Administrator</span>
+      <span class="user-status">
+        <i class="fa fa-circle"></i>
+        <span>Online</span>
+      </span>
+    </div>
+  </div>
+
+  <ul class="list-unstyled components my-2">
+
     <li>
       <a [routerLink]="[ '/dashboard' ]" routerLinkActive="active">Dashboard</a>
     </li>
@@ -48,7 +74,7 @@
             <li>
               <a [routerLink]="[ '/user-management/users/users-list' ]" routerLinkActive="active">Users List</a>
             </li>
-            <li>
+            <li *ngIf="some.includes('Create User')">
               <a [routerLink]="[ '/user-management/users/create-users' ]" routerLinkActive="active">Create Users</a>
             </li>
           </ul>

@@ -25,6 +25,7 @@ export class SiteListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getSitesList();
+    this.subSiteListFromService();
   }
 
   getSitesList() {
@@ -51,7 +52,6 @@ export class SiteListComponent implements OnInit {
     console.log(this.sites);
   }
 
-
   copy_site_from_table(site) {
     this.copysite = site;
     this.siteService.copy_site.next(site);
@@ -62,10 +62,7 @@ export class SiteListComponent implements OnInit {
       (res) => {
         $('#deleteSiteModal').modal('hide');
         this.toastr.success(`${this.copysite.siteName} deleted successfully`, "Success");
-        this.ngOnInit();
       });
   }
-
-
 
 }
