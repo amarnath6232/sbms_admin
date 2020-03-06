@@ -1,40 +1,40 @@
 .wrapper {
-    display: flex;
-    width: 100%;
-    position: relative;
+  display: flex;
+  width: 100%;
+  position: relative;
 }
 
 #content {
-    width: calc(100% - var(--sideBar-width));
-    min-height: 100vh;
-    transition: all 0.3s;
-    position: absolute;
-    top: 0;
-    right: 0;
+  width: calc(100% - var(--sideBar-width));
+  min-height: 100vh;
+  transition: all 0.3s;
+  position: absolute;
+  top: 0;
+  right: 0;
 }
 
 #content.active {
-    width: 100%;
+  width: 100%;
 }
 
 .height {
-    min-height: calc(100vh - var(--navBar-height));
+  min-height: calc(100vh - var(--navBar-height));
 }
 
 .mandetory {
-    color: red;
+  color: red;
 }
 
 .form-control.ng-untouched {
-    border: 1px solid #ced4da !important;
-    border-radius: 5px;
+  border: 1px solid #ced4da !important;
+  border-radius: 5px;
 }
 
 .form-control.ng-invalid {
-    border: 1px solid #ff000052;
-    border-radius: 5px;
+  border: 1px solid #ff000052;
+  border-radius: 5px;
 }
 
 button:focus {
-    outline: 0px auto -webkit-focus-ring-color !important;
+  outline: 0px auto -webkit-focus-ring-color !important;
 }

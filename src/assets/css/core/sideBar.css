@@ -62,7 +62,9 @@ a[aria-expanded="true"] {
   text-decoration: none;
 }
 
-a {color: var(--sideBar-list-color);}
+a {
+  color: var(--sideBar-list-color);
+}
 
 a[data-toggle="collapse"] {
   position: relative;
