@@ -9,7 +9,7 @@
       <th scope="col" class="text-capitalize">Role Name</th>
       <th scope="col" class="text-capitalize">Description</th>
       <th scope="col" class="text-capitalize">permissions List</th>
-      <th scope="col" class="text-capitalize">Actions</th>
+      <th scope="col" class="text-capitalize" *ngIf="enable_buttons.includes('P00006') || enable_buttons.includes('P00007')">Actions</th>
     </tr>
   </thead>
   <tbody>
@@ -23,14 +23,14 @@
       <td>
         <div *ngFor="let per of item.permissionsId">{{per}}</div>
       </td>
-      <td>
+      <td *ngIf="enable_buttons.includes('P00006') || enable_buttons.includes('P00007')">
         <div class="row">
           <button type="button" class="btn btn-warning mr-2 btn-sm" data-toggle="modal" data-target="#editRoleModal"
-            (click)="copy_role_from_table(item);">
+            (click)="copy_role_from_table(item);" *ngIf="enable_buttons.includes('P00006')">
             Edit
           </button>
           <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteRoleModal"
-            (click)="copy_role_from_table(item);">
+            (click)="copy_role_from_table(item);" *ngIf="enable_buttons.includes('P00007')">
             Delete
           </button>
         </div>

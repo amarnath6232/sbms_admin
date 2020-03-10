@@ -13,7 +13,7 @@
         <th scope="col">City</th>
         <th scope="col">Role</th>
         <th scope="col">Permissions List</th>
-        <th scope="col">Actions</th>
+        <th scope="col" *ngIf="enable_buttons.includes('P000010') || enable_buttons.includes('P000011')">Actions</th>
       </tr>
     </thead>
     <tbody>
@@ -33,15 +33,15 @@
         <td>{{user.city}}</td>
         <td>{{user.role}}</td>
         <td>
-          <div *ngFor="let per of user.permissions">{{per}}</div>
+          <div *ngFor="let per of user.permissionsId">{{per}}</div>
         </td>
-        <td>
+        <td *ngIf="enable_buttons.includes('P000010') || enable_buttons.includes('P000011')">
           <button type="button" class="btn btn-primary btn-sm mr-2" data-toggle="modal"
-            data-target=".bd-example-modal-lg" (click)="updateUser(user)">Edit</button>
+            data-target=".bd-example-modal-lg" (click)="updateUser(user)" *ngIf="enable_buttons.includes('P000010')">Edit</button>
           <!-- <button class="btn btn-info btn-sm m-2" (click)="updateUser(user)" title="Edit" data-toggle="modal"
             data-target="#editUser" data-backdrop="static" data-keyboard="false">Edit</button> -->
           <button class="btn btn-danger btn-sm m-2" (click)="deleteUser(user)" title="Delete" data-toggle="modal"
-            data-target="#deleteUser" data-backdrop="static" data-keyboard="false">Delete</button>
+            data-target="#deleteUser" data-backdrop="static" data-keyboard="false" *ngIf="enable_buttons.includes('P000011')">Delete</button>
         </td>
       </tr>
     </tbody>

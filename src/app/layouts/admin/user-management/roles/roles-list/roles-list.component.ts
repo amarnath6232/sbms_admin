@@ -3,6 +3,7 @@ import { ToastrService } from 'ngx-toastr';
 
 import { RoleService } from 'src/app/Services/roles/role.service';
 import { RoleList } from 'src/app/share/modal/modal';
+import { AuthenticationService } from 'src/app/Services/authentication.service';
 declare var $;
 
 @Component({
@@ -15,21 +16,32 @@ export class RolesListComponent implements OnInit {
 
   roleList: RoleList[];
   copy_role: RoleList;
+  enable_buttons: string[] = [];
 
   constructor(private roleService: RoleService,
-    private toastr: ToastrService) {
+    private toastr: ToastrService,
+    private auth: AuthenticationService) {
   }
 
   ngOnInit(): void {
     this.getrolesList();
     this.subRoleListFromService();
     this.sub_Copy_role();
+    this.sub_auth_permission();
   }
 
   getrolesList() {
     this.roleService.getRoleList().subscribe();
     this.roleList = this.roleService.roleList.value;
     console.log(this.roleList);
+  }
+
+  sub_auth_permission() {
+    this.auth.permissions.subscribe(val => {
+      if (val.length != 0) {
+        this.enable_buttons = val;
+      }
+    })
   }
 
   copy_role_from_table(role) {

@@ -3,6 +3,7 @@ import { ToastrService } from 'ngx-toastr';
 
 import { RoleService } from 'src/app/Services/roles/role.service';
 import { permissionsList } from 'src/app/share/modal/modal';
+import { AuthenticationService } from 'src/app/Services/authentication.service';
 declare var $;
 
 @Component({
@@ -16,13 +17,17 @@ export class PermissionsListComponent implements OnInit {
   permissionsList: permissionsList[] = [];
   copyPermission: permissionsList;
 
+  enable_buttons: string[] = [];
+
   constructor(private roleService: RoleService,
-    private toastr: ToastrService) {
+    private toastr: ToastrService,
+    private auth: AuthenticationService) {
     this.subscribePermissionsList();
   }
 
   ngOnInit(): void {
     this.getPermisiionsList();
+    this.sub_auth_permission();
   }
 
   ngOnDestroy(): void {
@@ -48,7 +53,7 @@ export class PermissionsListComponent implements OnInit {
   }
 
   deletePermission() {
-    this.roleService.deletePermissions(this.copyPermission.id).subscribe(res => {
+    this.roleService.deletePermissions(this.copyPermission.id).subscribe(() => {
       $('#deletePermissionModal').modal('hide');
       this.toastr.success(`${this.copyPermission.name} deleted successfully`, "Success");
     });
@@ -63,6 +68,14 @@ export class PermissionsListComponent implements OnInit {
       }
     });
     console.log(this.permissionsList);
+  }
+
+  sub_auth_permission() {
+    this.auth.permissions.subscribe(val => {
+      if (val.length != 0) {
+        this.enable_buttons = val;
+      }
+    })
   }
 
 }

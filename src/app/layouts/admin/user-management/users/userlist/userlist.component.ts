@@ -3,6 +3,7 @@ import { ToastrService } from 'ngx-toastr';
 
 import { User, Country, State, City, RoleName } from 'src/app/share/modal/modal';
 import { UserService } from 'src/app/Services/roles/user.service';
+import { AuthenticationService } from 'src/app/Services/authentication.service';
 
 @Component({
   selector: 'app-userlist',
@@ -21,13 +22,24 @@ export class UserlistComponent implements OnInit {
   roles: RoleName[] = [];
   extensionNumber = '';
   extensionNo: any;
+  enable_buttons: string[] = [];
 
   constructor(private user: UserService,
-    private toastr: ToastrService) { }
+    private toastr: ToastrService,
+    private auth: AuthenticationService) { }
 
   ngOnInit(): void {
     this.getUsers();
     this.subscribe_user_List();
+    this.sub_auth_permission();
+  }
+
+  sub_auth_permission() {
+    this.auth.permissions.subscribe(val => {
+      if (val.length != 0) {
+        this.enable_buttons = val;
+      }
+    })
   }
 
   getUsers() {

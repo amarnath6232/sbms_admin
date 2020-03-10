@@ -9,7 +9,7 @@
       <th scope="col">Permission Name</th>
       <th scope="col">Description</th>
       <th scope="col">Permission Access</th>
-      <th scope="col">Actions</th>
+      <th scope="col" *ngIf="enable_buttons.includes('P00002') || enable_buttons.includes('P00003')">Actions</th>
     </tr>
   </thead>
   <tbody>
@@ -21,14 +21,14 @@
       <td>{{item.name}}</td>
       <td>{{item.description}}</td>
       <td>{{item.permissionAccess}}</td>
-      <td>
+      <td *ngIf="enable_buttons.includes('P00002') || enable_buttons.includes('P00003')">
         <div class="row">
-          <button type="button" class="btn btn-warning mr-2 btn-sm" data-toggle="modal"
+          <button type="button" class="btn btn-warning mr-2 btn-sm" data-toggle="modal" *ngIf="enable_buttons.includes('P00002')"
             data-target="#editPermissionModal" (click)="copyPermissionFromTable(item)">
             Edit
           </button>
           <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deletePermissionModal"
-            (click)="copyPermissionFromTable(item)">
+            (click)="copyPermissionFromTable(item)" *ngIf="enable_buttons.includes('P00003')">
             Delete
           </button>
         </div>
