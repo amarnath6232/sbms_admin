@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 
 import { RoleService } from 'src/app/Services/roles/role.service';
 import { ValidationsService } from 'src/app/Services/validations/validations.service';
+import { permissionsList } from 'src/app/share/modal/modal';
 
 @Component({
   selector: 'app-create-roles',
@@ -16,6 +17,8 @@ export class CreateRolesComponent implements OnInit {
 
   createRole: FormGroup;
   permissions = [];
+  readPermissions: permissionsList[] = [];
+  writePermissions: permissionsList[] = [];
   validations;
   loading: boolean;
 
@@ -28,10 +31,17 @@ export class CreateRolesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.roleService.getPermissions().subscribe();
+    this.roleService.getPermissionsWith_Read_wirte().subscribe();
     this.getpermissionsFromService();
-    this.init_validations();
     this.initCreateRole();
+    this.bindAlias();
+  }
+
+
+  bindAlias() {
+    this.createRole.controls['name'].valueChanges.subscribe((val) => {
+      this.createRole.controls['aliasName'].setValue(val.toLowerCase())
+    })
   }
 
   init_validations() {
@@ -39,11 +49,16 @@ export class CreateRolesComponent implements OnInit {
   }
 
   getpermissionsFromService() {
-    this.roleService.permissionList.subscribe(val => {
+    this.roleService.permissionList_read_write.subscribe(val => {
       console.log("val", val);
-      if (val.length != 0) {
-        this.permissions = val;
+      if (val != null) {
+        this.readPermissions = val.READ;
+        this.writePermissions = val.WRITE;
+        this.init_read_permissions();
+        this.init_write_permissions();
       }
+      console.log("read per", this.readPermissions);
+      console.log("write per", this.writePermissions);
     });
   }
 
@@ -51,24 +66,55 @@ export class CreateRolesComponent implements OnInit {
     this.createRole = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(this.validations.name.minLength), Validators.maxLength(this.validations.name.maxLength)]],
       description: ['', [Validators.required, Validators.minLength(this.validations.description.minLength), Validators.maxLength(this.validations.description.maxLength)]],
-      permissions: this.fb.array(this.permissions, [Validators.required]),
+      aliasName: ['', [Validators.required]],
+      permissionsId: this.fb.array([]),
+      readPermissions: this.fb.array(this.readPermissions),
+      writePermissions: this.fb.array(this.writePermissions)
     })
   }
 
-  onCheckboxChange(e) {
-    const permissions: FormArray = this.createRole.get('permissions') as FormArray;
+  init_read_permissions() {
+    const read_Permissions: FormArray = this.createRole.get('readPermissions') as FormArray;
+    read_Permissions.controls = [];
+    this.readPermissions.forEach((val, i) => {
+      read_Permissions.push(new FormControl({
+        'checked': false,
+        'name': this.readPermissions[i].name,
+        'permissionId': this.readPermissions[i].permissionId,
+        'id': this.readPermissions[i].id
+      }))
+    });
+    console.log(read_Permissions.value);
+  }
 
-    if (e.target.checked) {
-      permissions.push(new FormControl(e.target.value));
+  init_write_permissions() {
+    const write_Permissions: FormArray = this.createRole.get('writePermissions') as FormArray;
+    write_Permissions.controls = [];
+    this.writePermissions.forEach((val, i) => {
+      write_Permissions.push(new FormControl({
+        'checked': false,
+        'name': this.writePermissions[i].name,
+        'permissionId': this.writePermissions[i].permissionId,
+        'id': this.writePermissions[i].id
+      }))
+    })
+  }
+
+  onCheckboxChangeRead(event, index) {
+    const permissions: FormArray = this.createRole.get('readPermissions') as FormArray;
+    if (event.target.checked) {
+      permissions.value[index]['checked'] = true;
     } else {
-      let i: number = 0;
-      permissions.controls.forEach((item: FormControl) => {
-        if (item.value == e.target.value) {
-          permissions.removeAt(i);
-          return;
-        }
-        i++;
-      });
+      permissions.value[index]['checked'] = false;
+    }
+  }
+
+  onCheckboxChangeWrite(event, index) {
+    const permissions: FormArray = this.createRole.get('writePermissions') as FormArray;
+    if (event.target.checked) {
+      permissions.value[index]['checked'] = true;
+    } else {
+      permissions.value[index]['checked'] = false;
     }
   }
 
@@ -80,6 +126,23 @@ export class CreateRolesComponent implements OnInit {
     return this.createRole.controls;
   }
 
+
+  push_permissionId() {
+    const permissionsId: FormArray = this.createRole.get('permissionsId') as FormArray;
+    const write_Permissions: FormArray = this.createRole.get('writePermissions') as FormArray;
+    const read_Permissions: FormArray = this.createRole.get('readPermissions') as FormArray;
+    for (let index = 0; index < this.readPermissions.length; index++) {
+      if (read_Permissions.value[index]['checked'] == true) {
+        permissionsId.push(new FormControl(read_Permissions.value[index]['permissionId']))
+      }
+    }
+    for (let index = 0; index < this.writePermissions.length; index++) {
+      if (write_Permissions.value[index]['checked'] == true) {
+        permissionsId.push(new FormControl(write_Permissions.value[index]['permissionId']))
+      }
+    }
+  }
+
   sendCreateRole() {
     this.loading = true;
     console.log(this.createRole.value);
@@ -87,6 +150,10 @@ export class CreateRolesComponent implements OnInit {
       this.loading = false;
       return
     }
+    this.push_permissionId();
+    console.clear();
+    console.log(this.createRole.value);
+
     this.roleService.createRole(this.createRole.value).subscribe(res => {
       console.log(res);
       this.toastr.success("Role created successfully", "Success");

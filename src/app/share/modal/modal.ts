@@ -35,9 +35,10 @@ export interface RoleList {
     modifiedDate?: string;
     roleId?: string;
     name?: string;
+    id?: string;
     aliasName?: string;
     description?: string;
-    permissions: string[]
+    permissionsId?: string[];
 }
 
 export interface permissionsList {
@@ -50,6 +51,10 @@ export interface permissionsList {
     description?: string;
     permissionAccess?: string;
     id?: string
+}
+export interface Permission_read_write {
+    READ: permissionsList[];
+    WRITE: permissionsList[];
 }
 
 export interface CreatePermission {
@@ -73,7 +78,7 @@ export interface User {
     state: string;
     country: string;
     role?: string;
-    permissions?: string[];
+    permissionsId?: string[];
 }
 
 
@@ -98,6 +103,7 @@ export interface RoleName {
     roleId: string;
     aliasName: string;
     name: string;
+    id?: string;
 }
 
 export interface Sites {

@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { ErrorHandlerService } from '../error-handler.service';
 import { catchError, map } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
-import { permissionsList, RoleList } from 'src/app/share/modal/modal';
+import { permissionsList, RoleList, Permission_read_write } from 'src/app/share/modal/modal';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +17,7 @@ export class RoleService {
 
   roleList = new BehaviorSubject<RoleList[]>([]);
   permissionList = new BehaviorSubject<permissionsList[]>([]);
+  permissionList_read_write = new BehaviorSubject<Permission_read_write>(null);
   edit_Permission_Value = new BehaviorSubject<permissionsList>(null);
   copy_role = new BehaviorSubject<RoleList>(null);
 
@@ -40,6 +41,18 @@ export class RoleService {
         if (res != null) {
           this.permissionList.next(res);
           console.log("permissions", res);
+        }
+        return res;
+      }), catchError(this.errHandler.handleError));
+  }
+
+  /* get permissions saperate read wirte */
+  getPermissionsWith_Read_wirte() {
+    return this.http.get<Permission_read_write>(`${this.ip.ip}${this.port}${this.permissions}/getpermissions`)
+      .pipe(map(res => {
+        if (res != null) {
+          this.permissionList_read_write.next(res);
+          console.log("permissionsWith_Read_wirte", res);
         }
         return res;
       }), catchError(this.errHandler.handleError));
@@ -75,13 +88,14 @@ export class RoleService {
     return this.http.get<any[]>(`${this.ip.ip}${this.port}${this.roles}/`)
       .pipe(map(res => {
         this.roleList.next(res);
+        console.log(res);
         return res;
       }), catchError(this.errHandler.handleError));
   }
 
   /* role update */
-  updateRole(roles) {
-    return this.http.put(`${this.ip.ip}${this.port}${this.roles}/${roles.roleId}`, roles)
+  updateRole(roles: RoleList) {
+    return this.http.put(`${this.ip.ip}${this.port}${this.roles}/${roles.id}`, roles)
       .pipe(map(res => {
         this.getRoleList().subscribe();
         return res;

@@ -67,21 +67,20 @@
 
     <!-- Radio button Control -->
     <div class="col-sm-10 d-flex">
-        <div class="form-check mr-2">
-          <!-- read -->
-          <input type="radio" class="form-check-input" name="permissionAccess" id="read" formControlName="permissionAccess" value="READ">
-          <label class="form-check-label" for="read">
-            Read
-          </label>
-        </div>
-  
-        <div class="form-check">
-          <!-- Write -->
-          <input type="radio" class="form-check-input" name="permissionAccess" id="write" formControlName="permissionAccess" value="WRITE">
-          <label class="form-check-label" for="write">
-            Write
-          </label>
-        </div>
+      
+      <!-- read -->
+      <div class="custom-control custom-radio mr-2">
+        <input type="radio" id="read" name="permissionAccess" class="custom-control-input"
+          formControlName="permissionAccess" value="READ">
+        <label class="custom-control-label text-capitalize" for="read">Read</label>
+      </div>
+
+      <!-- write -->
+      <div class="custom-control custom-radio">
+        <input type="radio" id="write" name="permissionAccess" class="custom-control-input"
+          formControlName="permissionAccess" value="WRITE">
+        <label class="custom-control-label text-capitalize" for="write">Write</label>
+      </div>
 
     </div>
 

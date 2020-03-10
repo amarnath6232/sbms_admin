@@ -2,10 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as jwt_decode from 'jwt-decode';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { catchError, map, take, tap } from 'rxjs/operators';
+import { catchError, map, take, tap, delay } from 'rxjs/operators';
 import { ErrorHandlerService } from './error-handler.service';
 import { IpService } from './ip.service';
 import { Router } from '@angular/router';
+import { Encode_Permission } from '../share/encode_permissions';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,7 @@ export class AuthenticationService {
   token: string = localStorage.getItem('token') || null;
   refresh_Token = null;
   decoded: any;
+  permissions = new BehaviorSubject<string[]>([]);
 
   constructor(private http: HttpClient,
     private errHandler: ErrorHandlerService,
@@ -50,8 +52,15 @@ export class AuthenticationService {
       if (this.token != null && this.token != undefined && this.token.length != 0) {
         this.decoded = jwt_decode(this.token);
         this.userName.next(this.decoded.sub);
-        // console.log(this.userName);
         console.log(this.decoded);
+        try {
+          let encode = new Encode_Permission(JSON.parse(localStorage.getItem('permissions')));
+          const decoded_permission = encode.decoded();
+          this.permissions.next(decoded_permission);
+        } catch (error) {
+          this.logout();
+          this.router.navigate(['/signIn']);
+        }
         return true;
       }
       else
@@ -67,9 +76,12 @@ export class AuthenticationService {
   authenticate(loginId: string, password: string) {
     return this.http.post(`${this.ip.ip}${this.ip.login_Port}/rest/v1/login/signin`, { loginId, password }).pipe(map(res => {
       if (res) {
-        // console.log(res);
+        console.log(res);
         this.token = res['jwtToken'];
+        const permissions = res['permissions'];
         localStorage.setItem('token', this.token);
+        let encode = new Encode_Permission(permissions);
+        localStorage.setItem('permissions', JSON.stringify(encode.encode()));;
         this.decodeToken();
         return true;
       }
@@ -79,9 +91,16 @@ export class AuthenticationService {
   }
 
 
-  private logout() {
-    localStorage.removeItem('token');
+  logout() {
+    this.remove_localStorage();
     this.token = null;
     this.islogin = false;
+    this.router.navigate(['/signIn']);
   }
+
+  private remove_localStorage() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('permissions');
+  }
+
 }

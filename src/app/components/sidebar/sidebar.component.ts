@@ -9,21 +9,30 @@ import { AuthenticationService } from 'src/app/Services/authentication.service';
 
 export class SidebarComponent implements OnInit {
 
-  some: any[];
+  permissionsIds = [];
   userName;
 
   constructor(private auth: AuthenticationService) { }
 
   ngOnInit() {
+    console.log(this.permissionsIds);
     this.displayUserName();
-    this.some = ['Create User', 'Edit User', 'Delete User', 'Create Permission',
-      'Edit Permission', 'Delete Permission', 'Create Role', 'Edit Role',
-      'Delete Role', 'Create Asset', 'Edit Asset']
+    this.sub_permissions();
   }
 
   displayUserName() {
     this.auth.userName.subscribe(val => {
       this.userName = val;
+    })
+  }
+
+  sub_permissions() {
+    this.auth.permissions.subscribe(val => {
+      if (val.length != 0) {
+        this.permissionsIds = val;
+        console.log(this.permissionsIds);
+        
+      }
     })
   }
 

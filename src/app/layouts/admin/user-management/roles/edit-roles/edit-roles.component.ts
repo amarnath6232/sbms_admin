@@ -20,6 +20,8 @@ export class EditRolesComponent implements OnInit {
   loading: boolean;
   edit_role_permissions = [];
   validations;
+  readPermissions: permissionsList[] = [];
+  writePermissions: permissionsList[] = [];
 
   constructor(private fb: FormBuilder,
     private roleService: RoleService,
@@ -29,11 +31,10 @@ export class EditRolesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getPermissionsList();
-    this.getpermissionsFromService();
-    this.init_role();
-    this.sub_copy_role();
     this.init_validations();
+    this.init_role();
+    this.getPermissionsWith_Read_wirte();
+    this.sub_copy_role();
   }
 
   init_validations() {
@@ -44,12 +45,28 @@ export class EditRolesComponent implements OnInit {
     this.edit_Role = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(this.validations.name.minLength), Validators.maxLength(this.validations.name.maxLength)]],
       description: ['', [Validators.required, Validators.minLength(this.validations.description.minLength), Validators.maxLength(this.validations.description.maxLength)]],
-      permissions: this.fb.array([], [Validators.required]),
+      permissionsId: this.fb.array([]),
       createdBy: [''],
       createdDate: [''],
       modifiedBy: [''],
       modifiedDate: [''],
       roleId: [''],
+      aliasName: [''],
+      id: [''],
+      readPermissions: this.fb.array([]),
+      writePermissions: this.fb.array([])
+    })
+  }
+
+  getPermissionsWith_Read_wirte() {
+    this.roleService.getPermissionsWith_Read_wirte().subscribe();
+    this.roleService.permissionList_read_write.subscribe(val => {
+      if (val != null) {
+        this.readPermissions = val.READ;
+        this.writePermissions = val.WRITE;
+        this.init_read_permissions();
+        this.init_write_permissions();
+      }
     })
   }
 
@@ -62,72 +79,96 @@ export class EditRolesComponent implements OnInit {
         this.edit_Role.controls['description'].patchValue(val.description);
         this.edit_Role.controls['modifiedBy'].patchValue(val.modifiedBy);
         this.edit_Role.controls['modifiedDate'].patchValue(val.modifiedDate);
+        this.edit_Role.controls['aliasName'].patchValue(val.aliasName);
         this.edit_Role.controls['roleId'].patchValue(val.roleId);
-        this.edit_role_permissions = val.permissions;
-        this.update_Permissions();
-        this.update_checkbox();
+        this.edit_Role.controls['id'].patchValue(val.id);
+        this.edit_role_permissions = val.permissionsId;
+        setTimeout(() => {
+          this.update_chexkBox();
+        }, 200);
       }
     })
   }
 
-  update_Permissions() {
-    const permissions = this.edit_Role.controls['permissions'] as FormArray;
-    console.log(" before update form permissions", permissions);
-    permissions.controls = [];
-    if (this.permissionsList.length != 0) {
-      this.permissionsList.forEach((val) => {
-        if (val) {
-          permissions.push(new FormControl({
-            checked: false,
-            name: val.name
-          }
-          ));
-        }
-      });
-    }
-    console.log("after form permissions", permissions);
-  }
-
-  update_checkbox() {
-    const permissions = this.edit_Role.get('permissions') as FormArray;
-    console.log("edit_role_permissions", this.edit_role_permissions);
-    console.log("permissions", permissions.value);
-    console.log("permissions list", this.permissionsList);
-    if (this.permissionsList.length != 0) {
-      for (let i = 0; i < this.permissionsList.length; i++) {
-        for (let j = 0; j < this.edit_role_permissions.length; j++) {
-          if (this.permissionsList[i].name == this.edit_role_permissions[j]) {
-            permissions.value[i]['checked'] = true;
-            break;
-          }
-        }
-      }
-    }
-  }
-
-  getPermissionsList() {
-    this.roleService.getPermissions().subscribe(res => {
-      if (res) {
-        this.permissionsList = res;
-        this.sub_copy_role();
-      }
+  init_read_permissions() {
+    const read_Permissions: FormArray = this.edit_Role.get('readPermissions') as FormArray;
+    read_Permissions.controls = [];
+    this.readPermissions.forEach((val, i) => {
+      read_Permissions.push(new FormControl({
+        'checked': false,
+        'name': this.readPermissions[i].name,
+        'permissionId': this.readPermissions[i].permissionId,
+        'id': this.readPermissions[i].id
+      }))
     });
   }
 
-  getpermissionsFromService() {
-    this.roleService.permissionList.subscribe(val => {
-      console.log("val", val);
-      if (val.length != 0) {
-        this.permissionsList = val;
-        // this.update_Permissions();
-      }
-    });
+  init_write_permissions() {
+    const write_Permissions: FormArray = this.edit_Role.get('writePermissions') as FormArray;
+    write_Permissions.controls = [];
+    this.writePermissions.forEach((val, i) => {
+      write_Permissions.push(new FormControl({
+        'checked': false,
+        'name': this.writePermissions[i].name,
+        'permissionId': this.writePermissions[i].permissionId,
+        'id': this.writePermissions[i].id
+      }))
+    })
   }
 
-  onCheckboxChange(e, index) {
-    const permissions = this.edit_Role.get('permissions') as FormArray;
+  update_chexkBox() {
+    this.reset_checkBox();
+    this.update_read_checkBox();
+    this.update_write_checkBox();
+  }
 
-    if (e.target.checked) {
+  reset_checkBox() {
+    const read_permissions = this.edit_Role.get('readPermissions') as FormArray;
+    const write_permissions = this.edit_Role.get('writePermissions') as FormArray;
+    for (let i = 0; i < this.readPermissions.length; i++) {
+      read_permissions.value[i]['checked'] = false;
+    }
+    for (let i = 0; i < this.writePermissions.length; i++) {
+      write_permissions.value[i]['checked'] = false;
+    }
+  }
+
+  update_read_checkBox() {
+    const read_permissions = this.edit_Role.get('readPermissions') as FormArray;
+    read_permissions.controls = [];
+    for (let i = 0; i < this.readPermissions.length; i++) {
+      for (let j = 0; j < this.edit_role_permissions.length; j++) {
+        if (this.readPermissions[i].permissionId == this.edit_role_permissions[j]) {
+          read_permissions.value[i]['checked'] = true;
+        }
+      }
+    }
+  }
+
+  update_write_checkBox() {
+    const write_permissions = this.edit_Role.get('writePermissions') as FormArray;
+    write_permissions.controls = [];
+    for (let i = 0; i < this.writePermissions.length; i++) {
+      for (let j = 0; j < this.edit_role_permissions.length; j++) {
+        if (this.writePermissions[i].permissionId == this.edit_role_permissions[j]) {
+          write_permissions.value[i]['checked'] = true;
+        }
+      }
+    }
+  }
+
+  onCheckboxChangeRead(event, index) {
+    const permissions: FormArray = this.edit_Role.get('readPermissions') as FormArray;
+    if (event.target.checked) {
+      permissions.value[index]['checked'] = true;
+    } else {
+      permissions.value[index]['checked'] = false;
+    }
+  }
+
+  onCheckboxChangeWrite(event, index) {
+    const permissions: FormArray = this.edit_Role.get('writePermissions') as FormArray;
+    if (event.target.checked) {
       permissions.value[index]['checked'] = true;
     } else {
       permissions.value[index]['checked'] = false;
@@ -142,24 +183,34 @@ export class EditRolesComponent implements OnInit {
     return this.edit_Role.controls;
   }
 
+  push_permissionId() {
+    const permissionsId: FormArray = this.edit_Role.get('permissionsId') as FormArray;
+    const write_Permissions: FormArray = this.edit_Role.get('writePermissions') as FormArray;
+    const read_Permissions: FormArray = this.edit_Role.get('readPermissions') as FormArray;
+    for (let index = 0; index < this.readPermissions.length; index++) {
+      if (read_Permissions.value[index]['checked'] == true) {
+        permissionsId.push(new FormControl(read_Permissions.value[index]['permissionId']))
+      }
+    }
+    for (let index = 0; index < this.writePermissions.length; index++) {
+      if (write_Permissions.value[index]['checked'] == true) {
+        permissionsId.push(new FormControl(write_Permissions.value[index]['permissionId']))
+      }
+    }
+  }
+
   sendEditRole() {
     this.loading = true;
-    console.log(this.edit_Role.value.permissions);
+    console.log(this.edit_Role.value);
     if (this.edit_Role.invalid) {
       this.loadingFalse();
       return
     }
-    this.loadingFalse();
+    this.push_permissionId();
+    // this.edit_Role.removeControl('readPermissions');
+    // this.edit_Role.removeControl('writePermissions');
     const editRole = this.edit_Role.value;
-    const transform_Permission: any[] = this.edit_Role.value.permissions;
-    const permission = [];
-    for (let i = 0; i < transform_Permission.length; i++) {
-      if (transform_Permission[i].checked == true) {
-        permission.push(transform_Permission[i].name);
-      }
-    }
-    editRole.permissions = permission;
-    console.log(editRole);
+    console.log(this.edit_Role.value);
     this.roleService.updateRole(editRole).subscribe(res => {
       console.log(res);
       this.toastr.success("Role updated successfully", "Success");
@@ -170,6 +221,8 @@ export class EditRolesComponent implements OnInit {
       }
       else
         this.toastr.error(err.error.errorMessage, "Error");
+    }, () => {
+      this.loadingFalse();
     });
   }
 

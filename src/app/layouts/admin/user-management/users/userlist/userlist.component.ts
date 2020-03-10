@@ -51,6 +51,7 @@ export class UserlistComponent implements OnInit {
       }
     })
   }
+
   /* 
      updateUser(userData: User) {
        this.editUSer = userData;

@@ -32,6 +32,32 @@
 
     <!-- Label -->
     <div class="col-2">
+      <label for="aliasName" class="col-form-label">{{this.validations.aliasName.label}}</label>
+    </div>
+
+    <!-- Input Control -->
+    <div class="col-10">
+      <input type="text" class="form-control" id="aliasName" formControlName="aliasName"
+        placeholder="{{this.validations.aliasName.label}}" autocomplete="off" maxlength={{this.validations.aliasName.maxLength}}>
+
+      <!-- Error Messages -->
+      <div *ngIf="f.aliasName.invalid && f.aliasName.touched" class="text-danger">
+        <div *ngIf="f.aliasName.errors?.required">
+          <small>{{this.validations.aliasName.err_msg_required}}</small>
+        </div>
+        <div *ngIf="f.aliasName.errors?.minlength">
+          <small>{{this.validations.aliasName.err_msg_minLength}}</small>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 3rd Row -->
+  <div class="form-group row">
+
+    <!-- Label -->
+    <div class="col-2">
       <label for="description" class="col-form-label">{{this.validations.description.label}}</label>
     </div>
 
@@ -56,26 +82,42 @@
 
   </div>
 
-  <!-- 3rd Row -->
-  <div class="form-group row">
+   <!-- List of Permissions -->
+   <div class="form-group row">
 
     <!-- Label -->
     <div class="col-2">
       <label for="permission" class="col-form-label">Permissions</label>
     </div>
 
-    <!-- Input Controls as Checkboxes -->
-    <div class="col-10" formArrayName="permissions">
-      <div class="form-check form-check-inline"
-        *ngFor="let permission of edit_Role.controls.permissions?.value;let i = index;">
-        <div [formGroupName]="i">
-          <input class="form-check-input" type="checkbox" id="per{{i}}" [value]="permission"
-            [checked]="permission.checked" (change)="onCheckboxChange($event,i);">
-          <label class="form-check-label" for="per{{i}}">{{permission.name}}</label>
+    <!-- Input Checkbox Control -->
+    <div class="col-10 d-flex">
+
+      <div class="col-6">
+        <h5 class="text-info">Read Permissions</h5>
+
+        <!-- read -->
+        <div class="custom-control custom-checkbox" formArrayName="readPermissions"
+          *ngFor="let read_Per of edit_Role.controls.readPermissions?.value; let i=index">
+          <input type="checkbox" class="custom-control-input" id="{{read_Per.id}}" [checked]="read_Per.checked"
+            (change)="onCheckboxChangeRead($event,i)">
+          <label class="custom-control-label" for="{{read_Per.id}}">{{read_Per.name}}</label>
+        </div>
+
+      </div>
+
+      <div class="col-6">
+        <h5 class="text-success">Wirte Permissions</h5>
+        <!-- write -->
+        <div class="custom-control custom-checkbox" formArrayName="writePermissions"
+          *ngFor="let write_per of edit_Role.controls.writePermissions?.value; let i=index">
+          <input type="checkbox" class="custom-control-input" id="{{write_per.id}}" [checked]="write_per.checked"
+            (change)="onCheckboxChangeWrite($event,i)">
+          <label class="custom-control-label" for="{{write_per.id}}">{{write_per.name}}</label>
         </div>
       </div>
-    </div>
 
+    </div>
   </div>
 
   <!-- 4th Row Update Button -->

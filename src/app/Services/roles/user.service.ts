@@ -67,6 +67,7 @@ export class UserService {
     return this.http.get<User[]>(`${this.Ip}${this.user_port}${this.baseUrl}/users`).pipe(
       map(res => {
         this.users_List.next(res);
+        console.log("users_List",res);
         return res;
       }),
       (catchError(this.errHandler.handleError))
@@ -89,10 +90,11 @@ export class UserService {
   }
 
   // Get roles based on id
-  getRoleById(roleId: string) {
-    return this.http.get<RoleList>(`${this.Ip}${this.user_port}${this.baseUrl}/roles/${roleId}`)
+  getRoleById(id: string) {
+    return this.http.get<RoleList>(`${this.Ip}${this.user_port}${this.baseUrl}/roles/${id}`)
       .pipe(map(res => {
         this.roleListById.next(res);
+        console.log("getRoleById",res);
         return res
       }), (catchError(this.errHandler.handleError)));
   }

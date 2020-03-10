@@ -2,7 +2,6 @@ import { Component, OnInit, ElementRef, HostListener } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import * as $ from "jquery";
-import { Logout } from 'src/app/share/logout';
 import { AuthenticationService } from 'src/app/Services/authentication.service';
 
 @Component({
@@ -35,8 +34,8 @@ export class NavbarComponent implements OnInit {
         this.displayUserName();
     }
 
-    displayUserName(){
-        this.auth.userName.subscribe(val=>{
+    displayUserName() {
+        this.auth.userName.subscribe(val => {
             this.userName = val;
         })
     }
@@ -66,8 +65,7 @@ export class NavbarComponent implements OnInit {
     }
 
     logout() {
-        let logout = new Logout(this.router, this.auth);
-        logout.logout();
+        this.auth.logout();
     }
 
 }

@@ -3,13 +3,25 @@ body {
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 400;
-  font-size: 14px;
+  font-size: calc(10px + (15 - 10) * ((100vw - 300px) / (1600 - 300))) !important;
   src: local('Roboto'), local('Roboto-Regular'), url(https://fonts.gstatic.com/s/roboto/v20/KFOmCnqEu92Fr1Mu72xKOzY.woff2) format('woff2');
   unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
 }
 
 .toast-container {
   font-size: 10px !important;
+  border-radius: .25rem;
+  animation: move 2s both;
+}
+
+@keyframes move {
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
 }
 
 th,

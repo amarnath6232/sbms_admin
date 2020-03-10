@@ -61,6 +61,10 @@ export class ValidationsService {
       maxLength: 200,
       err_msg_required: 'Description is required',
       err_msg_minLength: 'Description must be atleast 5 characters'
+    },
+    aliasName:{
+      label: "Alias Name",
+      err_msg_required: 'Alias name is required',
     }
   }
 

@@ -72,7 +72,7 @@ export class SigninComponent implements OnInit {
           } else if (error.status === 0) {
             this.toastr.error("Server is not responding", 'Error');
           } else if (error.status === 500) {
-            this.toastr.error(error.error.message, 'Error');
+            this.toastr.error(error.error.errorMessage, 'Error');
           }
         });
   }

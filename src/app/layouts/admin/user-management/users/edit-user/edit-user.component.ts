@@ -17,7 +17,6 @@ export class EditUserComponent implements OnInit {
     firstName: 16,
     lastName: 16,
     phoneNumber: 10,
-
   }
   selectedUser: User;
   id;
@@ -30,7 +29,8 @@ export class EditUserComponent implements OnInit {
   extensionNo: any;
   permissions = [];
   permissionsList: permissionsList[] = [];
-  generatedPermissionsList = [];
+  readPermissions = [];
+  writePermissions = [];
   /*  country: null;
    state: null;
    city: null; */
@@ -43,8 +43,11 @@ export class EditUserComponent implements OnInit {
     state: ['', [Validators.required]],
     city: ['', [Validators.required]],
     role: ['', [Validators.required]],
-    permissions: this.fb.array([], [Validators.required]),
+    permissionsId: this.fb.array([]),
+    readPermissions: this.fb.array([]),
+    writePermissions: this.fb.array([])
   });
+
   constructor(private fb: FormBuilder,
     private userService: UserService,
     private toastr: ToastrService,
@@ -54,7 +57,7 @@ export class EditUserComponent implements OnInit {
   ngOnInit(): void {
     this.getCountries();
     this.getRoles();
-    this.getPermissionsList();
+    this.getPermissionsWith_Read_wirte();
     this.subRolelistById();
     this.sub_copy_edit_User();
   }
@@ -70,13 +73,61 @@ export class EditUserComponent implements OnInit {
       this.userForm.controls['city'].setValue(res.city);
       this.userForm.controls['role'].setValue(res.role);
       this.selectedUser = res;
-      console.log(this.selectedUser);
+      console.log("this.selectedUser",this.selectedUser);
+      this.permissions = res.permissionsId;
       /* call countires states cities on change */
       this.init_country_state_city();
-      this.selectedRolename(this.userForm.controls['role'].value);
       /*   this.userForm.controls['permissions'].patchValue(res.permissions); */
+      this.selectCheckBox();
     })
   }
+
+  getPermissionsWith_Read_wirte() {
+    this.roleService.getPermissionsWith_Read_wirte().subscribe();
+    this.roleService.permissionList_read_write.subscribe(val => {
+      if (val !== null) {
+        this.readPermissions = val.READ;
+        this.writePermissions = val.WRITE;
+        this.addPermissionsListToForm();
+      }
+    });
+  }
+
+  /* initialize permissions */
+  addPermissionsListToForm() {
+    this.init_read_permissions();
+    this.init_write_permissions();
+  }
+
+  /* initialize read permissions */
+  init_read_permissions() {
+    const read_Permissions: FormArray = this.userForm.get('readPermissions') as FormArray;
+    read_Permissions.controls = [];
+    this.readPermissions.forEach((val, i) => {
+      read_Permissions.push(new FormControl({
+        'checked': false,
+        'name': this.readPermissions[i].name,
+        'permissionId': this.readPermissions[i].permissionId,
+        'id': this.readPermissions[i].id
+      }))
+    });
+  }
+
+  /* initialize write permissions */
+  init_write_permissions() {
+    const write_Permissions: FormArray = this.userForm.get('writePermissions') as FormArray;
+    write_Permissions.controls = [];
+    this.writePermissions.forEach((val, i) => {
+      write_Permissions.push(new FormControl({
+        'checked': false,
+        'name': this.writePermissions[i].name,
+        'permissionId': this.writePermissions[i].permissionId,
+        'id': this.writePermissions[i].id
+      }))
+    })
+  }
+
+
 
   init_country_state_city() {
     console.log("init_country_state_city -------- country", this.selectedUser.country);
@@ -169,7 +220,7 @@ export class EditUserComponent implements OnInit {
     if (number.length !== 0) {
       this.id = number[0].roleId;
       console.log(this.id);
-      this.getRolesById(number[0].roleId);
+      this.getRolesById(number[0].id);
     } /* else {
       this.toastr.warning('Please select role', 'Warning');
     } */
@@ -189,62 +240,91 @@ export class EditUserComponent implements OnInit {
   subRolelistById() {
     this.userService.roleListById.subscribe(val => {
       if (val != null) {
-        this.permissions = val.permissions;
+        this.permissions = val.permissionsId;
       }
       console.log("roleListById ", this.permissions);
       this.selectCheckBox();
     })
   }
 
+  /* update check box by role */
   selectCheckBox() {
-    const permission = this.userForm.get('permissions') as FormArray;
-    for (let i = 0; i < this.permissionsList.length; i++) {
-      if (permission.value[i]['name'] == this.permissions[i]) {
-        permission.value[i]['checked'] = true;
-      } else {
-        permission.value[i]['checked'] = false;
-      }
-    }
-    console.log(permission);
+    this.reset_checkBox();
+    this.select_checkBox_read();
+    this.select_checkBox_write();
   }
 
-  //permissions evevt
-  onCheckboxChange(e, index) {
-    console.log(index);
-    const permissions: FormArray = this.userForm.get('permissions') as FormArray;
-    if (e.target.checked) {
+  reset_checkBox() {
+    const read_permissions = this.userForm.get('readPermissions') as FormArray;
+    const write_permissions = this.userForm.get('writePermissions') as FormArray;
+    for (let i = 0; i < this.readPermissions.length; i++) {
+      read_permissions.value[i]['checked'] = false;
+    }
+    for (let i = 0; i < this.writePermissions.length; i++) {
+      write_permissions.value[i]['checked'] = false;
+    }
+  }
+
+  select_checkBox_read() {
+    const read_permissions = this.userForm.get('readPermissions') as FormArray;
+    for (let i = 0; i < this.readPermissions.length; i++) {
+      for (let j = 0; j < this.permissions.length; j++) {
+        console.log("read_permissions.value[i]['permissionId']----- ", read_permissions.value[i]['permissionId']);
+        console.log("this.permissions[j]--------------------------- ", this.permissions[j]);
+        if (read_permissions.value[i]['permissionId'] == this.permissions[j]) {
+          read_permissions.value[i]['checked'] = true;
+        }
+      }
+    }
+  }
+
+
+  select_checkBox_write() {
+    const write_permissions = this.userForm.get('writePermissions') as FormArray;
+    for (let i = 0; i < this.writePermissions.length; i++) {
+      for (let k = 0; k < this.permissions.length; k++) {
+        if (write_permissions.value[i]['permissionId'] == this.permissions[k]) {
+          write_permissions.value[i]['checked'] = true;
+        }
+      }
+    }
+  }
+
+  //on change read check box
+  onCheckboxChangeRead(event, index) {
+    const permissions: FormArray = this.userForm.get('readPermissions') as FormArray;
+    if (event.target.checked) {
       permissions.value[index]['checked'] = true;
     } else {
       permissions.value[index]['checked'] = false;
     }
   }
 
-  getPermissionsList() {
-    this.roleService.getPermissions().subscribe();
-    this.roleService.permissionList.subscribe(val => {
-      if (val.length !== 0) {
-        this.permissionsList = val;
-        console.log("pr list in com", this.permissionsList);
-        this.addPermissionsListToForm();
-      }
-    });
+  //on change write check box
+  onCheckboxChangeWrite(event, index) {
+    const permissions: FormArray = this.userForm.get('writePermissions') as FormArray;
+    if (event.target.checked) {
+      permissions.value[index]['checked'] = true;
+    } else {
+      permissions.value[index]['checked'] = false;
+    }
   }
 
-  addPermissionsListToForm() {
-    const permissions = this.userForm.get('permissions') as FormArray;
-    permissions.controls = [];
-    for (let i = 0; i < this.permissionsList.length; i++) {
-      permissions.push(new FormControl({
-        "createdBy": this.permissionsList[i].createdBy,
-        "createdDate": this.permissionsList[i].createdDate,
-        "description": this.permissionsList[i].description,
-        "modifiedBy": this.permissionsList[i].modifiedBy,
-        "name": this.permissionsList[i].name,
-        "permissionId": this.permissionsList[i].permissionId,
-        "checked": false
-      }));
+  push_permissionId() {
+    const permissionsId: FormArray = this.userForm.get('permissionsId') as FormArray;
+    const write_Permissions: FormArray = this.userForm.get('writePermissions') as FormArray;
+    const read_Permissions: FormArray = this.userForm.get('readPermissions') as FormArray;
+    permissionsId.controls = [];
+    for (let index = 0; index < this.readPermissions.length; index++) {
+      if (read_Permissions.value[index]['checked'] == true) {
+        permissionsId.push(new FormControl(read_Permissions.value[index]['permissionId']))
+      }
     }
-    return this.generatedPermissionsList;
+    for (let index = 0; index < this.writePermissions.length; index++) {
+      if (write_Permissions.value[index]['checked'] == true) {
+        permissionsId.push(new FormControl(write_Permissions.value[index]['permissionId']))
+      }
+    }
   }
 
   //Update user
@@ -254,18 +334,8 @@ export class EditUserComponent implements OnInit {
       this.toastr.error("Please fill all fields.", "Error");
       return
     }
-    console.log(this.userForm.value.permissions);
-
-    let per = [];
-    for (let i = 0; i < this.userForm.value.permissions.length; i++) {
-      if (this.userForm.value.permissions[i]['checked'] == true) {
-        per.push(this.userForm.value.permissions[i]['name']);
-      }
-    }
-    console.log(per);
-    this.userForm.value.permissions = per;
-    console.log("this.userForm.value", this.userForm.value);
-    console.log("id:", this.userForm.controls['id'].value);
+    this.push_permissionId();
+    console.log(this.userForm.value);
     this.userService.updateUsers(this.userForm.value, this.userForm.controls['id'].value).subscribe(
       (res) => {
         console.log(res);
