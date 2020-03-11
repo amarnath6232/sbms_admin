@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 
 import { RoleService } from 'src/app/Services/roles/role.service';
-import { RoleList } from 'src/app/share/modal/modal';
+import { RoleList, permissionsList } from 'src/app/share/modal/modal';
 import { AuthenticationService } from 'src/app/Services/authentication.service';
 declare var $;
 
@@ -17,6 +17,7 @@ export class RolesListComponent implements OnInit {
   roleList: RoleList[];
   copy_role: RoleList;
   enable_buttons: string[] = [];
+  view_permission_of_user: permissionsList[] = [];
 
   constructor(private roleService: RoleService,
     private toastr: ToastrService,
@@ -28,6 +29,7 @@ export class RolesListComponent implements OnInit {
     this.subRoleListFromService();
     this.sub_Copy_role();
     this.sub_auth_permission();
+    this.sub_view_permissions_of_user();
   }
 
   getrolesList() {
@@ -41,6 +43,16 @@ export class RolesListComponent implements OnInit {
       if (val.length != 0) {
         this.enable_buttons = val;
       }
+    })
+  }
+
+  viewPermissions(id) {
+    this.roleService.getViewPermissions(id).subscribe();
+  }
+
+  sub_view_permissions_of_user() {
+    this.roleService.view_permissions_of_user.subscribe(val => {
+      if (val != null) this.view_permission_of_user = val;
     })
   }
 

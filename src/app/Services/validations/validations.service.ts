@@ -33,7 +33,7 @@ export class ValidationsService {
       err_msg_required: 'Permission name is required',
       err_msg_minLength: 'Permission name must be atleast 4 characters'
     },
-    
+
     description: {
       label: 'Description',
       minLength: 5,
@@ -42,8 +42,8 @@ export class ValidationsService {
       err_msg_minLength: 'Description must be atleast 5 characters'
     },
 
-    permissionAccess:{
-      label:"Permission Access",
+    permissionAccess: {
+      label: "Permission Access",
     }
   }
 
@@ -62,7 +62,7 @@ export class ValidationsService {
       err_msg_required: 'Description is required',
       err_msg_minLength: 'Description must be atleast 5 characters'
     },
-    aliasName:{
+    aliasName: {
       label: "Alias Name",
       err_msg_required: 'Alias name is required',
     }
@@ -178,14 +178,14 @@ export class ValidationsService {
 
   readonly siteArchitecture = {
     noOfModules: {
-      label: 'No Of Modules',
+      label: 'No of Modules',
       minLength: 1,
       maxLength: 2,
       err_msg_required: 'No of modules is required',
       err_msg_minLength: 'No of modules must be atleast 1 digit',
     },
     noOfPacks: {
-      label: 'No Of Packs',
+      label: 'No of Packs',
       minLength: 1,
       maxLength: 2,
       err_msg_required: 'No of packs is required',

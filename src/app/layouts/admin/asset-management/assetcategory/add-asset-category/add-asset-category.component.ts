@@ -51,7 +51,7 @@ export class AddAssetCategoryComponent implements OnInit {
     }
     this.assetService.createAssetCategory(this.addAssetCategory.value).subscribe(res => {
       console.log(res);
-      this.toastr.success("Create asset successfully.", "Success");
+      this.toastr.success("Create asset successfully", "Success");
       this.addAssetCategory.reset();
       this.router.navigate(['/assert-management/category-List']);
     }, err => {

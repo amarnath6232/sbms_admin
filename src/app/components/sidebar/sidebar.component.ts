@@ -11,6 +11,7 @@ export class SidebarComponent implements OnInit {
 
   permissionsIds = [];
   userName;
+  roleName;
 
   constructor(private auth: AuthenticationService) { }
 
@@ -24,6 +25,10 @@ export class SidebarComponent implements OnInit {
     this.auth.userName.subscribe(val => {
       this.userName = val;
     })
+
+    this.auth.roleName.subscribe(val => {
+      this.roleName = val;
+    })
   }
 
   sub_permissions() {
@@ -31,7 +36,7 @@ export class SidebarComponent implements OnInit {
       if (val.length != 0) {
         this.permissionsIds = val;
         console.log(this.permissionsIds);
-        
+
       }
     })
   }

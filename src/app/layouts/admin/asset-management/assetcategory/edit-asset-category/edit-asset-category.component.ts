@@ -57,7 +57,7 @@ export class EditAssetCategoryComponent implements OnInit {
     }
     this.assetService.editAssetCategory(this.addAssetCategory.value).subscribe(res => {
       console.log(res);
-      this.toastr.success("Edit asset category successfully.", "Success");
+      this.toastr.success("Update asset category successfully", "Success");
       this.addAssetCategory.reset();
       $(document).ready(function () {
         $(".close").click();
@@ -65,7 +65,7 @@ export class EditAssetCategoryComponent implements OnInit {
       this.assetService.getAssetCategoryList().subscribe();
     }, err => {
       console.log(err);
-      this.toastr.error("Some thing went worng.", "Error");
+      this.toastr.error(err.error.errorMessage, "Error");
     });
   }
 

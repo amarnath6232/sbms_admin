@@ -2,10 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as jwt_decode from 'jwt-decode';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { catchError, map, take, tap, delay } from 'rxjs/operators';
+import { catchError, map, take, tap } from 'rxjs/operators';
+import { Router } from '@angular/router';
+
 import { ErrorHandlerService } from './error-handler.service';
 import { IpService } from './ip.service';
-import { Router } from '@angular/router';
 import { Encode_Permission } from '../share/encode_permissions';
 
 @Injectable({
@@ -17,6 +18,7 @@ export class AuthenticationService {
   authenticatedUser: any;
   islogin: boolean = false;
   userName = new BehaviorSubject<string>(null);
+  roleName = new BehaviorSubject<string>(null);
   token: string = localStorage.getItem('token') || null;
   refresh_Token = null;
   decoded: any;
@@ -72,12 +74,12 @@ export class AuthenticationService {
 
   }
 
-
   authenticate(loginId: string, password: string) {
     return this.http.post(`${this.ip.ip}${this.ip.login_Port}/rest/v1/login/signin`, { loginId, password }).pipe(map(res => {
       if (res) {
         console.log(res);
         this.token = res['jwtToken'];
+        this.roleName.next(res['role']);
         const permissions = res['permissions'];
         localStorage.setItem('token', this.token);
         let encode = new Encode_Permission(permissions);
@@ -89,7 +91,6 @@ export class AuthenticationService {
         return false;
     }), catchError(this.errHandler.handleError));
   }
-
 
   logout() {
     this.remove_localStorage();

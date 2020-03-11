@@ -20,6 +20,7 @@ export class RoleService {
   permissionList_read_write = new BehaviorSubject<Permission_read_write>(null);
   edit_Permission_Value = new BehaviorSubject<permissionsList>(null);
   copy_role = new BehaviorSubject<RoleList>(null);
+  view_permissions_of_user = new BehaviorSubject([]);
 
 
   constructor(private ip: IpService,
@@ -41,6 +42,18 @@ export class RoleService {
         if (res != null) {
           this.permissionList.next(res);
           console.log("permissions", res);
+        }
+        return res;
+      }), catchError(this.errHandler.handleError));
+  }
+
+  /* view permissions */
+  getViewPermissions(id) {
+    return this.http.get<permissionsList[]>(`${this.ip.ip}${this.port}${this.roles}/viewPermissions/${id}`)
+      .pipe(map(res => {
+        if (res != null) {
+          this.view_permissions_of_user.next(res);
+          console.log("view_permissions_of_user", res);
         }
         return res;
       }), catchError(this.errHandler.handleError));

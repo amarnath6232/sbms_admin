@@ -146,8 +146,8 @@ export class CreateUsersComponent implements OnInit {
     const read_permissions = this.userForm.get('readPermissions') as FormArray;
     for (let i = 0; i < this.read_permissions.length; i++) {
       for (let j = 0; j < this.permissions.length; j++) {
-        console.log("read_permissions.value[i]['permissionId']----- ", read_permissions.value[i]['permissionId']);
-        console.log("this.permissions[j]--------------------------- ", this.permissions[j]);
+        // console.log("read_permissions.value[i]['permissionId']----- ", read_permissions.value[i]['permissionId']);
+        // console.log("this.permissions[j]--------------------------- ", this.permissions[j]);
         if (read_permissions.value[i]['permissionId'] == this.permissions[j]) {
           read_permissions.value[i]['checked'] = true;
         }
@@ -318,7 +318,7 @@ export class CreateUsersComponent implements OnInit {
     console.log(this.userForm.value);
     if (this.userForm.invalid) {
       this.spin = false;
-      this.toastr.warning('Please fill all mandetory fields.');
+      this.toastr.warning('Please fill all fields.');
       return
     }
     this.push_permissionId();

@@ -23,8 +23,9 @@
       <td>{{item.permissionAccess}}</td>
       <td *ngIf="enable_buttons.includes('P00002') || enable_buttons.includes('P00003')">
         <div class="row">
-          <button type="button" class="btn btn-warning mr-2 btn-sm" data-toggle="modal" *ngIf="enable_buttons.includes('P00002')"
-            data-target="#editPermissionModal" (click)="copyPermissionFromTable(item)">
+          <button type="button" class="btn btn-warning mr-2 btn-sm" data-toggle="modal"
+            *ngIf="enable_buttons.includes('P00002')" data-target="#editPermissionModal"
+            (click)="copyPermissionFromTable(item)">
             Edit
           </button>
           <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deletePermissionModal"
@@ -43,8 +44,8 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content" *ngIf="copyPermission">
       <div class="modal-header">
-        <h5 class="modal-title" id="editPermissionLabel">Edit Permission</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <h5 class="modal-title text-info" id="editPermissionLabel">Edit Permission</h5>
+        <button type="button" class="close text-success" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&#10005;</span>
         </button>
       </div>
@@ -61,9 +62,9 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header" *ngIf="copyPermission">
-        <h5 class="modal-title" id="deletePermissionLabel">Are you sure to delete <span
+        <h5 class="modal-title text-info" id="deletePermissionLabel">Are you sure to delete <span
             class="text-danger">{{copyPermission.name}}</span></h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close text-success" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&#10005;</span>
         </button>
       </div>

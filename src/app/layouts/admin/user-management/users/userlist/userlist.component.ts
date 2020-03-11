@@ -23,6 +23,7 @@ export class UserlistComponent implements OnInit {
   extensionNumber = '';
   extensionNo: any;
   enable_buttons: string[] = [];
+  userPermissoins;
 
   constructor(private user: UserService,
     private toastr: ToastrService,
@@ -60,6 +61,20 @@ export class UserlistComponent implements OnInit {
         this.userData = val;
       } else {
         this.userData = [];
+      }
+    })
+  }
+
+  getpermissions(userData: User) {
+    console.clear();
+    console.log(userData);
+
+    this.user.getUserPermissions(userData.id).subscribe(val => {
+      if (val) {
+        this.userPermissoins = val;
+        console.log(this.userPermissoins);
+      } else {
+        this.userPermissoins = [];
       }
     })
   }
@@ -171,11 +186,9 @@ export class UserlistComponent implements OnInit {
     console.log(number);
   }
 
-
   deleteUser(userData: User) {
     this.delUser = userData;
     this.name = userData.firstName;
-
   }
 
   delete(id) {

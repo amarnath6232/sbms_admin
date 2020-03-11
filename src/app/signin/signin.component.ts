@@ -57,7 +57,7 @@ export class SigninComponent implements OnInit {
       .subscribe(
         () => {
           this.loading = !this.loading;
-          this.router.navigate(['/dashboard']).then(() => {
+          this.router.navigate(['/']).then(() => {
             this.toastr.success('Login successful', 'Success');
           });
         },

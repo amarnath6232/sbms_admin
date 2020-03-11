@@ -185,6 +185,7 @@ export class EditRolesComponent implements OnInit {
 
   push_permissionId() {
     const permissionsId: FormArray = this.edit_Role.get('permissionsId') as FormArray;
+    permissionsId.controls = [];
     const write_Permissions: FormArray = this.edit_Role.get('writePermissions') as FormArray;
     const read_Permissions: FormArray = this.edit_Role.get('readPermissions') as FormArray;
     for (let index = 0; index < this.readPermissions.length; index++) {

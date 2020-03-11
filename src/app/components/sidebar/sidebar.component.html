@@ -20,7 +20,7 @@
       <span class="user-name">
         <strong class="text-capitalize">{{userName}}</strong>
       </span>
-      <span class="user-role">Administrator</span>
+      <span class="user-role">{{roleName}}</span>
       <span class="user-status">
         <i class="fa fa-circle"></i>
         <span>Online</span>
@@ -39,6 +39,45 @@
       <a href="#userManagement" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">User Management</a>
 
       <ul class="collapse list-unstyled" id="userManagement">
+
+        <!-- users -->
+        <li>
+          <a href="#users" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+            Users
+          </a>
+          <ul class="collapse list-unstyled" id="users">
+            <li *ngIf="permissionsIds.includes('P000012')">
+              <a id="P000012" [routerLink]="[ '/user-management/users/users-list' ]" routerLinkActive="active">
+                Users List
+              </a>
+            </li>
+            <li *ngIf="permissionsIds.includes('P00009')">
+              <a id="P00009" [routerLink]="[ '/user-management/users/create-users' ]" routerLinkActive="active">
+                Create User
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <!-- roles -->
+        <li>
+          <a href="#role" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+            Roles
+          </a>
+          <ul class="collapse list-unstyled" id="role">
+            <li *ngIf="permissionsIds.includes('P00008')">
+              <a id="	P00008" [routerLink]="[ '/user-management/roles/roles-list' ]" routerLinkActive="active">
+                Roles List
+              </a>
+            </li>
+            <li *ngIf="permissionsIds.includes('P00005')">
+              <a id="P00005" [routerLink]="[ '/user-management/roles/create-roles' ]" routerLinkActive="active">
+                Create Role
+              </a>
+            </li>
+          </ul>
+        </li>
+
         <!-- permissions -->
         <li>
           <a href="#permissions" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
@@ -54,47 +93,12 @@
             <li *ngIf="permissionsIds.includes('P00001')">
               <a id="P00001" [routerLink]="[ '/user-management/permissions/create-permissions' ]"
                 routerLinkActive="active">
-                Create Permissions
+                Create Permission
               </a>
             </li>
           </ul>
         </li>
-        <!-- roles -->
-        <li>
-          <a href="#role" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-            Roles
-          </a>
-          <ul class="collapse list-unstyled" id="role">
-            <li *ngIf="permissionsIds.includes('P00008')">
-              <a id="	P00008" [routerLink]="[ '/user-management/roles/roles-list' ]" routerLinkActive="active">
-                Roles List
-              </a>
-            </li>
-            <li *ngIf="permissionsIds.includes('P00005')">
-              <a id="P00005" [routerLink]="[ '/user-management/roles/create-roles' ]" routerLinkActive="active">
-                Create Roles
-              </a>
-            </li>
-          </ul>
-        </li>
-        <!-- users -->
-        <li>
-          <a href="#users" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-            Users
-          </a>
-          <ul class="collapse list-unstyled" id="users">
-            <li *ngIf="permissionsIds.includes('P000012')">
-              <a id="P000012" [routerLink]="[ '/user-management/users/users-list' ]" routerLinkActive="active">
-                Users List
-              </a>
-            </li>
-            <li *ngIf="permissionsIds.includes('P00009')">
-              <a id="P00009" [routerLink]="[ '/user-management/users/create-users' ]" routerLinkActive="active">
-                Create Users
-              </a>
-            </li>
-          </ul>
-        </li>
+
       </ul>
     </li>
 

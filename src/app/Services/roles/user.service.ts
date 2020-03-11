@@ -5,7 +5,7 @@ import { catchError, map } from 'rxjs/operators';
 
 import { IpService } from '../ip.service';
 import { ErrorHandlerService } from '../error-handler.service';
-import { User, RoleList } from 'src/app/share/modal/modal';
+import { User, RoleList, permissionsList } from 'src/app/share/modal/modal';
 
 @Injectable({
   providedIn: 'root'
@@ -67,7 +67,7 @@ export class UserService {
     return this.http.get<User[]>(`${this.Ip}${this.user_port}${this.baseUrl}/users`).pipe(
       map(res => {
         this.users_List.next(res);
-        console.log("users_List",res);
+        console.log("users_List", res);
         return res;
       }),
       (catchError(this.errHandler.handleError))
@@ -94,9 +94,16 @@ export class UserService {
     return this.http.get<RoleList>(`${this.Ip}${this.user_port}${this.baseUrl}/roles/${id}`)
       .pipe(map(res => {
         this.roleListById.next(res);
-        console.log("getRoleById",res);
+        console.log("getRoleById", res);
         return res
       }), (catchError(this.errHandler.handleError)));
+  }
+
+  //Get User Permissions
+  getUserPermissions(id: string): Observable<permissionsList> {
+    return this.http.get<permissionsList>(`${this.Ip}${this.user_port}${this.baseUrl}/users/viewPermissions/${id}`).pipe(
+      (catchError(this.errHandler.handleError))
+    );
   }
 
 }

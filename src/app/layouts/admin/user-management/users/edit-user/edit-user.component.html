@@ -8,7 +8,7 @@
       <!-- first name -->
       <div class="col-6">
         <div class="form-group">
-          <label for="firstName"> First Name<span class="mandetory">*</span></label>
+          <label for="firstName"> First Name</label>
           <input type="text" class="form-control" id="firstName" formControlName="firstName" autocomplete="off"
             maxlength="{{maxLen.firstName}}">
         </div>
@@ -17,7 +17,7 @@
       <!-- Last name -->
       <div class="col-6">
         <div class="form-group">
-          <label for="lastName">Last Name <span class="mandetory">*</span></label>
+          <label for="lastName">Last Name </label>
           <input type="text" class="form-control" id="lastName" formControlName="lastName" autocomplete="off"
             maxlength="{{maxLen.lastName}}">
         </div>
@@ -31,7 +31,7 @@
       <!-- Phone number -->
       <div class="col-6">
         <div class="form-group">
-          <label for="phoneNumber">Phone Number <span class="mandetory">*</span></label>
+          <label for="phoneNumber">Phone Number </label>
           <input type="text" class="form-control" id="phone Number" formControlName="phoneNumber"
             maxlength="{{maxLen.phoneNumber}}" autocomplete="off">
         </div>
@@ -40,7 +40,7 @@
       <!-- Country -->
       <div class="col-6">
         <div class="form-group">
-          <label for="country">Country <span class="mandetory">*</span></label>
+          <label for="country">Country </label>
           <select id="country" name="country" class="form-control text-center" placeholder="Select Country"
             formControlName="country" (change)="Filter($event.target.value)">
             <option style="font-size: 16px !important;" value="">Select country</option>
@@ -59,7 +59,7 @@
       <!-- State -->
       <div class="col-6">
         <div class="form-group">
-          <label for="state">State <span class="mandetory">*</span></label>
+          <label for="state">State </label>
           <select id="state" name="state" class="form-control input-custom-control" formControlName="state"
             (change)="selectedState($event.target.value)">
             <option *ngFor="let state of states" [value]="state.name" class="form-control input-custom-control-sm">
@@ -72,7 +72,7 @@
       <!-- City -->
       <div class="col-6">
         <div class="form-group">
-          <label for="city">City <span class="mandetory">*</span></label>
+          <label for="city">City </label>
           <select id="city" name="city" class="form-control text-center" formControlName="city">
             <option *ngFor="let city of cities" [value]="city.name" class="form-control input-custom-control-sm">
               {{city.name}}
@@ -86,7 +86,7 @@
     <div class="row">
 
       <div class="col-12 form-group">
-        <label for="role"> Role<span class="mandetory">*</span></label>
+        <label for="role"> Role</label>
         <select id="role" name="role" class="form-control text-center" formControlName="role"
           (change)="selectedRolename($event.target.value)">
           <option value="">Select Role</option>
@@ -105,13 +105,13 @@
       <div class="col-2">
         <label for="permission" class="col-form-label">Permissions</label>
       </div>
-  
+
       <!-- Input Checkbox Control -->
       <div class="col-10 d-flex">
-  
+
         <div class="col-6">
           <h5 class="text-info">Read Permissions</h5>
-  
+
           <!-- read -->
           <div class="custom-control custom-checkbox" formArrayName="readPermissions"
             *ngFor="let read_Per of userForm.controls.readPermissions?.value; let i=index">
@@ -119,9 +119,9 @@
               (change)="onCheckboxChangeRead($event,i)">
             <label class="custom-control-label" for="{{read_Per.id}}">{{read_Per.name}}</label>
           </div>
-  
+
         </div>
-  
+
         <div class="col-6">
           <h5 class="text-success">Wirte Permissions</h5>
           <!-- write -->
@@ -132,7 +132,7 @@
             <label class="custom-control-label" for="{{write_per.id}}">{{write_per.name}}</label>
           </div>
         </div>
-  
+
       </div>
     </div>
 

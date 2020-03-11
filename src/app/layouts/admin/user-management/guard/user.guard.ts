@@ -8,8 +8,7 @@ import { AuthenticationService } from 'src/app/Services/authentication.service';
   providedIn: 'root'
 })
 
-export class PermissionGuard implements CanActivate {
-
+export class UserGuard implements CanActivate {
   private permissions: any[] = [];
 
   constructor(private router: Router,
@@ -21,7 +20,7 @@ export class PermissionGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot) {
     if (this.permissions.length != 0) {
-      if (this.permissions.includes(env_permissions.create_permission)) {
+      if (this.permissions.includes(env_permissions.create_user)) {
         return true;
       } else {
         this.navigate();
@@ -35,5 +34,6 @@ export class PermissionGuard implements CanActivate {
   navigate() {
     this.router.navigate(['signIn']);
   }
+
 
 }
