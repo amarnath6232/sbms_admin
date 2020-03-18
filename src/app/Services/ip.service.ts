@@ -12,4 +12,8 @@ export class IpService {
   asset_Port: string = "2018";
   usermanagement_port: string = "2017";
   site_port: string = "2151";
+  battery_port: string = "2019";
+  pack_port: string = "2019";
+  module_port: string = "2019"
+  ipbattery: string = "http://192.168.10.57:";
 }

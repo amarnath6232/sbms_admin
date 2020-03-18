@@ -8,12 +8,14 @@ import { UserlistComponent } from './userlist/userlist.component';
 import { CreateUsersComponent } from './create-users/create-users.component';
 import { EditUserComponent } from './edit-user/edit-user.component';
 import { NumbersOnlyModule } from 'src/app/share/modules/numbers-only.module';
+import { AssetnamePipe } from './userlist/assetname.pipe';
 
 @NgModule({
   declarations: [UsersComponent,
     UserlistComponent,
     CreateUsersComponent,
-    EditUserComponent],
+    EditUserComponent,
+    AssetnamePipe],
   imports: [
     CommonModule,
     ReactiveFormsModule,

@@ -80,7 +80,7 @@ export class RolesListComponent implements OnInit {
   }
 
   deleteRole() {
-    this.roleService.deleteRole(this.copy_role.roleId).subscribe(res => {
+    this.roleService.deleteRole(this.copy_role.id).subscribe(res => {
       $('#deleteRoleModal').modal('hide');
       this.toastr.success(`${this.copy_role.name} deleted successfully`, "Success");
     }, err => {

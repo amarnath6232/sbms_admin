@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { User, Country, State, City, RoleName } from 'src/app/share/modal/modal';
 import { UserService } from 'src/app/Services/roles/user.service';
 import { AuthenticationService } from 'src/app/Services/authentication.service';
+import { AssetService } from 'src/app/Services/asset.service';
 
 @Component({
   selector: 'app-userlist',
@@ -27,7 +28,10 @@ export class UserlistComponent implements OnInit {
 
   constructor(private user: UserService,
     private toastr: ToastrService,
-    private auth: AuthenticationService) { }
+    private auth: AuthenticationService,
+    private asset_ser: AssetService) {
+    this.asset_ser.getAssetCategoryList().subscribe();
+  }
 
   ngOnInit(): void {
     this.getUsers();
@@ -93,7 +97,6 @@ export class UserlistComponent implements OnInit {
      } */
   updateUser(user: User) {
     this.user.copyEditUser.next(user);
-
   }
 
   getCountries() {
@@ -122,7 +125,6 @@ export class UserlistComponent implements OnInit {
     } else {
       this.toastr.warning('Please select country', 'Warning');
     }
-
   }
 
   getStates(id: number) {

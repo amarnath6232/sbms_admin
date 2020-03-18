@@ -3,11 +3,12 @@ import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@ang
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 
-import { Country, State, City, RoleName, permissionsList, RoleList } from 'src/app/share/modal/modal';
+import { Country, State, City, permissionsList, RoleList, AssetCategory } from 'src/app/share/modal/modal';
 import { UserService } from 'src/app/Services/roles/user.service';
 import { RoleService } from 'src/app/Services/roles/role.service';
 import { ValidationsService } from 'src/app/Services/validations/validations.service';
 import { MustMatch } from 'src/app/signup/mustMatch';
+import { AssetService } from 'src/app/Services/asset.service';
 
 @Component({
   selector: 'app-create-users',
@@ -30,6 +31,7 @@ export class CreateUsersComponent implements OnInit {
   permissions: string[] = [];
   permissionsList: permissionsList[] = [];
   generatedPermissionsList = [];
+  assetsList: AssetCategory[] = [];
 
   read_permissions: permissionsList[] = [];
   write_Permissions: permissionsList[] = [];
@@ -39,16 +41,19 @@ export class CreateUsersComponent implements OnInit {
     private roleService: RoleService,
     private toastr: ToastrService,
     private router: Router,
-    private validation_ser: ValidationsService) {
+    private validation_ser: ValidationsService,
+    private ser_asset: AssetService) {
   }
 
   ngOnInit(): void {
+
     this.getValidations();
     this.userFormValidations();
     this.getCountries();
     this.getPermissionsList();
     this.getRoles();
     this.subRolelistById();
+    this.getAssetCategory();
   }
 
   getValidations() {
@@ -76,10 +81,52 @@ export class CreateUsersComponent implements OnInit {
       role: ['', [Validators.required]],
       permissionsId: this.fb.array([]),
       readPermissions: this.fb.array([]),
-      writePermissions: this.fb.array([])
+      writePermissions: this.fb.array([]),
+      assetCategoryId: this.fb.array([]),
+      form_assetsList: this.fb.array([])
     }, {
       validator: MustMatch('password', 'confirmPassword')
     })
+  }
+
+  /* get asset list */
+  getAssetCategory() {
+    this.ser_asset.getAssetCategoryList().subscribe();
+    this.ser_asset.assetCategoryList.subscribe(val => {
+      if (val.length != 0) {
+        this.assetsList = val;
+        this.init_asset_checkbox();
+      }
+    })
+  }
+
+  init_asset_checkbox() {
+    const asset_list: FormArray = this.userForm.get('form_assetsList') as FormArray;
+    asset_list.controls = [];
+    for (let i = 0; i < this.assetsList.length; i++) {
+      if (this.assetsList[i].categoryName == "BMS") {
+        asset_list.push(new FormControl({
+          checked: true,
+          assetCategoryId: this.assetsList[i].assetCategoryId,
+          categoryName: this.assetsList[i].categoryName,
+        }))
+      } else {
+        asset_list.push(new FormControl({
+          checked: false,
+          assetCategoryId: this.assetsList[i].assetCategoryId,
+          categoryName: this.assetsList[i].categoryName,
+        }))
+      }
+    }
+  }
+
+  onCheckboxCategoryChange(event, i) {
+    const assetCategoryId: FormArray = this.userForm.get('form_assetsList') as FormArray;
+    if (event.target.checked) {
+      assetCategoryId.value[i]['checked'] = true;
+    } else {
+      assetCategoryId.value[i]['checked'] = false;
+    }
   }
 
   getPermissionsList() {
@@ -93,7 +140,6 @@ export class CreateUsersComponent implements OnInit {
       }
     });
   }
-
 
   addPermissionsListToForm() {
     this.init_read_permissions();
@@ -313,6 +359,20 @@ export class CreateUsersComponent implements OnInit {
     }
   }
 
+  push_assetList() {
+    const asset_list: FormArray = this.userForm.get('assetCategoryId') as FormArray;
+    const form_assetsList: FormArray = this.userForm.get('form_assetsList') as FormArray;
+    asset_list.controls = [];
+    for (let index = 0; index < this.assetsList.length; index++) {
+      if (form_assetsList.value[index]['checked'] == true) {
+        asset_list.push(new FormControl(form_assetsList.value[index]['assetCategoryId']))
+      }
+    }
+    if (asset_list.length === 0) {
+      return false;
+    } else return true;
+  }
+
   onSubmit() {
     this.spin = true;
     console.log(this.userForm.value);
@@ -322,24 +382,27 @@ export class CreateUsersComponent implements OnInit {
       return
     }
     this.push_permissionId();
+    this.push_assetList();
     console.log(this.userForm.value);
     console.log("this.userForm.value", this.userForm.value);
-    this.user.createByUser(this.userForm.value).subscribe(
-      (res) => {
-        console.log(res);
-        this.spin = false;
-        this.user.roleListById.next(null);
-        this.userForm.reset();
-        this.toastr.success('User created successfully', 'Success');
-        this.router.navigate(['user-management/users/users-list']);
-      },
-      (err) => {
-        console.log(err);
-        this.spin = false;
-        if (err.status == 400) {
-          this.toastr.error(err.error.errorMessage, 'Error');
-        }
-      })
+
+    if (this.push_assetList())
+      this.user.createByUser(this.userForm.value).subscribe(
+        (res) => {
+          console.log(res);
+          this.spin = false;
+          this.user.roleListById.next(null);
+          this.userForm.reset();
+          this.toastr.success('User created successfully', 'Success');
+          this.router.navigate(['user-management/users/users-list']);
+        },
+        (err) => {
+          console.log(err);
+          this.spin = false;
+          if (err.status == 400) {
+            this.toastr.error(err.error.errorMessage, 'Error');
+          }
+        })
   }
 
 }

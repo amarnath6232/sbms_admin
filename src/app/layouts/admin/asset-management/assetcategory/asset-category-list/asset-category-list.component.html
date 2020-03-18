@@ -1,27 +1,29 @@
 <!-- Component Title -->
 <h3 class="text-capitalize text-center p-2">Asset Category List</h3>
 
-<table class="table table-hover">
+<table class="table table-striped table-hover">
     <thead class="thead-dark">
         <tr>
             <th scope="col">Asset Category Name</th>
             <th scope="col">Description</th>
-            <th scope="col">Actions</th>
+            <th scope="col" *ngIf="enable_buttons.includes('P000014') || enable_buttons.includes('P000015')">Actions
+            </th>
         </tr>
     </thead>
     <tbody>
         <tr *ngFor="let item of assetCategoryList">
             <td>{{item.categoryName}}</td>
             <td>{{item.description}}</td>
-            <td>
-                <div>
-                    <button type="button" class="btn btn-warning mr-2 btn-sm" data-toggle="modal"
-                        data-target=".bd-example-modal-lg" (click)="Edit(item)">
-                        Edit
-                    </button>
-                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                        data-target=".modal-Asset-category-del" (click)="copyDelete(item)">Delete</button>
-                </div>
+            <td *ngIf="enable_buttons.includes('P000014') || enable_buttons.includes('P000015')">
+                <button type="button" class="btn btn-outline-warning mr-2 btn-sm" data-toggle="modal"
+                    data-target=".bd-example-modal-lg" (click)="Edit(item)" *ngIf="enable_buttons.includes('P000014')">
+                    Edit
+                </button>
+                <button type="button" class="btn btn-outline-danger btn-sm" data-toggle="modal"
+                    data-target=".modal-Asset-category-del" (click)="copyDelete(item)"
+                    *ngIf="enable_buttons.includes('P000015')">
+                    Delete
+                </button>
             </td>
         </tr>
     </tbody>
@@ -62,7 +64,7 @@
                 <button type="button" class="btn btn-secondary btn-sm mr-2" data-dismiss="modal"
                     aria-label="Close">Cancel
                 </button>
-                <button type="button" class="btn btn-danger btn-sm" (click)="deleteAssetCategory()">Delete</button>
+                <button type="button" class="btn btn-outline-danger btn-sm" (click)="deleteAssetCategory()">Delete</button>
             </div>
         </div>
     </div>

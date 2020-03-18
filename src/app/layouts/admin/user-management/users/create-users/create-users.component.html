@@ -257,7 +257,25 @@
   </div>
 
   <!-- 6th Row -->
-  <div class="form-group row d-flex justify-content-center">
+  <div class="form-group row">
+
+    <!-- assetAccess Selection -->
+    <div class="form-group col-6">
+
+      <!-- label -->
+      <label for="assetAccess">{{validation.assetAccess.label}}</label>
+
+      <!-- Input Checkbox Control -->
+      <div class="d-flex">
+        <div class="custom-control custom-checkbox mr-2" formArrayName="form_assetsList"
+          *ngFor="let asset of userForm.controls.form_assetsList?.value;let i = index;">
+          <input class="custom-control-input" type="checkbox" id="{{asset.assetCategoryId}}" [checked]="asset.checked"
+            (change)="onCheckboxCategoryChange($event,i)">
+          <label class="custom-control-label" for="{{asset.assetCategoryId}}">{{asset.categoryName}}</label>
+        </div>
+      </div>
+
+    </div>
 
     <!-- Role Selection -->
     <div class="form-group col-6">

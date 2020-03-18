@@ -1,4 +1,8 @@
 export interface AssertType {
+    createdUser?: string;
+    createdDate?: string;
+    modifiedUser?: string;
+    modifiedDate?: string;
     assetTypeId?: String;
     assetType?: String;
     description?: String;
@@ -26,6 +30,51 @@ export interface Assert {
     assetCategory?: string;
     assetType?: string;
     typeOfAsset?: string;
+}
+
+export interface Battery {
+    batteryId?: string;
+    serialNumber?: string;
+    storageTemperature: {
+        value: string;
+        units: string;
+    };
+    ratedBatteryCapacity?: string;
+    specifiedCharge?: string;
+    dimensions?: string;
+    dischargeRate?: string;
+    nominalVoltage?: string;
+    chargingPolicy?: string;
+    operatingTemperature?: string;
+    manufacturingDate?: string;
+    warrantyPeriod?: string;
+    assetCategory?: string;
+}
+
+/* export interface storageTemperature {
+    value?: string;
+    units?: string;
+} */
+
+export class Packs {
+    packId?: string;
+    id?: string;
+    packName?: string;
+    packDescription?: string;
+    siteName?: string;
+}
+
+export class Module {
+    id?: string;
+    moduleId?: string;
+    moduleName?: string;
+    voltage?: string;
+    capacity?: string;
+    life?: number;
+    dateOfManufacture?: string;
+    weight?: number;
+    warranty?: number;
+    packName?: string;
 }
 
 export interface RoleList {
@@ -79,6 +128,7 @@ export interface User {
     country: string;
     role?: string;
     permissionsId?: string[];
+    assetCategoryId?: string[]
 }
 
 

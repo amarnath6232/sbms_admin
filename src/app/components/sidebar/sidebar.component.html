@@ -35,13 +35,14 @@
     </li>
 
     <!-- userManagement -->
-    <li>
+    <li
+      *ngIf="permissionsIds.includes('P000012') || permissionsIds.includes('P00009') || permissionsIds.includes('P00008') || permissionsIds.includes('P00005') || permissionsIds.includes('P00004') || permissionsIds.includes('P00001')">
       <a href="#userManagement" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">User Management</a>
 
       <ul class="collapse list-unstyled" id="userManagement">
 
         <!-- users -->
-        <li>
+        <li *ngIf="permissionsIds.includes('P000012') || permissionsIds.includes('P00009')">
           <a href="#users" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
             Users
           </a>
@@ -60,11 +61,11 @@
         </li>
 
         <!-- roles -->
-        <li>
-          <a href="#role" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+        <li *ngIf="permissionsIds.includes('P00008') || permissionsIds.includes('P00005')">
+          <a href="#roles" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
             Roles
           </a>
-          <ul class="collapse list-unstyled" id="role">
+          <ul class="collapse list-unstyled" id="roles">
             <li *ngIf="permissionsIds.includes('P00008')">
               <a id="	P00008" [routerLink]="[ '/user-management/roles/roles-list' ]" routerLinkActive="active">
                 Roles List
@@ -79,7 +80,7 @@
         </li>
 
         <!-- permissions -->
-        <li>
+        <li *ngIf="permissionsIds.includes('P00004') || permissionsIds.includes('P00001')">
           <a href="#permissions" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
             Permissions
           </a>
@@ -102,14 +103,42 @@
       </ul>
     </li>
 
+    <!-- site Management -->
+    <li
+      *ngIf="permissionsIds.includes('P000020') || permissionsIds.includes('P000017') || permissionsIds.includes('P000025') || permissionsIds.includes('P000026')  ">
+      <a href="#site-management" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+        Site Management
+      </a>
+      <ul class="collapse list-unstyled" id="site-management">
+        <li *ngIf="permissionsIds.includes('P000020')">
+          <a id="P000020" [routerLink]="['/site-management/site-list']" routerLinkActive="active">
+            Site List
+          </a>
+        </li>
+        <li *ngIf="permissionsIds.includes('P000017')">
+          <a id="P000017" [routerLink]="['/site-management/add-site']" routerLinkActive="active">Create Site</a>
+        </li>
+        <li *ngIf="permissionsIds.includes('P000025')">
+          <a id="P000025" [routerLink]="['/site-management/site-arc' ]" routerLinkActive="active">Create Site
+            Architecture</a>
+        </li>
+        <li *ngIf="permissionsIds.includes('P000026')">
+          <a id="P000026" [routerLink]="['/site-management/site-req' ]" routerLinkActive="active">Create Site
+            Requirement</a>
+        </li>
+      </ul>
+    </li>
+
     <!-- assertManagement -->
-    <li>
+    <li
+      *ngIf="permissionsIds.includes('P000016') || permissionsIds.includes('P000013') || permissionsIds.includes('P000024') || permissionsIds.includes('P000021')">
       <a href="#assertManagement" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
         Asset Management
       </a>
       <ul class="collapse list-unstyled" id="assertManagement">
+
         <!-- asset category -->
-        <li>
+        <li *ngIf="permissionsIds.includes('P000016') || permissionsIds.includes('P000013')">
           <a href="#assetCategory" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
             Asset Category
           </a>
@@ -123,52 +152,106 @@
             <li *ngIf="permissionsIds.includes('P000013')">
               <a id="P000013" [routerLink]="[ '/asset-management/assetcategory/add-asset-category' ]"
                 routerLinkActive="active">
-                Create Asset
+                Create Asset Category
               </a>
             </li>
           </ul>
         </li>
+
         <!-- asset Type -->
-        <li>
-          <a href="#assetType" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+        <!-- <li *ngIf="permissionsIds.includes('P000024') || permissionsIds.includes('P000021')">
+          <a href="#assetType1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
             Asset Type
           </a>
-          <ul class="collapse list-unstyled" id="assetType">
-            <li>
-              <a [routerLink]="[ '/asset-management/asset-type/asset-type-list' ]" routerLinkActive="active">
+          <ul class="collapse list-unstyled" id="assetType1">
+            <li *ngIf="permissionsIds.includes('P000024')">
+              <a id="P000024" [routerLink]="[ '/asset-management/assetType/asset-type-list' ]"
+                routerLinkActive="active">
                 Asset Type List
               </a>
             </li>
-            <li>
-              <a [routerLink]="[ '/asset-management/asset-type/add-asset-type' ]" routerLinkActive="active">
+            <li *ngIf="permissionsIds.includes('P000021')">
+              <a id="P000021" [routerLink]="[ '/asset-management/assetType/add-asset-type' ]" routerLinkActive="active">
                 Create Asset Type
               </a>
             </li>
           </ul>
-        </li>
-      </ul>
-    </li>
+        </li> -->
 
-    <!-- site Management -->
-    <li>
-      <a href="#site-management" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-        Site Management
-      </a>
-      <ul class="collapse list-unstyled" id="site-management">
-        <li *ngIf="permissionsIds.includes('P000020')">
-          <a id="P000020" [routerLink]="['/site-management/site-list']" routerLinkActive="active">
-            Site List
-          </a>
+        <!-- battery management -->
+        <li
+          *ngIf="permissionsIds.includes('P000027') || permissionsIds.includes('P000028') || permissionsIds.includes('P000029') || permissionsIds.includes('P000030') ||
+          permissionsIds.includes('P000031') || permissionsIds.includes('P000032') || permissionsIds.includes('P000033') || permissionsIds.includes('P000034')||
+           permissionsIds.includes('P000035') ||  permissionsIds.includes('P000036') ||  permissionsIds.includes('P000037') ||  permissionsIds.includes('P000038') ">
+          <a href="#batteryManagement" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Battery
+            Management</a>
+          <ul class="collapse list-unstyled" id="batteryManagement">
+            <!-- Batteries -->
+            <li
+              *ngIf="permissionsIds.includes('P000027') || permissionsIds.includes('P000028') || permissionsIds.includes('P000029') || permissionsIds.includes('P000030')">
+              <a href="#batteries" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                Batteries
+              </a>
+              <ul class="collapse list-unstyled" id="batteries">
+                <li *ngIf="permissionsIds.includes('P000030')">
+                  <a id="P000030" [routerLink]="[ '/battery-management/batteries/battery-list' ]"
+                    routerLinkActive="active">
+                    Batteries List
+                  </a>
+                </li>
+                <li *ngIf="permissionsIds.includes('P000027')">
+                  <a id="P000027" [routerLink]="[ '/battery-management/batteries/create-batteries' ]"
+                    routerLinkActive="active">
+                    Create Batteries
+                  </a>
+                </li>
+              </ul>
+            </li>
+
+            <!-- Packs -->
+            <li
+              *ngIf="permissionsIds.includes('P000031') || permissionsIds.includes('P000032') || permissionsIds.includes('P000033') || permissionsIds.includes('P000034')">
+              <a href="#packs" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                Packs
+              </a>
+              <ul class="collapse list-unstyled" id="packs">
+                <li *ngIf="permissionsIds.includes('P000034')">
+                  <a id="P000034" [routerLink]="[ '/battery-management/packs/packs-list' ]" routerLinkActive="active">
+                    Packs List
+                  </a>
+                </li>
+                <li *ngIf="permissionsIds.includes('P000031')">
+                  <a id="P000031" [routerLink]="[ '/battery-management/packs/create-pack' ]" routerLinkActive="active">
+                    Create Pack
+                  </a>
+                </li>
+              </ul>
+            </li>
+
+            <!-- Modules -->
+            <li
+              *ngIf="permissionsIds.includes('P000035') || permissionsIds.includes('P000036') || permissionsIds.includes('P000037') || permissionsIds.includes('P000038')">
+              <a href="#modules" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                Modules
+              </a>
+              <ul class="collapse list-unstyled" id="modules">
+                <li *ngIf="permissionsIds.includes('P000038')">
+                  <a id="P000038" [routerLink]="[ '/battery-management/modules/modules-list' ]"
+                    routerLinkActive="active">
+                    Modules List
+                  </a>
+                </li>
+                <li *ngIf="permissionsIds.includes('P000035')">
+                  <a id="P000035" [routerLink]="[ '/battery-management/modules/create-module' ]"
+                    routerLinkActive="active">
+                    Create Module
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
         </li>
-        <li *ngIf="permissionsIds.includes('P000017')">
-          <a id="P000017" [routerLink]="['/site-management/add-site']" routerLinkActive="active">Create Site</a>
-        </li>
-        <li>
-          <a [routerLink]="['/site-management/site-arc' ]" routerLinkActive="active">Site Architecture</a>
-        </li>
-        <li>
-          <a [routerLink]="['/site-management/site-req' ]" routerLinkActive="active">Site Requirement</a>
-        </li>
+
       </ul>
     </li>
 

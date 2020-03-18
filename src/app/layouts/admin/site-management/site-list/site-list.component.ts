@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Sites } from 'src/app/share/modal/modal';
 import { SiteService } from 'src/app/Services/site.service';
 import { ToastrService } from 'ngx-toastr';
+import { AuthenticationService } from 'src/app/Services/authentication.service';
 
 declare var $;
 
@@ -15,17 +16,26 @@ export class SiteListComponent implements OnInit {
 
   sites: Sites[]; // sitelist
   copysite: Sites; // edit or delete site
-
   sitename;
   sitealias;
-
+  enable_buttons: string[] = [];
 
   constructor(private siteService: SiteService,
+    public auth: AuthenticationService,
     private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.getSitesList();
     this.subSiteListFromService();
+    this.sub_auth_permission();
+  }
+
+  sub_auth_permission() {
+    this.auth.permissions.subscribe(val => {
+      if (val.length != 0) {
+        this.enable_buttons = val;
+      }
+    })
   }
 
   getSitesList() {

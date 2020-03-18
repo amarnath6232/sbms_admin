@@ -30,6 +30,31 @@ export const env_permissions = {
   create_site: "P000017",
   edit_site: "P000018",
   delete_site: "P000019",
+  site_list: "P000020",
+
+  create_asset_type: "P000021",
+  edit_asset_type: "P000022",
+  delete_asset_type: "P000023",
+  asset_type_list: "P000024",
+
+  create_site_architecture: "P000025",
+
+  create_site_requirement: "P000026",
+
+  create_battery: 'P000027',
+  edit_battery: 'P000028',
+  delete_battery: 'P000029',
+  battery_list: 'P000030',
+
+  create_pack: 'P000031',
+  edit_pack: 'P000032',
+  delete_pack: 'P000033',
+  pack_list: 'P000034',
+
+  create_module: 'P000035',
+  edit_module: 'P000036',
+  delete_module: 'P000037',
+  module_list: 'P000038',
 
 }
 

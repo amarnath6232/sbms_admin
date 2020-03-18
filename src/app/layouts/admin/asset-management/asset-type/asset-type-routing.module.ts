@@ -8,7 +8,7 @@ import { CreateAssettypeComponent } from './create-assettype/create-assettype.co
 const routes: Routes = [
   {
     path: '', component: AssetTypeComponent, children: [
-      {path:'', redirectTo:'asset-type-list'},
+      { path: '', redirectTo: 'asset-type-list' },
       { path: 'asset-type-list', component: AssetTypeListComponent },
       { path: 'add-asset-type', component: CreateAssettypeComponent }
     ]

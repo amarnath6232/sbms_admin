@@ -9,6 +9,7 @@ const routes: Routes = [
     path: '', component: AssetManagementComponent, children: [
       { path: '', redirectTo: 'assetcategory' },
       { path: 'assetcategory', loadChildren: () => import('./assetcategory/assetcategory.module').then(m => m.AssetcategoryModule) },
+      { path: 'assetType', loadChildren: () => import('./asset-type/asset-type.module').then(m => m.AssetTypeModule) }
     ]
   }
 ];

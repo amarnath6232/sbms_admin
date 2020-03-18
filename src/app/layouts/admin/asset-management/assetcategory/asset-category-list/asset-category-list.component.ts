@@ -3,6 +3,7 @@ import { ToastrService } from 'ngx-toastr';
 
 import { AssetService } from 'src/app/Services/asset.service';
 import { AssetCategory } from 'src/app/share/modal/modal';
+import { AuthenticationService } from 'src/app/Services/authentication.service';
 declare var $;
 
 
@@ -15,13 +16,24 @@ export class AssetCategoryListComponent implements OnInit {
 
   assetCategoryList: AssetCategory[];
   copyDeleteItem: AssetCategory;
+  enable_buttons: string[] = [];
 
   constructor(private assetService: AssetService,
+    public auth: AuthenticationService,
     private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.getCategoryList();
     this.subcribe();
+    this.sub_auth_permission();
+  }
+
+  sub_auth_permission() {
+    this.auth.permissions.subscribe(val => {
+      if (val.length != 0) {
+        this.enable_buttons = val;
+      }
+    })
   }
 
   subcribe() {
