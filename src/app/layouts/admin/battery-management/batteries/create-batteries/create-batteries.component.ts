@@ -69,8 +69,10 @@ export class CreateBatteriesComponent implements OnInit {
       }),
       manufacturingDate: ['', [Validators.required]],
       warrantyPeriod: ['', [Validators.required, Validators.minLength(this.validation.warrantyPeriod.minLength), Validators.maxLength(this.validation.warrantyPeriod.maxLength)]],
-      assetCategory: ['', [Validators.required, Validators.minLength(this.validation.assetCategory.minLength), Validators.maxLength(this.validation.assetCategory.maxLength)]],
-    })
+      assetCategory: ['BMS', [Validators.required, Validators.minLength(this.validation.assetCategory.minLength), Validators.maxLength(this.validation.assetCategory.maxLength)]],
+    });
+    const asset = this.createBattery.get('assetCategory');
+    asset.disable();
   }
 
   get f() {
@@ -87,18 +89,23 @@ export class CreateBatteriesComponent implements OnInit {
       }
     )
   }
+  
   onSubmit() {
-    console.log(this.createBattery.value);
-    if (this.createBattery.invalid) {
+    console.log(this.createBattery.get('assetCategory').enable());
+    /* if (this.createBattery.invalid) {
       this.spin = false;
       this.toastr.warning('Please fill all fields.');
       return
-    }
+    } */
     this.spin = true;
     /* const manufacturingDate: string = new Date(this.createBattery.value.manufacturingDate).toISOString();
     console.log(manufacturingDate);
     this.createBattery.value.manufacturingDate = manufacturingDate; */
+    console.clear();
     console.log(this.createBattery.value);
+    console.log(this.createBattery.get('assetCategory').status);
+    
+    return;
     this.batteryService.batteryCreation(this.createBattery.value).subscribe(
       (res) => {
         console.log(res);

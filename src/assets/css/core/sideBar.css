@@ -18,7 +18,6 @@ hr {
 
 .sidebar-header {
   padding: 20px;
-  overflow: hidden;
 }
 
 .sidebar-header .user-pic {
@@ -75,11 +74,10 @@ hr {
   background: var(--sideBar-list-bg);
   color: #fff;
   transition: all 0.3s;
+  overflow-y: scroll;
 }
-
-#sidebar:hover,
-#sidebar:focus {
-  overflow: auto;
+#sidebar::-webkit-scrollbar{
+display: none;
 }
 
 #sidebar.active {
@@ -150,6 +148,12 @@ ul ul a {
 ul ul ul a {
   font-size: 0.9em !important;
   padding-left: 40px !important;
+  background: var(--sideBar-list-bg);
+}
+
+ul ul ul ul a {
+  font-size: 0.9em !important;
+  padding-left: 50px !important;
   background: var(--sideBar-list-bg);
 }
 

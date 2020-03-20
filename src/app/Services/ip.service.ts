@@ -15,5 +15,4 @@ export class IpService {
   battery_port: string = "2019";
   pack_port: string = "2019";
   module_port: string = "2019"
-  ipbattery: string = "http://192.168.10.57:";
 }
