@@ -1,8 +1,9 @@
 :root {
   /* nav bar variables */
-  --navBar-bg: #F5F5F5;
+  --navBar-bg: #144A90;
+  --navBar-color: #F2F2F2;
   --navBar-height: 70px;
-  --navBar-title: 1.2rem;
+  --navBar-title: 25px;
   --narBar-bottom-margin: 8px;
 
   /* side bar variables */

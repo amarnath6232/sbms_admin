@@ -2,9 +2,23 @@ input[type="text"],
 input[type="email"],
 input[type="password"],
 input[type="tel"] {
-    border-radius: 7px;
+  border-radius: 3px;
+  background-color: #FCFCFC;
+  border: 1px solid #CCC;
+  height: 55px;
+}
+
+.form-control {
+  border-radius: 3px;
+  background-color: #FCFCFC;
+  border: 1px solid #CCC;
+  height: 55px !important;
 }
 
 textarea {
-    resize: none !important;
+  resize: none !important;
+}
+
+.form-control:focus {
+  box-shadow: 0 0 0 0.1rem rgba(0, 123, 255, .25) !important;
 }

@@ -1,6 +1,4 @@
 import { Component, OnInit, ElementRef, HostListener } from '@angular/core';
-import { Location } from '@angular/common';
-import { Router } from '@angular/router';
 import * as $ from "jquery";
 import { AuthenticationService } from 'src/app/Services/authentication.service';
 
@@ -10,7 +8,6 @@ import { AuthenticationService } from 'src/app/Services/authentication.service';
     styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-    location: Location;
     mobile_menu_visible: any = 0;
     windowSize = $(window).width();
 
@@ -22,11 +19,8 @@ export class NavbarComponent implements OnInit {
         this.window(event.target.innerWidth);
     }
 
-    constructor(location: Location,
-        private element: ElementRef,
-        private router: Router,
+    constructor(
         private auth: AuthenticationService) {
-        this.location = location;
     }
 
     ngOnInit() {

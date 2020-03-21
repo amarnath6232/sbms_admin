@@ -8,7 +8,7 @@
   <div class="form-row">
 
     <!-- First Name -->
-    <div class="form-group col-md-6">
+    <div class="form-group col-md-4">
 
       <!-- label -->
       <label for="firstName">{{validation.firstName.label}}</label>
@@ -30,7 +30,7 @@
     </div>
 
     <!-- Last Name -->
-    <div class="form-group col-md-6">
+    <div class="form-group col-md-4">
 
       <!-- label -->
       <label for="lastName">{{validation.lastName.label}}</label>
@@ -52,13 +52,8 @@
 
     </div>
 
-  </div>
-
-  <!-- 2nd Row -->
-  <div class="form-row">
-
     <!-- User Name -->
-    <div class="form-group col-md-6">
+    <div class="form-group col-md-4">
 
       <!-- label -->
       <label for="userName">{{validation.userName.label}}</label>
@@ -78,8 +73,15 @@
       </div>
     </div>
 
+  </div>
+
+  <!-- 2nd Row -->
+  <div class="form-row">
+
+
+
     <!-- Email Id -->
-    <div class="form-group col-md-6">
+    <div class="form-group col-md-4">
 
       <!-- label -->
       <label for="emailId">{{validation.emailId.label}}</label>
@@ -99,13 +101,8 @@
       </div>
     </div>
 
-  </div>
-
-  <!-- 3rd row -->
-  <div class="form-row">
-
     <!-- Password -->
-    <div class="form-group col-md-6">
+    <div class="form-group col-md-4">
 
       <!-- label -->
       <label for="password">{{validation.password.label}}</label>
@@ -127,7 +124,7 @@
 
     <!-- Confirm Password -->
 
-    <div class="form-group col-md-6">
+    <div class="form-group col-md-4">
 
       <!-- label -->
       <label for="confirmPassword">{{validation.confirmPassword.label}}</label>
@@ -153,11 +150,11 @@
 
   </div>
 
-  <!-- 4th row -->
+  <!-- 3rd row -->
   <div class="form-row">
 
     <!-- Phone Number -->
-    <div class="form-group col-md-6">
+    <div class="form-group col-md-4">
 
       <!-- label -->
       <label for="phoneNumber">{{validation.phoneNumber.label}}</label>
@@ -179,7 +176,7 @@
     </div>
 
     <!-- Country Selection -->
-    <div class="form-group col-md-6">
+    <div class="form-group col-md-4">
 
       <!-- label -->
       <label for="country">{{validation.country.label}}</label>
@@ -202,13 +199,8 @@
       </select>
     </div>
 
-  </div>
-
-  <!-- 5th row -->
-  <div class="form-row">
-
     <!-- State Selection -->
-    <div class="form-group col-md-6">
+    <div class="form-group col-md-4">
 
       <!-- label -->
       <label for="state">{{validation.state.label}}</label>
@@ -231,8 +223,13 @@
 
     </div>
 
+  </div>
+
+  <!-- 4th row -->
+  <div class="form-row">
+
     <!-- City Selection -->
-    <div class="form-group col-md-6">
+    <div class="form-group col-md-4">
 
       <!-- label -->
       <label for="city">{{validation.city.label}}</label>
@@ -254,31 +251,8 @@
 
     </div>
 
-  </div>
-
-  <!-- 6th Row -->
-  <div class="form-group row">
-
-    <!-- assetAccess Selection -->
-    <div class="form-group col-6">
-
-      <!-- label -->
-      <label for="assetAccess">{{validation.assetAccess.label}}</label>
-
-      <!-- Input Checkbox Control -->
-      <div class="d-flex">
-        <div class="custom-control custom-checkbox mr-2" formArrayName="form_assetsList"
-          *ngFor="let asset of userForm.controls.form_assetsList?.value;let i = index;">
-          <input class="custom-control-input" type="checkbox" id="{{asset.assetCategoryId}}" [checked]="asset.checked"
-            (change)="onCheckboxCategoryChange($event,i)">
-          <label class="custom-control-label" for="{{asset.assetCategoryId}}">{{asset.categoryName}}</label>
-        </div>
-      </div>
-
-    </div>
-
     <!-- Role Selection -->
-    <div class="form-group col-6">
+    <div class="form-group col-md-4">
 
       <!-- label -->
       <label for="role">{{validation.role.label}}</label>
@@ -301,9 +275,27 @@
 
     </div>
 
+    <!-- assetAccess Selection -->
+    <div class="form-group col-md-4">
+
+      <!-- label -->
+      <label for="assetAccess">{{validation.assetAccess.label}}</label>
+
+      <!-- Input Checkbox Control -->
+      <div class="d-flex">
+        <div class="custom-control custom-checkbox mr-2" formArrayName="form_assetsList"
+          *ngFor="let asset of userForm.controls.form_assetsList?.value;let i = index;">
+          <input class="custom-control-input" type="checkbox" id="{{asset.assetCategoryId}}" [checked]="asset.checked"
+            (change)="onCheckboxCategoryChange($event,i)">
+          <label class="custom-control-label" for="{{asset.assetCategoryId}}">{{asset.categoryName}}</label>
+        </div>
+      </div>
+
+    </div>
+
   </div>
 
-  <!-- 7th row Roles-->
+  <!-- 5th row -->
   <div class="form-group row">
 
     <!-- Label -->
