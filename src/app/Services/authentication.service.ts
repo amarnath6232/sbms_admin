@@ -22,6 +22,7 @@ export class AuthenticationService {
   token: string = localStorage.getItem('token') || null;
   refresh_Token = null;
   decoded: any;
+  spiner = new BehaviorSubject(false);
   permissions = new BehaviorSubject<string[]>([]);
 
   constructor(private http: HttpClient,

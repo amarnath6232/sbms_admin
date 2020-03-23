@@ -21,25 +21,3 @@
     min-height: calc(100vh - var(--navBar-height));
 }
 
-.mandetory {
-    color: red;
-}
-
-.form-control.ng-untouched {
-    border: 1px solid #ced4da !important;
-    border-radius: 5px;
-}
-
-.form-control.ng-invalid {
-    border: 1px solid #ff000052;
-    border-radius: 5px;
-}
-
-button:focus {
-    outline: 0px auto -webkit-focus-ring-color !important;
-}
-
-/* Table thead background color */
-.table .thead-dark th {
-    background-color: #374559 !important;
-}
