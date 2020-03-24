@@ -8,7 +8,7 @@
 
   /* side bar variables */
   --sideBar-logo-bg: #374559;
-  --sideBar-list-bg: #374559;
+  --sideBar-list-bg: #fff;
   --sideBar-list-color: #bdbdbd;
   --sideBar-width: 250px;
 }

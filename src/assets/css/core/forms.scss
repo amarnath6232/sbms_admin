@@ -33,6 +33,29 @@ select {
   -moz-appearance: none;
 }
 
+/* check box start */
+
+.custom-checkbox .custom-control-label::before {
+  border-radius: .25rem;
+  border-radius: 3px;
+  background-color: #E0E0E0;
+  border: 1px solid #828282;
+  box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.15);
+}
+
+.custom-checkbox .custom-control-input:checked~.custom-control-label::after {
+  border-radius: 3px;
+  background-color: #1D1D56;
+  border: 1px solid #828282;
+  box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.15);
+}
+
+.custom-control-input:focus ~ .custom-control-label::before {
+  box-shadow:none !important;
+}
+
+/* check box end */
+
 .mandetory {
   color: red;
 }
@@ -59,4 +82,14 @@ button:focus {
 .has-float-label .form-control:placeholder-shown:not(:focus)+* {
   font-size: 120% !important;
   top: 0.9em !important;
+}
+
+
+/* form-header */
+.form-header {
+  color: #1D1D56;
+}
+
+.permissions-head{
+  color: #FA9917;
 }
