@@ -20,7 +20,6 @@ textarea {
 }
 
 .form-control:focus {
-  /* box-shadow: 0 0 0 0.1rem rgba(0, 123, 255, .25) !important; */
   box-shadow: none !important;
 }
 
@@ -50,8 +49,8 @@ select {
   box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.15);
 }
 
-.custom-control-input:focus ~ .custom-control-label::before {
-  box-shadow:none !important;
+.custom-control-input:focus~.custom-control-label::before {
+  box-shadow: none !important;
 }
 
 /* check box end */
@@ -70,10 +69,6 @@ select {
   border-radius: 5px;
 }
 
-button:focus {
-  outline: 0px auto -webkit-focus-ring-color !important;
-}
-
 /* Table thead background color */
 .table .thead-dark th {
   background-color: #374559 !important;
@@ -90,6 +85,7 @@ button:focus {
   color: #1D1D56;
 }
 
-.permissions-head{
+/* form-content */
+.permissions-head {
   color: #FA9917;
 }
