@@ -1,4 +1,29 @@
-<h3 class="text-capitalize text-center p-2">Users List</h3>
+<div class="d-flex col-12">
+  <!-- Component Title -->
+  <div>
+    <h5 class="text-capitalize mb-0 form-header">User List</h5>
+  </div>
+
+  <div class="ml-auto d-flex">
+
+    <!-- add user button  -->
+    <div class="mr-2 ">
+      <button type="button" class="btn btn-success text-uppercase px-2"
+        [routerLink]="[ '/user-management/users/create-users']">
+        add new user <span class="mx-2">&#43;</span>
+      </button>
+    </div>
+
+    <!-- search box -->
+    <div class="form-inline form-group searchbox">
+      <input class="searchTerm" type="text" name="search" placeholder="search" aria-label="search"
+        aria-describedby="search" autocomplete="off">
+      <span><i class="fas fa-search"></i></span>
+    </div>
+  </div>
+
+</div>
+
 <div class="container-fluid table-responsive">
   <table class="table table-striped table-hover">
     <thead class="thead-dark">
