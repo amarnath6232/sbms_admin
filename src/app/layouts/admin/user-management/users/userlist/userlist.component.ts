@@ -34,9 +34,11 @@ export class UserlistComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.auth.spiner.next(true);
     this.getUsers();
     this.subscribe_user_List();
     this.sub_auth_permission();
+    this.auth.spiner.next(false);
   }
 
   sub_auth_permission() {
