@@ -35,4 +35,22 @@ select {
   font-size: 25px;
   font-weight: 500;
   line-height: 29px;
+  color: #4f4f4f;
+}
+
+.battery-num-2 {
+  font-size: 30px;
+  font-weight: 500;
+  line-height: 29px;
+  color: #4f4f4f;
+}
+
+.battery-details-2 {
+  font-size: 16px;
+  color: #bdbdbd;
+  line-height: 14px;
+}
+
+.img-2-80{
+  width: 80%;
 }
