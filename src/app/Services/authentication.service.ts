@@ -24,6 +24,7 @@ export class AuthenticationService {
   decoded: any;
   spiner = new BehaviorSubject(false);
   permissions = new BehaviorSubject<string[]>([]);
+  hide2navbar = new BehaviorSubject(true);
 
   constructor(private http: HttpClient,
     private errHandler: ErrorHandlerService,

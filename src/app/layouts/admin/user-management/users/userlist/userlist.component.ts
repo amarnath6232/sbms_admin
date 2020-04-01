@@ -25,6 +25,7 @@ export class UserlistComponent implements OnInit {
   extensionNo: any;
   enable_buttons: string[] = [];
   userPermissoins;
+  show_edit_model = false;
 
   constructor(private user: UserService,
     private toastr: ToastrService,
@@ -85,20 +86,9 @@ export class UserlistComponent implements OnInit {
     })
   }
 
-  /* 
-     updateUser(userData: User) {
-       this.editUSer = userData;
-       console.log(userData);
-       this.getCountries();
-       this.Filter(this.editUSer.country);
-       this.selectedState(this.editUSer.state);
-       this.selectedCity(this.editUSer.city);
-       this.getRoles();
-       this.selectRolename(this.editUSer.roleName);
-   
-     } */
   updateUser(user: User) {
     this.user.copyEditUser.next(user);
+    this.show_edit_model = true;
   }
 
   getCountries() {

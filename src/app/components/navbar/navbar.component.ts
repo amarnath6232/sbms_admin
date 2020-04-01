@@ -1,6 +1,7 @@
-import { Component, OnInit, ElementRef, HostListener } from '@angular/core';
-import * as $ from "jquery";
+import { Component, OnInit, HostListener } from '@angular/core';
 import { AuthenticationService } from 'src/app/Services/authentication.service';
+import { Subscription } from 'rxjs';
+import * as $ from "jquery";
 
 @Component({
     selector: 'app-navbar',
@@ -10,8 +11,9 @@ import { AuthenticationService } from 'src/app/Services/authentication.service';
 export class NavbarComponent implements OnInit {
     mobile_menu_visible: any = 0;
     windowSize = $(window).width();
-
+    hide_2_navbar = true;
     userName = null;
+    unsub_2_navbar: Subscription;
 
     @HostListener('window:resize', ['$event'])
     onResize(event) {
@@ -26,6 +28,13 @@ export class NavbarComponent implements OnInit {
     ngOnInit() {
         this.window(this.windowSize);
         this.displayUserName();
+        this.subs_navbar();
+    }
+
+    subs_navbar() {
+        this.unsub_2_navbar = this.auth.hide2navbar.subscribe(val => {
+            this.hide_2_navbar = val;
+        })
     }
 
     displayUserName() {
@@ -58,6 +67,12 @@ export class NavbarComponent implements OnInit {
 
     logout() {
         this.auth.logout();
+    }
+
+    ngOnDestroy(): void {
+        //Called once, before the instance is destroyed.
+        //Add 'implements OnDestroy' to the class.
+        this.unsub_2_navbar.unsubscribe();
     }
 
 }
