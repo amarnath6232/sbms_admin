@@ -51,6 +51,31 @@ select {
   line-height: 14px;
 }
 
-.img-2-80{
+.img-2-80 {
   width: 80%;
+}
+
+.img-fluid {
+  max-width: 75%;
+}
+
+h5 {
+  color: #333;
+}
+
+.health {
+  font-size: 14px;
+  color: #333;
+}
+
+.consumption {
+  font-size: 16px;
+  color: #bdbdbd;
+  line-height: 19px;
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+  .img-fluid {
+    max-width: 65%;
+  }
 }
