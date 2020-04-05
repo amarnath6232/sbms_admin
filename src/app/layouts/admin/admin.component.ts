@@ -21,7 +21,7 @@ export class AdminComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    this.auth.spiner.next(false);
   }
 
   sub_router() {

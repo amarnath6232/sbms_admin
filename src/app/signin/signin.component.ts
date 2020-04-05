@@ -31,7 +31,6 @@ export class SigninComponent implements OnInit {
     private validation_ser: ValidationsService) { }
 
   ngOnInit() {
-    
     this.getValidations();
     this.SigninValidations();
     this.authenticationService.spiner.next(false);

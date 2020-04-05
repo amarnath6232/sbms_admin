@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core';
 export class IpService {
 
   constructor() { }
-  ip: string = "http://14.142.118.6:";
+  ip: string = window["backend_Url"] || "http://localhost:";
   login_Port: string = "8081";
   asset_Port: string = "2018";
   usermanagement_port: string = "2017";
