@@ -4,8 +4,7 @@ import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-loader',
-  templateUrl: './loader.component.html',
-  styleUrls: ['./loader.component.css']
+  template: ``,
 })
 export class LoaderComponent implements OnInit {
 
